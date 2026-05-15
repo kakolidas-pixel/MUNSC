@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MENA Emergency Crisis Committee</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#c0392b;--red-dim:#5a1a14;--amber:#d4860a;--amber-dim:#7a4d06;
+  --bg:#080808;--surface:#111;--surface2:#181818;--border:#252525;--border2:#333;
+  --text:#ddd;--muted:#777;--green:#1e8449;--green-bright:#27ae60;--blue:#1a6fa8;--purple:#7c3aed;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden;}
+header{background:var(--bg);border-bottom:1px solid var(--red);position:sticky;top:0;z-index:200;}
+.hd-meta{display:flex;justify-content:space-between;align-items:center;padding:6px 28px;border-bottom:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);}
+.live{color:var(--red);animation:blink 1.4s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.session-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;padding:3px 10px;border:1px solid;text-transform:uppercase;}
+.session-open{color:var(--green-bright);border-color:var(--green-bright);background:#071a0e;}
+.session-recess{color:var(--amber);border-color:var(--amber);background:#1a1000;}
+.session-closed{color:#555;border-color:#333;background:#111;}
+.hd-body{padding:12px 28px 0;display:flex;align-items:flex-end;gap:20px;}
+.hd-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4vw,52px);letter-spacing:5px;line-height:1;color:#fff;}
+.hd-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1.8px;padding-bottom:5px;line-height:1.7;max-width:480px;}
+nav{display:flex;overflow-x:auto;margin-top:10px;}
+nav::-webkit-scrollbar{display:none;}
+.tab-btn{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);background:none;border:none;border-top:2px solid transparent;padding:10px 18px;cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s,background .2s;border-right:1px solid var(--border);}
+.tab-btn:hover{color:var(--text);background:var(--surface);}
+.tab-btn.active{color:#fff;border-top-color:var(--red);background:var(--surface);}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+.dot-red{background:var(--red);}
+.dot-amber{background:var(--amber);}
+.ticker{background:var(--red);height:26px;display:flex;align-items:center;overflow:hidden;}
+.ticker-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;background:#000;color:var(--red);padding:0 12px;height:100%;display:flex;align-items:center;flex-shrink:0;}
+.ticker-inner{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;color:#fff;white-space:nowrap;animation:ticker 45s linear infinite;flex-shrink:0;}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+main{max-width:1300px;margin:0 auto;padding:28px;}
+.section{display:none;}
+.section.active{display:block;}
+.grid-2{display:grid;grid-template-columns:2fr 1fr;gap:20px;}
+.grid-2-eq{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--muted);margin-bottom:14px;text-transform:uppercase;}
+.panel{background:var(--surface);border:1px solid var(--border);}
+.panel-hd{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--muted);padding:10px 14px;border-bottom:1px solid var(--border);text-transform:uppercase;}
+.tl-item{padding:13px 15px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:108px 1fr;gap:13px;transition:background .15s;}
+.tl-item:hover{background:var(--surface2);}
+.tl-item.crit{border-left:3px solid var(--red);}
+.tl-item.warn{border-left:3px solid var(--amber);}
+.tl-item.neut{border-left:3px solid #383838;}
+.tl-time{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);line-height:1.6;}
+.tl-tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1.5px;padding:2px 6px;margin-bottom:5px;}
+.tl-tag.crit{background:#1f0505;color:var(--red);}
+.tl-tag.warn{background:#1a1000;color:var(--amber);}
+.tl-tag.neut{background:#1a1a1a;color:#555;}
+.tl-body{font-size:13px;line-height:1.65;color:#bbb;}
+.tl-body strong{color:#e8e8e8;font-weight:500;}
+.stat-card{background:var(--surface);border:1px solid var(--border);padding:14px 16px;}
+.stat-card h3{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2.5px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
+.defcon-big{text-align:center;padding:8px 0;}
+.defcon-num{font-family:'Bebas Neue',sans-serif;font-size:68px;color:var(--red);line-height:1;animation:pulse .9s ease-in-out infinite alternate;}
+@keyframes pulse{from{opacity:.75}to{opacity:1}}
+.defcon-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:2px;}
+.bar-row{margin-bottom:8px;}
+.bar-lbl{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;margin-bottom:3px;}
+.bar-lbl span:last-child{color:var(--red);}
+.bar-bg{height:3px;background:#222;}
+.bar-fill{height:3px;}
+.bar-crit{background:var(--red);}
+.bar-warn{background:var(--amber);}
+.front-row{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 0;border-bottom:1px solid var(--border);}
+.front-row:last-child{border-bottom:none;}
+.front-row .loc{color:#777;}
+.status-active{color:var(--red);}
+.status-standby{color:var(--amber);}
+.status-blockade{color:#a855f7;}
+.del-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:20px;}
+.del-card{background:var(--surface);padding:13px;transition:background .15s;position:relative;}
+.del-card:hover{background:var(--surface2);}
+.del-card.p5star{border-top:2px solid var(--amber);}
+.del-country{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#fff;margin-bottom:1px;}
+.del-name{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);}
+.del-role{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--amber);margin-top:4px;}
+.del-stance{margin-top:7px;height:2px;border-radius:1px;}
+.stance-h{background:var(--red);}
+.stance-m{background:var(--amber);}
+.stance-n{background:#444;}
+.stance-a{background:var(--green-bright);}
+.p5-star{position:absolute;top:10px;right:10px;font-size:12px;}
+.del-flag{font-size:17px;margin-bottom:3px;}
+.agenda-block{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--red);margin-bottom:14px;}
+.agenda-block.secondary{border-left-color:var(--amber);}
+.ag-num{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--red);padding:13px 17px 0;}
+.agenda-block.secondary .ag-num{color:var(--amber);}
+.ag-title{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:2px;padding:4px 17px 11px;border-bottom:1px solid var(--border);}
+.ag-body{padding:13px 17px;font-size:13px;line-height:1.75;color:#aaa;}
+.ag-body strong{color:#ddd;font-weight:500;}
+.ag-body ul{margin:10px 0 0;list-style:none;}
+.ag-body ul li{padding:3px 0;border-bottom:1px solid var(--border);}
+.ag-body ul li::before{content:'→ ';font-family:'IBM Plex Mono',monospace;color:var(--muted);}
+.ag-body ul li:last-child{border-bottom:none;}
+.matrix-wrap{overflow-x:auto;margin-top:18px;}
+.matrix{width:100%;border-collapse:collapse;font-size:12px;}
+.matrix th{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);padding:7px 11px;border:1px solid var(--border);background:var(--surface2);text-align:left;text-transform:uppercase;}
+.matrix td{padding:8px 11px;border:1px solid var(--border);vertical-align:top;line-height:1.5;color:#aaa;}
+.matrix tr:hover td{background:var(--surface2);}
+.matrix td strong{color:#ddd;font-weight:500;}
+.badge{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;padding:2px 5px;border-radius:2px;}
+.badge-red{background:#1f0505;color:var(--red);}
+.badge-amber{background:#1a1000;color:var(--amber);}
+.badge-green{background:#071a0e;color:var(--green-bright);}
+.badge-blue{background:#051220;color:#5ba3d9;}
+.update-feed{display:flex;flex-direction:column;gap:11px;margin-bottom:24px;}
+.update-card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--red);padding:15px 17px;}
+.update-card.warn{border-left-color:var(--amber);}
+.update-card.info{border-left-color:var(--blue);}
+.update-card.resolved{border-left-color:var(--green-bright);}
+.update-card.eyes-only{border-left-color:var(--purple);background:#0e0b14;}
+.update-meta{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;}
+.update-time{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
+.update-severity{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;padding:2px 6px;}
+.sev-critical{background:#1f0505;color:var(--red);}
+.sev-warning{background:#1a1000;color:var(--amber);}
+.sev-info{background:#05101f;color:#5ba3d9;}
+.sev-resolved{background:#071a0e;color:var(--green-bright);}
+.sev-eyes{background:#150b2a;color:#a78bfa;}
+.update-title{font-weight:500;font-size:14px;color:#e0e0e0;margin-bottom:4px;}
+.update-body{font-size:13px;line-height:1.65;color:#999;}
+.update-source{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:7px;}
+.eyes-blur{filter:blur(5px);transition:filter .3s;cursor:pointer;user-select:none;}
+.eyes-blur:hover{filter:blur(0);}
+.eyes-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:#a78bfa;}
+.pr-feed{display:flex;flex-direction:column;gap:14px;margin-bottom:24px;}
+.pr-card{background:var(--surface);border:1px solid var(--border);}
+.pr-header{padding:13px 17px 9px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.pr-from{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--amber);}
+.pr-title-text{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:2px;margin-top:3px;}
+.pr-time-txt{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap;}
+.pr-body-txt{padding:13px 17px;font-size:13px;line-height:1.75;color:#aaa;white-space:pre-wrap;}
+.pr-edit-form{background:#0d0d0d;border-top:1px solid var(--border2);padding:13px 17px;display:none;flex-direction:column;gap:9px;}
+.pr-edit-form.open{display:flex;}
+.vote-board{display:flex;flex-direction:column;gap:13px;}
+.vote-item{background:var(--surface);border:1px solid var(--border);}
+.vote-header{padding:11px 15px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.vote-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;}
+.vote-status{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;padding:2px 7px;}
+.vote-status.open{background:#071a0e;color:var(--green-bright);}
+.vote-status.closed{background:#1a1a1a;color:#555;}
+.vote-tally{display:grid;grid-template-columns:repeat(3,1fr);}
+.tally-col{padding:13px 17px;text-align:center;}
+.tally-col:not(:last-child){border-right:1px solid var(--border);}
+.tally-num{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;}
+.tally-for .tally-num{color:var(--green-bright);}
+.tally-against .tally-num{color:var(--red);}
+.tally-abstain .tally-num{color:#555;}
+.tally-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-top:2px;}
+.vote-bar{height:5px;display:flex;margin:0 15px 11px;}
+.vote-bar-for{background:var(--green-bright);transition:width .4s;}
+.vote-bar-against{background:var(--red);transition:width .4s;}
+.vote-bar-abstain{background:#333;transition:width .4s;}
+.vote-delegates{padding:9px 15px;font-size:12px;color:#777;font-family:'IBM Plex Mono',monospace;border-top:1px solid var(--border);line-height:1.8;}
+.speakers-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.speaker-current{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--red);padding:18px;}
+.speaker-current h3{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--muted);margin-bottom:9px;}
+.speech-timer{font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--red);line-height:1;margin-top:10px;animation:pulse .9s ease-in-out infinite alternate;}
+.speech-timer.ok{color:var(--green-bright);animation:none;}
+.speech-timer.warn{color:var(--amber);animation:pulse .9s ease-in-out infinite alternate;}
+.speaker-queue{background:var(--surface);border:1px solid var(--border);border-top:none;}
+.queue-item{display:flex;align-items:center;justify-content:space-between;padding:10px 15px;border-bottom:1px solid var(--border);font-size:13px;}
+.queue-item:last-child{border-bottom:none;}
+.queue-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);width:22px;}
+.queue-name{flex:1;}
+.queue-country{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
+.admin-wrap{background:var(--surface);border:1px solid var(--border2);padding:20px;margin-bottom:18px;}
+.admin-wrap h2{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:3px;margin-bottom:12px;color:var(--amber);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:11px;}
+.form-row.single{grid-template-columns:1fr;}
+label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);display:block;margin-bottom:4px;text-transform:uppercase;}
+input[type=text],input[type=number],input[type=password],textarea,select{width:100%;background:#0e0e0e;border:1px solid var(--border2);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:13px;padding:7px 10px;outline:none;transition:border-color .2s;}
+input:focus,textarea:focus,select:focus{border-color:var(--amber);}
+select option{background:#111;}
+textarea{resize:vertical;min-height:80px;line-height:1.6;}
+.btn{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;padding:8px 16px;border:1px solid var(--border2);background:transparent;color:var(--text);cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.btn:hover{background:var(--amber-dim);border-color:var(--amber);color:#fff;}
+.btn-primary{background:var(--red-dim);border-color:var(--red);color:#fff;}
+.btn-primary:hover{background:var(--red);}
+.btn-success{background:#071a0e;border-color:var(--green-bright);color:var(--green-bright);}
+.btn-success:hover{background:var(--green);color:#fff;}
+.btn-sm{padding:4px 9px;font-size:9px;}
+.flash{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green-bright);margin-top:9px;display:none;}
+.del-btn{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;background:none;border:1px solid #333;color:#555;cursor:pointer;padding:2px 6px;transition:all .15s;}
+.del-btn:hover{background:#1f0505;border-color:var(--red);color:var(--red);}
+.btn-edit{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;background:none;border:1px solid #383838;color:#777;cursor:pointer;padding:2px 7px;transition:all .15s;}
+.btn-edit:hover{border-color:var(--amber);color:var(--amber);background:#1a1000;}
+.rc-col{display:flex;flex-direction:column;gap:4px;}
+.rc-item{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 9px;border:1px solid var(--border);background:var(--surface2);color:var(--text);display:flex;align-items:center;gap:7px;}
+.rc-item .rc-flag{font-size:14px;}
+.rc-item .rc-name{flex:1;}
+.rc-item .rc-country{color:var(--muted);font-size:10px;}
+.del-card.rc-present{outline:2px solid var(--green-bright);}
+.del-card.rc-pnv{outline:2px solid var(--amber);}
+.del-card.rc-absent{outline:2px solid var(--red);opacity:0.5;}
+.del-card .rc-badge{position:absolute;bottom:8px;right:8px;font-size:9px;font-family:'IBM Plex Mono',monospace;letter-spacing:1px;padding:1px 5px;}
+.rc-badge-present{background:#071a0e;color:var(--green-bright);border:1px solid var(--green-bright);}
+.rc-badge-pnv{background:#1a1000;color:var(--amber);border:1px solid var(--amber);}
+.rc-badge-absent{background:#1f0505;color:var(--red);border:1px solid var(--red);}
+.edit-form{background:#0d0d0d;border-top:1px solid var(--border2);padding:13px 15px;display:none;flex-direction:column;gap:9px;}
+.edit-form.open{display:flex;}
+.edit-form-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.edit-actions{display:flex;gap:7px;}
+.alert-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.88);animation:fadeIn .2s ease;}
+.alert-box{background:#080000;border:2px solid var(--red);padding:36px 56px;text-align:center;max-width:680px;animation:scaleIn .3s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{transform:scale(.88)}to{transform:scale(1)}}
+.alert-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:4px;color:var(--red);margin-bottom:10px;}
+.alert-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,4vw,44px);letter-spacing:3px;color:#fff;margin-bottom:10px;}
+.alert-body{font-size:13px;line-height:1.7;color:#ccc;}
+.alert-dismiss{margin-top:20px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#444;letter-spacing:2px;}
+.bc-feed{display:flex;flex-direction:column;gap:9px;max-height:380px;overflow-y:auto;}
+.bc-item{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--purple);padding:11px 13px;}
+.bc-meta{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:4px;}
+.bc-body{font-size:13px;color:#ccc;line-height:1.6;}
+/* ── ANIMATIONS ── */
+
+/* Scanline overlay */
+body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.07) 2px,rgba(0,0,0,.07) 4px);animation:scanroll 8s linear infinite;}
+@keyframes scanroll{from{background-position:0 0}to{background-position:0 100%}}
+
+/* Header red glow at DEFCON 2 */
+header{box-shadow:0 0 18px 2px rgba(192,57,43,.35),0 0 40px 4px rgba(192,57,43,.13);animation:hdrGlow 2.5s ease-in-out infinite alternate;}
+@keyframes hdrGlow{from{box-shadow:0 0 12px 1px rgba(192,57,43,.25),0 0 28px 2px rgba(192,57,43,.08)}to{box-shadow:0 0 28px 4px rgba(192,57,43,.55),0 0 60px 8px rgba(192,57,43,.2)}}
+
+/* Glitch on title */
+.hd-title{position:relative;}
+.hd-title::before,.hd-title::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;font-family:'Bebas Neue',sans-serif;font-size:inherit;letter-spacing:inherit;line-height:inherit;opacity:0;}
+.hd-title.glitch::before{animation:glitch1 .12s steps(1) forwards;color:var(--red);clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);}
+.hd-title.glitch::after{animation:glitch2 .12s steps(1) forwards;color:#0ff;clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);}
+@keyframes glitch1{0%{opacity:1;transform:translateX(-3px)}50%{transform:translateX(3px)}100%{opacity:0;transform:translateX(0)}}
+@keyframes glitch2{0%{opacity:1;transform:translateX(3px)}50%{transform:translateX(-3px)}100%{opacity:0;transform:translateX(0)}}
+
+/* Bar animate in — controlled via JS */
+.bar-fill{}
+
+/* Crisis card slide in */
+@keyframes slideInTop{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+.update-card.new-card{animation:slideInTop .4s cubic-bezier(.16,1,.3,1) forwards;}
+
+/* NEW badge */
+.new-badge{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:2px;padding:2px 6px;background:var(--red);color:#fff;margin-left:8px;animation:newBadgeFade 30s forwards;}
+@keyframes newBadgeFade{0%,80%{opacity:1}100%{opacity:0;display:none}}
+
+/* Static/interference overlay */
+#static-overlay{position:fixed;inset:0;z-index:9990;pointer-events:none;display:none;opacity:0;}
+#static-overlay canvas{position:absolute;inset:0;width:100%;height:100%;}
+@keyframes staticIn{0%{opacity:0}20%{opacity:.9}80%{opacity:.7}100%{opacity:0}}
+
+/* Typewriter alert title */
+.typewriter{overflow:hidden;border-right:2px solid var(--red);white-space:nowrap;animation:typing .6s steps(30,end) forwards,blink-caret .5s step-end 6 forwards;}
+@keyframes typing{from{width:0}to{width:100%}}
+@keyframes blink-caret{from,to{border-color:transparent}50%{border-color:var(--red)}}
+
+@media(max-width:768px){
+  main{padding:16px 12px;}
+  .grid-2,.grid-2-eq,.form-row,.speakers-wrap{grid-template-columns:1fr;}
+  nav .tab-btn{padding:8px 11px;font-size:9px;}
+  .hd-body{padding:10px 14px 0;}
+}
+</style>
+</head>
+<body>
+
+<div id="static-overlay"><canvas id="static-canvas"></canvas></div>
+
+<div id="alert-overlay" class="alert-overlay" style="display:none;" onclick="dismissAlert()">
+  <div class="alert-box">
+    <div class="alert-tag" id="alert-tag">CRISIS UPDATE</div>
+    <div class="alert-title" id="alert-title"></div>
+    <div class="alert-body" id="alert-body"></div>
+    <div class="alert-dismiss">CLICK ANYWHERE TO DISMISS</div>
+  </div>
+</div>
+
+<header>
+  <div class="hd-meta">
+    <span>MENA EMERGENCY CRISIS COMMITTEE</span>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <span id="fb-status" style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:#444;">○ CONNECTING</span>
+      <span id="session-badge" class="session-badge session-open">● SESSION OPEN</span>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;line-height:1.1;">
+        <span id="timer-display" style="display:none;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:var(--red);"></span>
+        <span id="timer-display-label" style="display:none;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--muted);">MINUTES TO MIDNIGHT</span>
+      </div>
+      <span class="live">● LIVE</span>
+    </div>
+  </div>
+  <div class="hd-body">
+    <div class="hd-title" id="hd-title" data-text="MENA CRISIS COMMITTEE">MENA CRISIS COMMITTEE</div>
+    <div class="hd-sub">Regional Tensions · Illegal Maritime Blockades · State-Sponsored Aggression · Sovereignty Violations</div>
+  </div>
+  <nav>
+    <button class="tab-btn active" onclick="showTab('situation',this)"><span class="dot dot-red"></span>Situation</button>
+    <button class="tab-btn" onclick="showTab('delegates',this)">Delegates</button>
+    <button class="tab-btn" onclick="showTab('agenda',this)">Agenda</button>
+    <button class="tab-btn" onclick="showTab('crisis',this)"><span class="dot dot-red"></span>Crisis Updates</button>
+    <button class="tab-btn" onclick="showTab('press',this)"><span class="dot dot-amber"></span>Press Releases</button>
+    <button class="tab-btn" onclick="showTab('speakers',this)">Speakers</button>
+    <button class="tab-btn" onclick="showTab('admin',this)" style="margin-left:auto;color:var(--amber);border-left:1px solid var(--border);">⚙ Admin</button>
+  </nav>
+</header>
+
+<div class="ticker">
+  <div class="ticker-tag">BREAKING</div>
+  <div style="overflow:hidden;flex:1;display:flex;">
+    <div class="ticker-inner" id="tick1">DEFCON 2 ACTIVATED — ALL US NUCLEAR ASSETS ON STANDBY &nbsp;///&nbsp; IRAN STRATEGIC MISSILES AT FULL LAUNCH POSTURE &nbsp;///&nbsp; CHINA BLOCKADES TAIWAN — "ENTIRELY UNRELATED TO MENA" &nbsp;///&nbsp; PAKISTAN &amp; INDIA MATCH NUCLEAR READINESS — HOTLINE UNANSWERED &nbsp;///&nbsp; 25TH AMENDMENT INVOKED — VANCE ACTING PRESIDENT &nbsp;///&nbsp; 1,400 MISSILES IN FIRST SIX MINUTES &nbsp;///&nbsp; KNESSET STRUCK — 4 CABINET MINISTERS KILLED &nbsp;///&nbsp; SIMULTANEOUS HOSTAGE OPERATIONS: ROME · ANKARA · WASHINGTON &nbsp;///&nbsp;</div>
+    <div class="ticker-inner" id="tick2" aria-hidden="true">DEFCON 2 ACTIVATED — ALL US NUCLEAR ASSETS ON STANDBY &nbsp;///&nbsp; IRAN STRATEGIC MISSILES AT FULL LAUNCH POSTURE &nbsp;///&nbsp; CHINA BLOCKADES TAIWAN — "ENTIRELY UNRELATED TO MENA" &nbsp;///&nbsp; PAKISTAN &amp; INDIA MATCH NUCLEAR READINESS — HOTLINE UNANSWERED &nbsp;///&nbsp; 25TH AMENDMENT INVOKED — VANCE ACTING PRESIDENT &nbsp;///&nbsp; 1,400 MISSILES IN FIRST SIX MINUTES &nbsp;///&nbsp; KNESSET STRUCK — 4 CABINET MINISTERS KILLED &nbsp;///&nbsp; SIMULTANEOUS HOSTAGE OPERATIONS: ROME · ANKARA · WASHINGTON &nbsp;///&nbsp;</div>
+  </div>
+</div>
+
+<main>
+
+<!-- SITUATION -->
+<div id="tab-situation" class="section active">
+  <div class="grid-2">
+    <div>
+      <div class="panel">
+        <div class="panel-hd">Chronological Timeline</div>
+        <div class="tl-item neut"><div class="tl-time">3 WEEKS AGO<br>Beirut</div><div><div class="tl-tag neut">COVERT OP</div><div class="tl-body">Mossad extracts <strong>Hassan Nasrallah Jr.</strong> from Beirut university campus in daylight. 3 Lebanese students killed. Hezbollah begins mobilising <strong>80,000 fighters</strong>.</div></div></div>
+        <div class="tl-item warn"><div class="tl-time">10 DAYS AGO<br>Tehran</div><div><div class="tl-tag warn">CEASEFIRE</div><div class="tl-body">US-Israel-Iran ceasefire signed. Key clause: release of <strong>IRGC Gen. Shirazi</strong> within 24 hrs. Transfer never occurs — PM suspends under coalition pressure. Washington and Qatar not informed.</div></div></div>
+        <div class="tl-item warn"><div class="tl-time">4 DAYS AGO<br>Washington</div><div><div class="tl-tag warn">LEAKED CALL</div><div class="tl-body">NSC official leaks Trump-Netanyahu call. Trump: <em>"What if we gave Iran something to react to? Then we finish it. Properly. I'll back you completely."</em></div></div></div>
+        <div class="tl-item crit"><div class="tl-time">48 HRS AGO<br>Khan Younis</div><div><div class="tl-tag crit">DRONE STRIKE</div><div class="tl-body">Israeli drone strikes <strong>field hospital</strong> — Ibrahim Sinwar + 34 medical personnel killed. Hamas unanimously authorises <strong>full military retaliation</strong>.</div></div></div>
+        <div class="tl-item crit"><div class="tl-time">18 HRS AGO<br>Tehran</div><div><div class="tl-tag crit">DIRECTIVE</div><div class="tl-body">Israel: ceasefire void, Shirazi not released. Final line: "The Islamic Republic should focus on its own survival." Supreme Leader to IRGC: <strong>"Now."</strong></div></div></div>
+        <div class="tl-item crit"><div class="tl-time">04:47 UTC</div><div><div class="tl-tag crit">WAR BEGINS</div><div class="tl-body"><strong>1,400 rockets and missiles</strong> in 6 minutes. Hamas, Hezbollah, Iran strike simultaneously. 71% intercepted. Knesset struck during active session. <strong>4 cabinet ministers killed.</strong></div></div></div>
+        <div class="tl-item crit"><div class="tl-time">04:55 UTC</div><div><div class="tl-tag crit">SAMSON SHIELD</div><div class="tl-body">Israel authorises <strong>Operation Samson Shield</strong> — full-spectrum retaliation. Nuclear forces at maximum readiness. Nuclear escalation probability: <strong>highest since Cold War.</strong></div></div></div>
+        <div class="tl-item crit"><div class="tl-time">07:44 UTC</div><div><div class="tl-tag crit">PRESIDENT DOWN</div><div class="tl-body">Houthi missile strikes USS Gerald R. Ford. <strong>Trump: TBI, stable.</strong> 25th Amendment invoked. <strong>Vance Acting President.</strong> DEFCON 2 authorised.</div></div></div>
+        <div class="tl-item crit"><div class="tl-time">08:27 UTC — NOW</div><div><div class="tl-tag crit">HOSTAGE CRISIS</div><div class="tl-body">Simultaneous abductions: Rome, Ankara, Washington. Hamas demands <strong>Nasrallah Jr.</strong> released within 1 hour. This committee established under presidential authorisation.</div></div></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:13px;">
+      <div class="stat-card">
+        <div class="defcon-big">
+          <div class="defcon-num" id="defcon-num">2</div>
+          <div class="defcon-lbl" id="defcon-lbl">US DEFCON LEVEL</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <h3>Global Threat Assessment</h3>
+        <div class="bar-row"><div class="bar-lbl"><span id="bar-lbl-0">Nuclear Escalation</span><span id="bar-pct-0">94%</span></div><div class="bar-bg"><div class="bar-fill bar-crit" id="bar-fill-0" style="width:0%"></div></div></div>
+        <div class="bar-row"><div class="bar-lbl"><span id="bar-lbl-1">Regional Spread</span><span id="bar-pct-1">87%</span></div><div class="bar-bg"><div class="bar-fill bar-crit" id="bar-fill-1" style="width:0%"></div></div></div>
+        <div class="bar-row"><div class="bar-lbl"><span id="bar-lbl-2">Pak-India Flashpoint</span><span id="bar-pct-2">75%</span></div><div class="bar-bg"><div class="bar-fill bar-warn" id="bar-fill-2" style="width:0%"></div></div></div>
+        <div class="bar-row"><div class="bar-lbl"><span id="bar-lbl-3">NATO Involvement</span><span id="bar-pct-3">61%</span></div><div class="bar-bg"><div class="bar-fill bar-warn" id="bar-fill-3" style="width:0%"></div></div></div>
+      </div>
+      <div class="stat-card">
+        <h3>Active Fronts</h3>
+        <div id="fronts-list">
+          <div class="front-row"><span class="loc">Israel – Gaza</span><span class="status-active" id="front-0-status">● ACTIVE</span></div>
+          <div class="front-row"><span class="loc">Israel – Lebanon</span><span class="status-active" id="front-1-status">● ACTIVE</span></div>
+          <div class="front-row"><span class="loc">Iran – Israel</span><span class="status-active" id="front-2-status">● ACTIVE</span></div>
+          <div class="front-row"><span class="loc">Gulf / US Bases</span><span class="status-active" id="front-3-status">● ACTIVE</span></div>
+          <div class="front-row"><span class="loc">Pakistan – India</span><span class="status-standby" id="front-4-status">● STANDBY</span></div>
+          <div class="front-row"><span class="loc">Taiwan Strait</span><span class="status-blockade" id="front-5-status">● BLOCKADE</span></div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <h3>Key Off-Ramps</h3>
+        <div id="offramps-list" style="font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:2.1;color:#888;">
+          <div>→ Release of Hassan Nasrallah Jr.</div>
+          <div>→ Release of IRGC Gen. Shirazi</div>
+          <div>→ Ceasefire framework revival</div>
+          <div>→ US-Iran direct channel</div>
+          <div>→ Qatar / Oman mediation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DELEGATES -->
+<div id="tab-delegates" class="section">
+  <div class="sec-label">Committee Composition — 24 Delegations · ⭐ P5 Observer Status</div>
+  <div class="del-grid">
+    <div id="d-usa" class="del-card p5star"><span class="p5-star">⭐</span><div class="del-flag">🇺🇸</div><div class="del-country">USA</div><div class="del-name">Inara</div><div class="del-role">Acting President's Rep.</div><div class="del-stance stance-a"></div></div>
+    <div id="d-isr" class="del-card"><div class="del-flag">🇮🇱</div><div class="del-country">Israel</div><div class="del-name">Gian</div><div class="del-role">Primary Conflict Party</div><div class="del-stance stance-h"></div></div>
+    <div id="d-irn" class="del-card"><div class="del-flag">🇮🇷</div><div class="del-country">Iran</div><div class="del-name">Arhaan</div><div class="del-role">Missiles at Launch Posture</div><div class="del-stance stance-h"></div></div>
+    <div id="d-ham" class="del-card"><div class="del-flag">🇵🇸</div><div class="del-country">Hamas</div><div class="del-name">Anika</div><div class="del-role">Hostage Authority</div><div class="del-stance stance-h"></div></div>
+    <div id="d-rus" class="del-card p5star"><span class="p5-star">⭐</span><div class="del-flag">🇷🇺</div><div class="del-country">Russia</div><div class="del-name">Shaayan</div><div class="del-role">P5 · Strategic Observer</div><div class="del-stance stance-n"></div></div>
+    <div id="d-qat" class="del-card"><div class="del-flag">🇶🇦</div><div class="del-country">Qatar</div><div class="del-name">Vibhi</div><div class="del-role">Failed Mediator · Back-Channel</div><div class="del-stance stance-m"></div></div>
+    <div id="d-fra" class="del-card p5star"><span class="p5-star">⭐</span><div class="del-flag">🇫🇷</div><div class="del-country">France</div><div class="del-name">Diya</div><div class="del-role">P5 · NATO Member</div><div class="del-stance stance-a"></div></div>
+    <div id="d-syr" class="del-card"><div class="del-flag">🇸🇾</div><div class="del-country">Syria</div><div class="del-name">Eshaan</div><div class="del-role">Regional Actor</div><div class="del-stance stance-n"></div></div>
+    <div id="d-irq" class="del-card"><div class="del-flag">🇮🇶</div><div class="del-country">Iraq</div><div class="del-name">Tanay</div><div class="del-role">US Bases Host</div><div class="del-stance stance-m"></div></div>
+    <div id="d-leb" class="del-card"><div class="del-flag">🇱🇧</div><div class="del-country">Lebanon</div><div class="del-name">Prabhav</div><div class="del-role">Sovereignty Violated</div><div class="del-stance stance-h"></div></div>
+    <div id="d-hzb" class="del-card"><div class="del-flag">🇱🇧</div><div class="del-country">Hezbollah</div><div class="del-name">Avril</div><div class="del-role">80K Fighters Deployed</div><div class="del-stance stance-h"></div></div>
+    <div id="d-ksa" class="del-card"><div class="del-flag">🇸🇦</div><div class="del-country">Saudi Arabia</div><div class="del-name">Ava</div><div class="del-role">Gulf Stability Interest</div><div class="del-stance stance-m"></div></div>
+    <div id="d-kwt" class="del-card"><div class="del-flag">🇰🇼</div><div class="del-country">Kuwait</div><div class="del-name">Aradhya</div><div class="del-role">Gulf State</div><div class="del-stance stance-n"></div></div>
+    <div id="d-jor" class="del-card"><div class="del-flag">🇯🇴</div><div class="del-country">Jordan</div><div class="del-name">Ali</div><div class="del-role">Border State · Moderate Bloc</div><div class="del-stance stance-m"></div></div>
+    <div id="d-tur" class="del-card"><div class="del-flag">🇹🇷</div><div class="del-country">Turkey</div><div class="del-name">Ayaan</div><div class="del-role">Hostage Incident · NATO</div><div class="del-stance stance-h"></div></div>
+    <div id="d-ind" class="del-card"><div class="del-flag">🇮🇳</div><div class="del-country">India</div><div class="del-name">Amaira</div><div class="del-role">Nuclear Readiness</div><div class="del-stance stance-m"></div></div>
+    <div id="d-chn" class="del-card p5star"><span class="p5-star">⭐</span><div class="del-flag">🇨🇳</div><div class="del-country">China</div><div class="del-name">Rayaan</div><div class="del-role">P5 · Taiwan Blockade</div><div class="del-stance stance-h"></div></div>
+    <div id="d-uae" class="del-card"><div class="del-flag">🇦🇪</div><div class="del-country">UAE</div><div class="del-name">Izabel</div><div class="del-role">Gulf Regional Power</div><div class="del-stance stance-m"></div></div>
+    <div id="d-yem" class="del-card"><div class="del-flag">🇾🇪</div><div class="del-country">Yemen</div><div class="del-name">Shiesta</div><div class="del-role">Houthi Strike Authority</div><div class="del-stance stance-h"></div></div>
+    <div id="d-ger" class="del-card"><div class="del-flag">🇩🇪</div><div class="del-country">Germany</div><div class="del-name">Nivritti</div><div class="del-role">NATO · Lead Diplomatic Push</div><div class="del-stance stance-a"></div></div>
+    <div id="d-omn" class="del-card"><div class="del-flag">🇴🇲</div><div class="del-country">Oman</div><div class="del-name">Safwaan</div><div class="del-role">Neutral Broker History</div><div class="del-stance stance-n"></div></div>
+    <div id="d-sud" class="del-card"><div class="del-flag">🇸🇩</div><div class="del-country">Sudan</div><div class="del-name">Kai</div><div class="del-role">African Union Observer</div><div class="del-stance stance-n"></div></div>
+    <div id="d-ita" class="del-card"><div class="del-flag">🇮🇹</div><div class="del-country">Italy</div><div class="del-name">Nihal</div><div class="del-role">Hostage Incident · NATO</div><div class="del-stance stance-h"></div></div>
+    <div id="d-grc" class="del-card"><div class="del-flag">🇬🇷</div><div class="del-country">Greece</div><div class="del-name">Haniyah</div><div class="del-role">Eastern Mediterranean</div><div class="del-stance stance-n"></div></div>
+  </div>
+  <div style="display:flex;gap:18px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);">
+    <span><span style="display:inline-block;width:18px;height:2px;background:var(--red);vertical-align:middle;margin-right:5px;"></span>Hostile</span>
+    <span><span style="display:inline-block;width:18px;height:2px;background:var(--amber);vertical-align:middle;margin-right:5px;"></span>Moderate</span>
+    <span><span style="display:inline-block;width:18px;height:2px;background:#444;vertical-align:middle;margin-right:5px;"></span>Neutral</span>
+    <span><span style="display:inline-block;width:18px;height:2px;background:var(--green-bright);vertical-align:middle;margin-right:5px;"></span>De-escalation</span>
+  </div>
+
+  <!-- ROLL CALL — admin only -->
+  <div id="rollcall-section" style="display:none;margin-top:28px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+      <div class="sec-label" style="margin-bottom:0;">Roll Call — Attendance &amp; Voting Status</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-success btn-sm" onclick="setAllStatus('present')">Mark All Present</button>
+        <button class="btn btn-sm" onclick="setAllStatus('pnv')" style="border-color:var(--amber);color:var(--amber);">Mark All PNV</button>
+        <button class="btn btn-sm" onclick="setAllStatus('absent')" style="border-color:var(--red);color:var(--red);">Mark All Absent</button>
+        <button class="btn btn-sm" onclick="resetRollCall()">↺ Reset All</button>
+      </div>
+    </div>
+
+    <!-- Per-delegate rows -->
+    <div id="rc-rows" style="background:var(--surface);border:1px solid var(--border);margin-bottom:20px;"></div>
+
+    <!-- Summary columns -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--green-bright);margin-bottom:8px;padding:6px 10px;background:#071a0e;border:1px solid var(--green-bright);">● PRESENT — <span id="rc-present-count">0</span></div>
+        <div id="rc-present-list" class="rc-col"></div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--amber);margin-bottom:8px;padding:6px 10px;background:#1a1000;border:1px solid var(--amber);">◐ PRESENT &amp; NOT VOTING — <span id="rc-pnv-count">0</span></div>
+        <div id="rc-pnv-list" class="rc-col"></div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--red);margin-bottom:8px;padding:6px 10px;background:#1f0505;border:1px solid var(--red);">✕ ABSENT — <span id="rc-absent-count">0</span></div>
+        <div id="rc-absent-list" class="rc-col"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AGENDA -->
+<div id="tab-agenda" class="section">
+  <div class="agenda-block"><div class="ag-num">AGENDA ITEM 01</div><div class="ag-title">Illegal Maritime Blockades</div><div class="ag-body">Iranian-linked maritime interdictions in the Gulf and Strait of Hormuz, Houthi hypersonic missile threats to shipping, Israeli naval strikes against Gulf assets. The USS Gerald R. Ford incident has altered rules of engagement.<ul><li>UNCLOS freedom of navigation provisions</li><li>Houthi hypersonic capabilities: legality of preemptive naval action</li><li>Oil transit routes: 20% of global petroleum at risk</li><li>US carrier group — belligerent or defensive posture?</li><li>Proposed monitoring mechanism for Strait of Hormuz</li></ul></div></div>
+  <div class="agenda-block"><div class="ag-num">AGENDA ITEM 02</div><div class="ag-title">State-Sponsored Aggression</div><div class="ag-body">Legal and political status of each act; accountability mechanisms that do not trigger further escalation.<ul><li>Mossad extraction in Beirut: Lebanese sovereignty, civilian deaths</li><li>Leaked Trump-Netanyahu call: US co-belligerency</li><li>Drone strike on Khan Younis field hospital: IHL violation</li><li>IRGC missile campaign targeting civilian infrastructure</li><li>Hamas hostage operations across three NATO-adjacent states</li><li>China's Taiwan blockade: declared "unrelated" — strategic opportunism?</li></ul></div></div>
+  <div class="agenda-block"><div class="ag-num">AGENDA ITEM 03</div><div class="ag-title">Systematic Sabotage of Regional Sovereignty</div><div class="ag-body">The ceasefire collapse demonstrates the absence of enforceable agreements. The committee must design frameworks with real verification and enforcement capacity.<ul><li>Why did the ceasefire collapse and who bears responsibility?</li><li>Sovereignty guarantees for Lebanon, Palestine, Iran</li><li>Enforceable prisoner transfer mechanisms with third-party verification</li><li>Pakistan-India nuclear standoff: hotline unanswered</li><li>Role of UN, IAEA, Red Cross</li></ul></div></div>
+  <div class="agenda-block secondary"><div class="ag-num">CRISIS MANDATE</div><div class="ag-title">Immediate Committee Priorities</div><div class="ag-body"><ul><li><strong>Hostage Resolution</strong> — Hamas deadline active. Vance has personal stake.</li><li><strong>Nuclear De-escalation</strong> — Iran, USA, Pakistan, India at elevated posture.</li><li><strong>IRGC General Shirazi</strong> — Potential off-ramp if Israel can be persuaded.</li><li><strong>Ceasefire Architecture</strong> — The next agreement needs enforcement teeth.</li></ul></div></div>
+  <div class="sec-label" style="margin-top:22px;">Agenda Matrix — Country Positions</div>
+  <div class="matrix-wrap"><table class="matrix"><thead><tr><th>Delegation</th><th>Item 01: Maritime</th><th>Item 02: Aggression</th><th>Item 03: Sovereignty</th><th>Hostage Stance</th><th>Nuclear Red Line</th></tr></thead><tbody>
+    <tr><td><strong>USA</strong></td><td>Freedom of navigation priority</td><td>Condemns Iran / Hamas</td><td>Ceasefire framework</td><td><span class="badge badge-red">Direct stake</span></td><td>DEFCON 2 — firm</td></tr>
+    <tr><td><strong>Israel</strong></td><td>Naval superiority assertion</td><td>Self-defence doctrine</td><td>No sovereignty concession</td><td><span class="badge badge-red">Will not release</span></td><td>Samson option implied</td></tr>
+    <tr><td><strong>Iran</strong></td><td>Challenges US naval presence</td><td>Denies aggression</td><td>Ceasefire violated first by Israel</td><td><span class="badge badge-amber">Leverage tool</span></td><td>Launch posture active</td></tr>
+    <tr><td><strong>Hamas</strong></td><td>Blockade of Gaza as root cause</td><td>Resistance legitimacy</td><td>Palestinian statehood</td><td><span class="badge badge-red">Holding — deadline</span></td><td>Non-state actor</td></tr>
+    <tr><td><strong>Russia</strong></td><td>Anti-US naval posture</td><td>Abstains on attribution</td><td>Multipolar sovereignty</td><td><span class="badge badge-amber">Observing</span></td><td>Strategic ambiguity</td></tr>
+    <tr><td><strong>China</strong></td><td>Taiwan blockade — separate</td><td>Non-interference stated</td><td>Sovereignty inviolable (selective)</td><td><span class="badge badge-amber">Silence</span></td><td>Strategic ambiguity</td></tr>
+    <tr><td><strong>Turkey</strong></td><td>Strait access concerns</td><td>Condemns field hospital strike</td><td>Palestinian sovereignty</td><td><span class="badge badge-red">Hostage — furious</span></td><td>NATO Article 5 trigger?</td></tr>
+    <tr><td><strong>Italy</strong></td><td>NATO naval mandate</td><td>Condemns Hamas operations</td><td>Supports ICC process</td><td><span class="badge badge-red">Hostage — demands action</span></td><td>NATO solidarity</td></tr>
+    <tr><td><strong>Saudi Arabia</strong></td><td>Protect Hormuz transit</td><td>Condemns all parties</td><td>Arab League sovereignty</td><td><span class="badge badge-amber">Back-channel willing</span></td><td>Concerned — no arsenal</td></tr>
+    <tr><td><strong>Qatar</strong></td><td>Mediation role</td><td>Calls for investigation</td><td>Negotiated settlement</td><td><span class="badge badge-green">Will mediate</span></td><td>Alarm — facilitates talks</td></tr>
+    <tr><td><strong>Germany</strong></td><td>UN naval mandate</td><td>IHL violations — ICC referral</td><td>International law framework</td><td><span class="badge badge-green">Supports negotiation</span></td><td>DEFCON 2 — alarmed</td></tr>
+    <tr><td><strong>France</strong></td><td>P5 — naval deterrence</td><td>Condemns hospital strike</td><td>UN Security Council role</td><td><span class="badge badge-green">Pushes for release</span></td><td>P5 — nuclear doctrine</td></tr>
+    <tr><td><strong>Oman</strong></td><td>Strait — neutral passage</td><td>All parties restrain</td><td>Traditional mediator</td><td><span class="badge badge-green">Back-channel open</span></td><td>Deeply alarmed</td></tr>
+  </tbody></table></div>
+</div>
+
+<!-- CRISIS UPDATES -->
+<div id="tab-crisis" class="section">
+  <div class="sec-label">Live Crisis Feed</div>
+  <div class="update-feed" id="crisis-feed"></div>
+</div>
+
+<!-- PRESS RELEASES -->
+<div id="tab-press" class="section">
+  <div class="sec-label">Official Press Releases — Delegations &amp; Committee</div>
+  <div class="pr-feed" id="press-feed">
+    <div class="pr-card" id="pr-card-1">
+      <div class="pr-header">
+        <div><div class="pr-from">HAMAS POLITICAL BUREAU — KHALED MASHAL</div><div class="pr-title-text">Demand for Immediate Release of Hassan Nasrallah Jr.</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;"><span class="pr-time-txt">08:31 UTC</span><div id="pr-admin-btns-1" style="display:none;gap:5px;flex-wrap:wrap;"></div></div>
+      </div>
+      <div class="pr-body-txt" id="pr-body-1">The Hamas Political Bureau transmits the following to all affected governments:
+
+The hostages held in our custody will remain so until the State of Israel publicly releases Hassan Nasrallah Jr., currently held without charge in a classified detention facility in the Negev desert.
+
+Our demands:
+1. Immediate transfer of the detainee
+2. Public verification of release
+3. Full compliance within one hour of this transmission
+
+Failure to comply will result in escalation.
+
+— Khaled Mashal, Hamas Political Bureau Chief</div>
+      <div class="pr-edit-form" id="pr-edit-1">
+        <div><label>Issuing Party</label><input type="text" id="pr-ef-1" value="HAMAS POLITICAL BUREAU — KHALED MASHAL"></div>
+        <div><label>Title</label><input type="text" id="pr-et-1" value="Demand for Immediate Release of Hassan Nasrallah Jr."></div>
+        <div><label>Time</label><input type="text" id="pr-etime-1" value="08:31 UTC"></div>
+        <div><label>Body</label><textarea id="pr-eb-1" style="min-height:130px;">The Hamas Political Bureau transmits the following to all affected governments:
+
+The hostages held in our custody will remain so until the State of Israel publicly releases Hassan Nasrallah Jr., currently held without charge in a classified detention facility in the Negev desert.
+
+Our demands:
+1. Immediate transfer of the detainee
+2. Public verification of release
+3. Full compliance within one hour of this transmission
+
+Failure to comply will result in escalation.
+
+— Khaled Mashal, Hamas Political Bureau Chief</textarea></div>
+        <div class="edit-actions"><button class="btn btn-success btn-sm" onclick="savePR(1)">Save</button><button class="btn btn-sm" onclick="togglePREdit(1)">Cancel</button></div>
+      </div>
+    </div>
+    <div class="pr-card" id="pr-card-2">
+      <div class="pr-header">
+        <div><div class="pr-from">ACTING PRESIDENT — UNITED STATES</div><div class="pr-title-text">Committee Established Under Presidential Authorisation</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;"><span class="pr-time-txt">08:06 UTC</span><div id="pr-admin-btns-2" style="display:none;gap:5px;flex-wrap:wrap;"></div></div>
+      </div>
+      <div class="pr-body-txt" id="pr-body-2">The Acting President of the United States has established this emergency committee under direct presidential authorisation.
+
+The committee is instructed to provide immediate de-escalation proposals capable of preventing further interstate and nuclear escalation.
+
+All delegations are expected to engage in good faith. Time is not a luxury we possess.
+
+— Office of the Acting President, J.D. Vance</div>
+      <div class="pr-edit-form" id="pr-edit-2">
+        <div><label>Issuing Party</label><input type="text" id="pr-ef-2" value="ACTING PRESIDENT — UNITED STATES"></div>
+        <div><label>Title</label><input type="text" id="pr-et-2" value="Committee Established Under Presidential Authorisation"></div>
+        <div><label>Time</label><input type="text" id="pr-etime-2" value="08:06 UTC"></div>
+        <div><label>Body</label><textarea id="pr-eb-2" style="min-height:110px;">The Acting President of the United States has established this emergency committee under direct presidential authorisation.
+
+The committee is instructed to provide immediate de-escalation proposals capable of preventing further interstate and nuclear escalation.
+
+All delegations are expected to engage in good faith. Time is not a luxury we possess.
+
+— Office of the Acting President, J.D. Vance</textarea></div>
+        <div class="edit-actions"><button class="btn btn-success btn-sm" onclick="savePR(2)">Save</button><button class="btn btn-sm" onclick="togglePREdit(2)">Cancel</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VOTING -->
+<div id="tab-voting" class="section">
+  <div class="sec-label">Live Vote Tally Board</div>
+  <div class="vote-board" id="vote-board">
+    <div style="background:var(--surface);border:1px solid var(--border);padding:24px;text-align:center;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);margin-bottom:8px;">NO ACTIVE VOTES</div>
+      <div style="font-size:13px;color:#555;">The chair will open votes from the Admin panel.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SPEAKERS -->
+<div id="tab-speakers" class="section">
+  <div class="sec-label">Speakers List &amp; Speech Timer</div>
+  <div class="speakers-wrap">
+    <div>
+      <div class="speaker-current">
+        <h3>NOW SPEAKING</h3>
+        <div id="speaker-name" style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:3px;color:#444;line-height:1;">— FLOOR OPEN —</div>
+        <div id="speaker-country" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#444;margin-top:4px;"></div>
+        <div id="speech-timer" class="speech-timer ok" style="color:#333;">—</div>
+        <div id="speech-controls-locked" style="margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:#444;padding:8px 12px;border:1px solid #222;display:inline-block;">⚿ CHAIR CONTROLS — ADMIN ONLY</div>
+        <div id="speech-controls-unlocked" style="display:none;flex-wrap:wrap;gap:7px;margin-top:12px;">
+          <button class="btn btn-success btn-sm" onclick="startSpeech()">▶ Start</button>
+          <button class="btn btn-sm" onclick="pauseSpeech()">⏸ Pause</button>
+          <button class="btn btn-primary btn-sm" onclick="nextSpeaker()">⏭ Next Speaker</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="panel-hd" style="background:var(--surface2);border:1px solid var(--border);">Speaker Queue</div>
+      <div id="speaker-queue" class="speaker-queue"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="tab-admin" class="section">
+  <div id="admin-lock" style="max-width:400px;margin:60px auto;background:var(--surface);border:1px solid var(--border2);padding:32px;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;color:var(--amber);margin-bottom:5px;">Admin Access</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:22px;">RESTRICTED — CHAIR ONLY</div>
+    <label>Password</label>
+    <input type="password" id="admin-pw" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkAdminPw()" style="margin-bottom:13px;">
+    <button class="btn btn-primary" onclick="checkAdminPw()" style="width:100%;">Unlock →</button>
+    <div id="pw-error" style="display:none;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--red);margin-top:9px;">✕ Incorrect password.</div>
+  </div>
+  <div id="admin-content" style="display:none;">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;">
+      <div class="admin-wrap" style="margin-bottom:0;">
+        <h2>Session Status</h2>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;">
+          <button class="btn btn-success btn-sm" onclick="setSession('open')">● Open</button>
+          <button class="btn btn-sm" onclick="setSession('recess')" style="border-color:var(--amber);color:var(--amber);">◐ Recess</button>
+          <button class="btn btn-sm" onclick="setSession('closed')">◯ Closed</button>
+        </div>
+      </div>
+      <div class="admin-wrap" style="margin-bottom:0;">
+        <h2>Session Timer</h2>
+        <div style="display:flex;gap:7px;align-items:flex-end;flex-wrap:wrap;">
+          <div style="flex:1;min-width:70px;"><label>Minutes</label><input type="number" id="timer-mins" value="60" min="1" max="999"></div>
+          <button class="btn btn-primary btn-sm" onclick="startTimer()">▶</button>
+          <button class="btn btn-sm" onclick="stopTimer()">◼</button>
+          <button class="btn btn-sm" onclick="resetTimer()">↺</button>
+        </div>
+        <div id="timer-admin-display" style="font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:4px;color:var(--red);margin-top:7px;line-height:1;">00:00</div>
+        <div id="timer-status-label" style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-top:3px;">NOT RUNNING</div>
+      </div>
+    </div>
+
+    <div class="admin-wrap">
+      <h2>Breaking News Ticker</h2>
+      <div class="form-row single"><div><label>Ticker text (use &amp;nbsp;///&amp;nbsp; as separator)</label><input type="text" id="ticker-edit" value="DEFCON 2 ACTIVATED — ALL US NUCLEAR ASSETS ON STANDBY &nbsp;///&nbsp; IRAN STRATEGIC MISSILES AT FULL LAUNCH POSTURE &nbsp;///&nbsp; CHINA BLOCKADES TAIWAN &nbsp;///&nbsp; PAKISTAN &amp; INDIA MATCH NUCLEAR READINESS &nbsp;///&nbsp; 25TH AMENDMENT INVOKED — VANCE ACTING PRESIDENT &nbsp;///&nbsp; HOSTAGE OPERATIONS: ROME · ANKARA · WASHINGTON &nbsp;///&nbsp;"></div></div>
+      <button class="btn btn-primary" onclick="updateTicker()">Update Ticker →</button>
+      <div class="flash" id="ticker-flash">✓ Ticker updated.</div>
+    </div>
+
+    <div class="admin-wrap">
+      <h2>Situation Board</h2>
+
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:12px;">DEFCON</div>
+      <div class="form-row">
+        <div>
+          <label>DEFCON Number (1–5)</label>
+          <input type="number" id="admin-defcon" value="2" min="1" max="5">
+        </div>
+        <div>
+          <label>Label</label>
+          <input type="text" id="admin-defcon-lbl" value="US DEFCON LEVEL">
+        </div>
+      </div>
+
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin:14px 0 10px;">THREAT BARS</div>
+      <div id="admin-bars-list"></div>
+
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin:14px 0 10px;">ACTIVE FRONTS</div>
+      <div id="admin-fronts-list"></div>
+
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin:14px 0 10px;">KEY OFF-RAMPS</div>
+      <div id="admin-offramps-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px;"></div>
+      <button class="btn btn-sm" onclick="addOffRamp()" style="margin-top:4px;">+ Add Off-Ramp</button>
+
+      <div style="margin-top:16px;display:flex;gap:8px;">
+        <button class="btn btn-primary" onclick="saveSitState()">Apply Changes →</button>
+        <div class="flash" id="sit-flash" style="display:inline-block;line-height:2.2;">✓ Situation board updated.</div>
+      </div>
+    </div>
+
+    <div class="admin-wrap">
+      <h2>Post Crisis Update</h2>
+      <div class="form-row">
+        <div><label>Timestamp</label><input type="text" id="cu-time" placeholder="e.g. 09:15 UTC"></div>
+        <div><label>Severity</label>
+          <select id="cu-sev">
+            <option value="critical">Critical</option>
+            <option value="warning">Warning</option>
+            <option value="info">Info / Diplomatic</option>
+            <option value="resolved">Resolved</option>
+            <option value="eyes">Eyes Only (Admin)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row single"><div><label>Headline</label><input type="text" id="cu-title" placeholder="Short headline"></div></div>
+      <div class="form-row single"><div><label>Full Update Text</label><textarea id="cu-body" style="min-height:95px;"></textarea></div></div>
+      <div class="form-row">
+        <div><label>Source (optional)</label><input type="text" id="cu-source" placeholder="e.g. IDF Spokesperson"></div>
+        <div style="display:flex;align-items:flex-end;gap:7px;">
+          <button class="btn btn-primary" onclick="postCrisisUpdate(false)" style="flex:1;">Post →</button>
+          <button class="btn" onclick="postCrisisUpdate(true)" style="flex:1;border-color:var(--red);color:var(--red);" title="Show full-screen flash alert">⚡ Flash</button>
+        </div>
+      </div>
+      <div class="flash" id="cu-flash">✓ Crisis update posted.</div>
+    </div>
+
+    <div class="admin-wrap">
+      <h2>Publish Press Release</h2>
+      <div class="form-row">
+        <div><label>Issuing Party</label><input type="text" id="pr-from" placeholder="e.g. DELEGATION OF IRAN"></div>
+        <div><label>Timestamp</label><input type="text" id="pr-time" placeholder="e.g. 09:22 UTC"></div>
+      </div>
+      <div class="form-row single"><div><label>Title</label><input type="text" id="pr-title-input" placeholder="Press release headline"></div></div>
+      <div class="form-row single"><div><label>Body Text</label><textarea id="pr-body-input" style="min-height:130px;" placeholder="Full text. Line breaks preserved."></textarea></div></div>
+      <button class="btn btn-success" onclick="postPressRelease()">Publish Press Release →</button>
+      <div class="flash" id="pr-flash">✓ Press release published.</div>
+    </div>
+
+    <div class="admin-wrap">
+      <h2>Open New Vote</h2>
+      <div class="form-row single"><div><label>Motion / Resolution Title</label><input type="text" id="vote-title-input" placeholder="e.g. Draft Resolution 1.1 — Ceasefire Framework"></div></div>
+      <button class="btn btn-primary" onclick="openVote()">Open Vote →</button>
+      <div class="flash" id="vote-flash">✓ Vote opened.</div>
+      <div style="margin-top:14px;" id="vote-admin-list"></div>
+    </div>
+
+    <div class="admin-wrap">
+      <h2>Speakers List</h2>
+      <div class="form-row">
+        <div><label>Delegate Name</label><input type="text" id="spk-name" placeholder="e.g. Inara"></div>
+        <div><label>Country</label><input type="text" id="spk-country" placeholder="e.g. USA"></div>
+      </div>
+      <div class="form-row">
+        <div><label>Duration (seconds)</label><input type="number" id="spk-duration" value="90" min="10" max="600"></div>
+        <div style="display:flex;align-items:flex-end;"><button class="btn btn-primary" onclick="addSpeaker()" style="width:100%;">Add to Queue →</button></div>
+      </div>
+      <div class="flash" id="spk-flash">✓ Speaker added.</div>
+    </div>
+
+    <div class="admin-wrap">
+      <h2>Back-Channel Directives</h2>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:12px;">PRIVATE MESSAGES — CHAIR EYES ONLY</div>
+      <div class="bc-feed" id="bc-feed">
+        <div style="padding:14px;text-align:center;color:#444;font-family:'IBM Plex Mono',monospace;font-size:11px;">No directives received yet.</div>
+      </div>
+      <div style="margin-top:13px;border-top:1px solid var(--border);padding-top:13px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:9px;">LOG INCOMING DIRECTIVE</div>
+        <div class="form-row">
+          <div><label>From (Country)</label><input type="text" id="bc-from" placeholder="e.g. Iran"></div>
+          <div><label>Message</label><input type="text" id="bc-msg" placeholder="Directive text..."></div>
+        </div>
+        <button class="btn btn-sm" onclick="addDirective()">Log Directive →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</main>
+
+<script>
+let adminUnlocked=false;
+
+/* ── DELEGATE ROLL CALL DATA ── */
+const allDelegates=[
+  {id:'d-usa',flag:'🇺🇸',country:'USA',name:'Inara'},
+  {id:'d-isr',flag:'🇮🇱',country:'Israel',name:'Gian'},
+  {id:'d-irn',flag:'🇮🇷',country:'Iran',name:'Arhaan'},
+  {id:'d-ham',flag:'🇵🇸',country:'Hamas',name:'Anika'},
+  {id:'d-rus',flag:'🇷🇺',country:'Russia',name:'Shaayan'},
+  {id:'d-qat',flag:'🇶🇦',country:'Qatar',name:'Vibhi'},
+  {id:'d-fra',flag:'🇫🇷',country:'France',name:'Diya'},
+  {id:'d-syr',flag:'🇸🇾',country:'Syria',name:'Eshaan'},
+  {id:'d-irq',flag:'🇮🇶',country:'Iraq',name:'Tanay'},
+  {id:'d-leb',flag:'🇱🇧',country:'Lebanon',name:'Prabhav'},
+  {id:'d-hzb',flag:'🇱🇧',country:'Hezbollah',name:'Avril'},
+  {id:'d-ksa',flag:'🇸🇦',country:'Saudi Arabia',name:'Ava'},
+  {id:'d-kwt',flag:'🇰🇼',country:'Kuwait',name:'Aradhya'},
+  {id:'d-jor',flag:'🇯🇴',country:'Jordan',name:'Ali'},
+  {id:'d-tur',flag:'🇹🇷',country:'Turkey',name:'Ayaan'},
+  {id:'d-ind',flag:'🇮🇳',country:'India',name:'Amaira'},
+  {id:'d-chn',flag:'🇨🇳',country:'China',name:'Rayaan'},
+  {id:'d-uae',flag:'🇦🇪',country:'UAE',name:'Izabel'},
+  {id:'d-yem',flag:'🇾🇪',country:'Yemen',name:'Shiesta'},
+  {id:'d-ger',flag:'🇩🇪',country:'Germany',name:'Nivritti'},
+  {id:'d-omn',flag:'🇴🇲',country:'Oman',name:'Safwaan'},
+  {id:'d-sud',flag:'🇸🇩',country:'Sudan',name:'Kai'},
+  {id:'d-ita',flag:'🇮🇹',country:'Italy',name:'Nihal'},
+  {id:'d-grc',flag:'🇬🇷',country:'Greece',name:'Haniyah'},
+];
+// status: null | 'present' | 'pnv' | 'absent'
+let rollCall = Object.fromEntries(allDelegates.map(d=>[d.id, null]));
+const rcCycle = [null,'present','pnv','absent'];
+const sevMap={
+  critical:{cls:'crit',label:'CRITICAL',badge:'sev-critical'},
+  warning:{cls:'warn',label:'WARNING',badge:'sev-warning'},
+  info:{cls:'info',label:'INFO',badge:'sev-info'},
+  resolved:{cls:'resolved',label:'RESOLVED',badge:'sev-resolved'},
+  eyes:{cls:'eyes-only',label:'EYES ONLY',badge:'sev-eyes'}
+};
+let crisisUpdates=[
+  {id:1,time:'04:47 UTC',sev:'critical',title:'Operation Samson Shield Authorised — Full Spectrum Retaliation',body:'Israeli Security Cabinet authorises Operation Samson Shield. Targets: IRGC missile installations, Hezbollah command networks, Hamas operational facilities, Gulf naval assets. Mass long-range airstrikes, cyberattacks on Iranian power grid, naval strikes. Tehran, Isfahan, Shiraz suffer major power failures. Hezbollah command bunkers struck repeatedly across southern Lebanon.',source:'Israeli Security Cabinet · IDF Spokesperson'},
+  {id:2,time:'05:58 UTC',sev:'warning',title:'China Blockades Taiwan — Declares "Entirely Unrelated" to MENA',body:'China imposes maritime and air blockade of Taiwan. Official statement from Beijing describes the action as "entirely unrelated" to the Middle East situation. US Pacific Command assets placed on alert. NATO emergency consultations begin.',source:'PLA Eastern Theatre Command · US Pacific Command'},
+  {id:3,time:'07:33 UTC',sev:'warning',title:'Pakistan Declares Nuclear Readiness — India Matches in 4 Minutes',body:'Pakistan announces nuclear readiness "in solidarity with the Islamic world." India matches within four minutes. 3,300 kilometres of shared border. Two nuclear arsenals now at elevated posture. The Islamabad-New Delhi hotline rings unanswered.',source:'Regional Intelligence Assessments · IAEA Emergency Monitoring'},
+  {id:4,time:'07:44 UTC',sev:'critical',title:'USS Gerald R. Ford Struck — President Trump Injured',body:'Houthi hypersonic missile impacts flight deck of USS Gerald R. Ford during ongoing regional combat operations. President Trump sustains traumatic brain injuries of undetermined severity. White House Physician confirms stable condition.',source:'US Department of Defence · White House Physician'},
+  {id:5,time:'08:06 UTC',sev:'critical',title:'25th Amendment Invoked — Vance Acting President',body:'Due to uncertainty regarding presidential command continuity, emergency constitutional procedures initiated. VP JD Vance assumes Acting Presidency. First action: direct call with Israeli PM (4 min, no readout). Second action: DEFCON 2 authorised.',source:'White House Emergency Communications'},
+  {id:6,time:'08:27 UTC',sev:'critical',title:'Simultaneous Hostage Operations Confirmed',body:'Hamas Political Bureau confirms coordinated abductions in Rome, Ankara, and Washington. Encrypted channel message demands release of Hassan Nasrallah Jr. within one hour. Failure to comply: "escalation."',source:'Intelligence intercepts · Hamas encrypted channel'},
+];
+let nextCuId=7,votes=[],nextVoteId=1,speakers=[],currentSpeakerIdx=-1,speechInterval=null,speechSecsLeft=90,speechRunning=false,timerInterval=null,timerSeconds=0,timerRunning=false,nextPrId=10;
+let prIds=[1,2];
+
+/* ── DEFCON COUNTDOWN ANIMATION ── */
+function animateDefcon(){
+  const el=document.getElementById('defcon-num');
+  if(!el)return;
+  let n=9;el.textContent=n;
+  const target=sitState.defcon;
+  const iv=setInterval(()=>{
+    n--;el.textContent=n;
+    if(n<=target){clearInterval(iv);el.textContent=target;}
+  },120);
+}
+
+/* ── SITUATION STATE ── */
+const sitState = {
+  defcon: 2,
+  defconLbl: 'US DEFCON LEVEL',
+  bars: [
+    {label:'Nuclear Escalation', pct:94, color:'crit'},
+    {label:'Regional Spread',    pct:87, color:'crit'},
+    {label:'Pak-India Flashpoint',pct:75, color:'warn'},
+    {label:'NATO Involvement',   pct:61, color:'warn'},
+  ],
+  fronts: [
+    {loc:'Israel – Gaza',      status:'active',   text:'● ACTIVE'},
+    {loc:'Israel – Lebanon',   status:'active',   text:'● ACTIVE'},
+    {loc:'Iran – Israel',      status:'active',   text:'● ACTIVE'},
+    {loc:'Gulf / US Bases',    status:'active',   text:'● ACTIVE'},
+    {loc:'Pakistan – India',   status:'standby',  text:'● STANDBY'},
+    {loc:'Taiwan Strait',      status:'blockade', text:'● BLOCKADE'},
+  ],
+  offramps: [
+    'Release of Hassan Nasrallah Jr.',
+    'Release of IRGC Gen. Shirazi',
+    'Ceasefire framework revival',
+    'US-Iran direct channel',
+    'Qatar / Oman mediation',
+  ],
+};
+
+function applySitState(){
+  // DEFCON
+  const dn=document.getElementById('defcon-num');
+  const dl=document.getElementById('defcon-lbl');
+  if(dn)dn.textContent=sitState.defcon;
+  if(dl)dl.textContent=sitState.defconLbl;
+  // Bars — rebuild HTML dynamically
+  const barContainer=document.querySelector('.stat-card #bar-fill-0')?.closest('.stat-card');
+  if(barContainer){
+    // Rebuild inner bar rows
+    const h3=barContainer.querySelector('h3');
+    barContainer.innerHTML='';
+    if(h3)barContainer.appendChild(h3);
+    sitState.bars.forEach((b,i)=>{
+      const row=document.createElement('div');row.className='bar-row';
+      row.innerHTML=`<div class="bar-lbl"><span id="bar-lbl-${i}">${b.label}</span><span id="bar-pct-${i}" style="color:${b.color==='crit'?'var(--red)':'var(--amber)'}">0%</span></div><div class="bar-bg"><div class="bar-fill bar-${b.color}" id="bar-fill-${i}" style="width:0%"></div></div>`;
+      barContainer.appendChild(row);
+    });
+  }
+  // Fronts — rebuild
+  const fl=document.getElementById('fronts-list');
+  if(fl){
+    fl.innerHTML='';
+    sitState.fronts.forEach((f,i)=>{
+      const row=document.createElement('div');row.className='front-row';
+      const cls=f.status==='active'?'status-active':f.status==='standby'?'status-standby':f.status==='blockade'?'status-blockade':'status-active';
+      row.innerHTML=`<span class="loc">${f.loc}</span><span class="${cls}" id="front-${i}-status">${f.text}</span>`;
+      fl.appendChild(row);
+    });
+  }
+  // Off-ramps
+  const ol=document.getElementById('offramps-list');
+  if(ol)ol.innerHTML=sitState.offramps.map(r=>`<div>→ ${r}</div>`).join('');
+}
+
+function renderSitAdmin(){
+  // Bars
+  const bl=document.getElementById('admin-bars-list');
+  if(bl){
+    bl.innerHTML='';
+    sitState.bars.forEach((b,i)=>{
+      const row=document.createElement('div');
+      row.id='admin-bar-row-'+i;
+      row.style.cssText='display:grid;grid-template-columns:1fr 70px 90px 28px;gap:7px;margin-bottom:7px;align-items:center;';
+      row.innerHTML=`
+        <input type="text" id="ab-lbl-${i}" value="${b.label}" placeholder="Label">
+        <input type="number" id="ab-pct-${i}" value="${b.pct}" min="0" max="100" placeholder="%">
+        <select id="ab-col-${i}">
+          <option value="crit" ${b.color==='crit'?'selected':''}>Red</option>
+          <option value="warn" ${b.color==='warn'?'selected':''}>Amber</option>
+        </select>
+        <button class="del-btn" onclick="removeBar(${i})" style="padding:3px 6px;">✕</button>`;
+      bl.appendChild(row);
+    });
+    // Add button
+    const addBtn=document.createElement('button');
+    addBtn.className='btn btn-sm';addBtn.textContent='+ Add Threat';
+    addBtn.onclick=addBar;addBtn.style.marginTop='4px';
+    bl.appendChild(addBtn);
+  }
+  // Fronts
+  const fl=document.getElementById('admin-fronts-list');
+  if(fl){
+    fl.innerHTML='';
+    sitState.fronts.forEach((f,i)=>{
+      const row=document.createElement('div');
+      row.id='admin-front-row-'+i;
+      row.style.cssText='display:grid;grid-template-columns:1fr 120px 110px 28px;gap:7px;margin-bottom:7px;align-items:center;';
+      row.innerHTML=`
+        <input type="text" id="af-loc-${i}" value="${f.loc}" placeholder="Location name">
+        <input type="text" id="af-txt-${i}" value="${f.text}" placeholder="e.g. ● ACTIVE">
+        <select id="af-st-${i}">
+          <option value="active"   ${f.status==='active'?'selected':''}>Active (red)</option>
+          <option value="standby"  ${f.status==='standby'?'selected':''}>Standby (amber)</option>
+          <option value="blockade" ${f.status==='blockade'?'selected':''}>Blockade (purple)</option>
+          <option value="resolved" ${f.status==='resolved'?'selected':''}>Resolved (green)</option>
+        </select>
+        <button class="del-btn" onclick="removeFront(${i})" style="padding:3px 6px;">✕</button>`;
+      fl.appendChild(row);
+    });
+    // Add button
+    const addBtn=document.createElement('button');
+    addBtn.className='btn btn-sm';addBtn.textContent='+ Add Front';
+    addBtn.onclick=addFront;addBtn.style.marginTop='4px';
+    fl.appendChild(addBtn);
+  }
+  renderOffRampAdmin();
+}
+
+function addBar(){
+  // Save current inputs first
+  collectBarsFromInputs();
+  sitState.bars.push({label:'New Threat',pct:50,color:'warn'});
+  renderSitAdmin();
+}
+function removeBar(i){
+  collectBarsFromInputs();
+  sitState.bars.splice(i,1);
+  renderSitAdmin();
+}
+function addFront(){
+  collectFrontsFromInputs();
+  sitState.fronts.push({loc:'New Front',status:'active',text:'● ACTIVE'});
+  renderSitAdmin();
+}
+function removeFront(i){
+  collectFrontsFromInputs();
+  sitState.fronts.splice(i,1);
+  renderSitAdmin();
+}
+function collectBarsFromInputs(){
+  sitState.bars.forEach((b,i)=>{
+    const lbl=document.getElementById('ab-lbl-'+i);
+    const pct=document.getElementById('ab-pct-'+i);
+    const col=document.getElementById('ab-col-'+i);
+    if(lbl)b.label=lbl.value;
+    if(pct)b.pct=parseInt(pct.value)||0;
+    if(col)b.color=col.value;
+  });
+}
+function collectFrontsFromInputs(){
+  sitState.fronts.forEach((f,i)=>{
+    const loc=document.getElementById('af-loc-'+i);
+    const txt=document.getElementById('af-txt-'+i);
+    const st=document.getElementById('af-st-'+i);
+    if(loc)f.loc=loc.value;
+    if(txt)f.text=txt.value;
+    if(st)f.status=st.value;
+  });
+}
+
+function renderOffRampAdmin(){
+  const ol=document.getElementById('admin-offramps-list');
+  if(!ol)return;
+  ol.innerHTML='';
+  sitState.offramps.forEach((r,i)=>{
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;gap:6px;align-items:center;';
+    row.innerHTML=`<input type="text" id="aor-${i}" value="${r}" style="flex:1;">
+      <button class="del-btn" onclick="removeOffRamp(${i})">✕</button>`;
+    ol.appendChild(row);
+  });
+}
+
+function addOffRamp(){
+  sitState.offramps.push('New off-ramp');
+  renderOffRampAdmin();
+}
+function removeOffRamp(i){
+  sitState.offramps.splice(i,1);
+  renderOffRampAdmin();
+}
+
+function saveSitState(){
+  // DEFCON
+  const defconIn=document.getElementById('admin-defcon');
+  const defconLblIn=document.getElementById('admin-defcon-lbl');
+  if(defconIn)sitState.defcon=parseInt(defconIn.value)||2;
+  if(defconLblIn)sitState.defconLbl=defconLblIn.value||'US DEFCON LEVEL';
+  collectBarsFromInputs();
+  collectFrontsFromInputs();
+  // Off-ramps
+  sitState.offramps=sitState.offramps.map((_,i)=>{
+    const el=document.getElementById('aor-'+i);
+    return el?el.value:_;
+  });
+  applySitState();
+  animateBars();
+  // Re-animate defcon
+  const dn=document.getElementById('defcon-num');
+  if(dn){let n=9;dn.textContent=n;const target=sitState.defcon;const iv=setInterval(()=>{n--;dn.textContent=n;if(n<=target){clearInterval(iv);dn.textContent=target;}},120);}
+  flash('sit-flash');
+}
+
+/* ── THREAT BARS ANIMATE IN ── */
+function animateBars(){
+  sitState.bars.forEach((b,i)=>{
+    const fill=document.getElementById('bar-fill-'+i);
+    const pctEl=document.getElementById('bar-pct-'+i);
+    if(!fill)return;
+    // ensure start at 0
+    fill.style.transition='none';
+    fill.style.width='0%';
+    // force reflow then animate slowly
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        fill.style.transition='width 2.4s cubic-bezier(.16,1,.3,1)';
+        fill.style.width=b.pct+'%';
+      });
+    });
+    // count up percentage display
+    if(pctEl){
+      pctEl.textContent='0%';
+      let current=0;const target=b.pct;
+      const duration=2400;const steps=60;
+      const increment=target/steps;
+      const stepTime=duration/steps;
+      const iv=setInterval(()=>{
+        current=Math.min(current+increment,target);
+        pctEl.textContent=Math.round(current)+'%';
+        if(current>=target)clearInterval(iv);
+      },stepTime);
+    }
+  });
+}
+
+/* ── GLITCH TITLE ── */
+function triggerGlitch(){
+  const el=document.getElementById('hd-title');
+  if(!el)return;
+  el.classList.add('glitch');
+  setTimeout(()=>el.classList.remove('glitch'),200);
+}
+setInterval(triggerGlitch, 6000 + Math.random()*4000);
+
+/* ── STATIC / INTERFERENCE ── */
+let staticAF=null;
+function runStatic(duration){
+  const overlay=document.getElementById('static-overlay');
+  const canvas=document.getElementById('static-canvas');
+  const ctx=canvas.getContext('2d');
+  overlay.style.display='block';
+  overlay.style.animation='staticIn '+duration+'ms forwards';
+  let start=null;
+  function frame(ts){
+    if(!start)start=ts;
+    const prog=(ts-start)/duration;
+    canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+    const id=ctx.createImageData(canvas.width,canvas.height);
+    const d=id.data;
+    for(let i=0;i<d.length;i+=4){
+      const v=Math.random()>0.5?255:0;
+      d[i]=v;d[i+1]=v;d[i+2]=v;d[i+3]=Math.random()*180;
+    }
+    ctx.putImageData(id,0,0);
+    if(prog<1)staticAF=requestAnimationFrame(frame);
+    else{overlay.style.display='none';overlay.style.animation='';}
+  }
+  staticAF=requestAnimationFrame(frame);
+}
+
+/* ── TYPEWRITER ALERT ── */
+window.showAlert=function(tag,title,body){
+  document.getElementById('alert-tag').textContent=tag;
+  document.getElementById('alert-body').textContent=body;
+  const titleEl=document.getElementById('alert-title');
+  titleEl.textContent='';titleEl.className='alert-title';
+  document.getElementById('alert-overlay').style.display='flex';
+  // static first, then type
+  runStatic(600);
+  setTimeout(()=>{
+    let i=0;
+    titleEl.className='alert-title typewriter';
+    function type(){
+      if(i<title.length){titleEl.textContent+=title[i++];setTimeout(type,28);}
+      else{setTimeout(()=>titleEl.classList.remove('typewriter'),800);}
+    }
+    type();
+  },400);
+};
+
+/* ── TICKER SPEED UP ON NEW UPDATE ── */
+function tickerBurst(){
+  document.querySelectorAll('.ticker-inner').forEach(el=>{
+    el.style.animationDuration='18s';
+    setTimeout(()=>el.style.animationDuration='45s',4000);
+  });
+}
+
+/* ── NEW BADGE + SLIDE IN for renderCrisisFeed ── */
+// patch applied inside renderCrisisFeed via new-card class and new-badge span
+
+/* ── INIT ── */
+window.addEventListener('load',()=>{
+  applySitState();
+  setTimeout(animateDefcon,600);
+  setTimeout(animateBars,900);
+  setTimeout(triggerGlitch,2200);
+});
+
+function showTab(id,btn){
+  if(id==='admin'){
+    adminUnlocked=false;
+    renderCrisisFeed();hidePRAdminBtns();
+    document.getElementById('admin-lock').style.display='block';
+    document.getElementById('admin-content').style.display='none';
+    document.getElementById('admin-pw').value='';
+    document.getElementById('pw-error').style.display='none';
+    // Lock speech controls
+    document.getElementById('speech-controls-locked').style.display='inline-block';
+    document.getElementById('speech-controls-unlocked').style.display='none';
+    // Hide roll call
+    document.getElementById('rollcall-section').style.display='none';
+    resetRollCallHighlights();
+  }
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function checkAdminPw(){
+  if(document.getElementById('admin-pw').value==='chairsgoated'){
+    adminUnlocked=true;
+    document.getElementById('admin-lock').style.display='none';
+    document.getElementById('admin-content').style.display='block';
+    document.getElementById('pw-error').style.display='none';
+    renderCrisisFeed();showPRAdminBtns();renderVoteAdminList();renderSpeakerQueue();
+    // Show speech controls
+    document.getElementById('speech-controls-locked').style.display='none';
+    document.getElementById('speech-controls-unlocked').style.display='flex';
+    // Show roll call
+    document.getElementById('rollcall-section').style.display='block';
+    initRollCallCards();
+    // Render sit admin
+    renderSitAdmin();
+  } else {document.getElementById('pw-error').style.display='block';document.getElementById('admin-pw').value='';}
+}
+
+function flash(id){const el=document.getElementById(id);if(!el)return;el.style.display='block';setTimeout(()=>el.style.display='none',3000);}
+
+function setSession(s){
+  const b=document.getElementById('session-badge');b.className='session-badge';
+  if(s==='open'){b.classList.add('session-open');b.textContent='● SESSION OPEN';}
+  else if(s==='recess'){b.classList.add('session-recess');b.textContent='◐ IN RECESS';}
+  else{b.classList.add('session-closed');b.textContent='◯ SESSION CLOSED';}
+}
+
+function fmtTime(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function updateTimerDisplays(){
+  const t=fmtTime(timerSeconds);
+  document.getElementById('timer-admin-display').textContent=t;
+  const hdr=document.getElementById('timer-display');hdr.textContent=t;
+  hdr.style.color=timerSeconds<=300&&timerRunning?'#ff3333':'var(--red)';
+}
+function startTimer(){
+  if(timerRunning)return;
+  const m=parseInt(document.getElementById('timer-mins').value)||60;
+  if(timerSeconds===0)timerSeconds=m*60;
+  timerRunning=true;
+  document.getElementById('timer-display').style.display='inline';
+  document.getElementById('timer-display-label').style.display='inline';
+  document.getElementById('timer-status-label').textContent='RUNNING';
+  timerInterval=setInterval(()=>{
+    if(timerSeconds>0){timerSeconds--;updateTimerDisplays();}
+    else{clearInterval(timerInterval);timerRunning=false;document.getElementById('timer-status-label').textContent='EXPIRED';document.getElementById('timer-display-label').textContent='MIDNIGHT';}
+  },1000);updateTimerDisplays();
+}
+function stopTimer(){clearInterval(timerInterval);timerRunning=false;document.getElementById('timer-status-label').textContent='PAUSED';}
+function resetTimer(){
+  clearInterval(timerInterval);timerRunning=false;timerSeconds=0;
+  document.getElementById('timer-display').style.display='none';
+  document.getElementById('timer-display-label').style.display='none';
+  document.getElementById('timer-display-label').textContent='MINUTES TO MIDNIGHT';
+  document.getElementById('timer-status-label').textContent='NOT RUNNING';
+  updateTimerDisplays();
+}
+
+function updateTicker(){
+  const txt=document.getElementById('ticker-edit').value;
+  document.querySelectorAll('.ticker-inner').forEach(el=>el.innerHTML=txt);
+  flash('ticker-flash');
+}
+
+function showAlert(tag,title,body){
+  document.getElementById('alert-tag').textContent=tag;
+  document.getElementById('alert-title').textContent=title;
+  document.getElementById('alert-body').textContent=body;
+  document.getElementById('alert-overlay').style.display='flex';
+}
+function dismissAlert(){document.getElementById('alert-overlay').style.display='none';}
+
+/* ── ROLL CALL ── */
+function initRollCallCards(){
+  renderRollCallRows();
+  renderRollCallLists();
+}
+function renderRollCallRows(){
+  const container=document.getElementById('rc-rows');
+  container.innerHTML='';
+  allDelegates.forEach(d=>{
+    const s=rollCall[d.id];
+    const row=document.createElement('div');
+    row.id='rc-row-'+d.id;
+    row.style.cssText='display:flex;align-items:center;padding:8px 14px;border-bottom:1px solid var(--border);gap:10px;';
+    // status indicator stripe
+    const stripe=document.createElement('div');
+    stripe.style.cssText='width:3px;height:28px;border-radius:2px;flex-shrink:0;background:'+(s==='present'?'var(--green-bright)':s==='pnv'?'var(--amber)':s==='absent'?'var(--red)':'#333');
+    // flag + name
+    const info=document.createElement('div');
+    info.style.cssText='flex:1;display:flex;align-items:center;gap:8px;';
+    info.innerHTML=`<span style="font-size:15px;">${d.flag}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#ccc;">${d.name}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);">${d.country}</span>`;
+    // status label
+    const lbl=document.createElement('span');
+    lbl.id='rc-lbl-'+d.id;
+    lbl.style.cssText='font-family:\'IBM Plex Mono\',monospace;font-size:9px;letter-spacing:2px;min-width:60px;text-align:right;';
+    lbl.textContent=s==='present'?'PRESENT':s==='pnv'?'PNV':s==='absent'?'ABSENT':'—';
+    lbl.style.color=s==='present'?'var(--green-bright)':s==='pnv'?'var(--amber)':s==='absent'?'var(--red)':'#444';
+    // buttons
+    const btns=document.createElement('div');
+    btns.style.cssText='display:flex;gap:5px;flex-shrink:0;';
+    const mkBtn=(label,status,borderColor,textColor)=>{
+      const b=document.createElement('button');
+      b.className='btn btn-sm';
+      b.textContent=label;
+      b.style.cssText=`border-color:${borderColor};color:${textColor};padding:3px 8px;font-size:9px;${s===status?'background:'+borderColor+'22;':''}`
+      b.onclick=()=>setStatus(d.id,s===status?null:status);
+      return b;
+    };
+    btns.appendChild(mkBtn('P','present','var(--green-bright)','var(--green-bright)'));
+    btns.appendChild(mkBtn('PNV','pnv','var(--amber)','var(--amber)'));
+    btns.appendChild(mkBtn('A','absent','var(--red)','var(--red)'));
+    row.appendChild(stripe);row.appendChild(info);row.appendChild(lbl);row.appendChild(btns);
+    container.appendChild(row);
+  });
+}
+function setStatus(id,status){
+  rollCall[id]=status;
+  renderRollCallRows();
+  renderRollCallLists();
+}
+function renderRollCallLists(){
+  const present=allDelegates.filter(d=>rollCall[d.id]==='present');
+  const pnv=allDelegates.filter(d=>rollCall[d.id]==='pnv');
+  const absent=allDelegates.filter(d=>rollCall[d.id]==='absent');
+  document.getElementById('rc-present-count').textContent=present.length;
+  document.getElementById('rc-pnv-count').textContent=pnv.length;
+  document.getElementById('rc-absent-count').textContent=absent.length;
+  const mkItem=d=>{const el=document.createElement('div');el.className='rc-item';el.innerHTML=`<span class="rc-flag">${d.flag}</span><span class="rc-name">${d.name}</span><span class="rc-country">${d.country}</span>`;return el;};
+  [['rc-present-list',present],['rc-pnv-list',pnv],['rc-absent-list',absent]].forEach(([listId,group])=>{
+    const list=document.getElementById(listId);list.innerHTML='';
+    if(group.length){group.forEach(d=>list.appendChild(mkItem(d)));}
+    else{const e=document.createElement('div');e.style.cssText='font-family:\'IBM Plex Mono\',monospace;font-size:10px;color:#444;padding:8px 0;';e.textContent='—';list.appendChild(e);}
+  });
+}
+function setAllStatus(status){
+  allDelegates.forEach(d=>{rollCall[d.id]=status;});
+  renderRollCallRows();renderRollCallLists();
+}
+function resetRollCall(){
+  allDelegates.forEach(d=>{rollCall[d.id]=null;});
+  renderRollCallRows();renderRollCallLists();
+}
+function resetRollCallHighlights(){ /* no-op — buttons approach needs no cleanup */ }
+
+function renderCrisisFeed(){
+  const feed=document.getElementById('crisis-feed');feed.innerHTML='';
+  const visible=adminUnlocked?[...crisisUpdates]:[...crisisUpdates].filter(u=>u.sev!=='eyes');
+  [...visible].reverse().forEach(u=>{
+    const s=sevMap[u.sev];const isEyes=u.sev==='eyes';
+    const card=document.createElement('div');card.className='update-card '+(s.cls||'crit');card.id='cu-card-'+u.id;
+    card.innerHTML=`
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div class="update-meta">
+          ${isEyes?'<span class="eyes-label">⬛ EYES ONLY — ADMIN</span>':''}
+          <span class="update-time">${u.time||''}</span>
+          <span class="update-severity ${s.badge}">${s.label}</span>
+        </div>
+        <div style="display:flex;gap:5px;" id="cu-btns-${u.id}"></div>
+      </div>
+      <div class="update-title">${u.title}</div>
+      <div class="update-body ${isEyes&&!adminUnlocked?'eyes-blur':''}">${u.body}</div>
+      ${u.source?`<div class="update-source">Source: ${u.source}</div>`:''}
+      <div class="edit-form" id="cu-edit-${u.id}">
+        <div class="edit-form-row">
+          <div><label>Time</label><input type="text" id="cu-et-${u.id}" value="${u.time}"></div>
+          <div><label>Severity</label><select id="cu-es-${u.id}">
+            <option value="critical" ${u.sev==='critical'?'selected':''}>Critical</option>
+            <option value="warning" ${u.sev==='warning'?'selected':''}>Warning</option>
+            <option value="info" ${u.sev==='info'?'selected':''}>Info</option>
+            <option value="resolved" ${u.sev==='resolved'?'selected':''}>Resolved</option>
+            <option value="eyes" ${u.sev==='eyes'?'selected':''}>Eyes Only</option>
+          </select></div>
+        </div>
+        <div><label>Headline</label><input type="text" id="cu-eh-${u.id}" value="${u.title.replace(/"/g,'&quot;')}"></div>
+        <div><label>Body</label><textarea id="cu-eb-${u.id}">${u.body}</textarea></div>
+        <div><label>Source</label><input type="text" id="cu-esr-${u.id}" value="${(u.source||'').replace(/"/g,'&quot;')}"></div>
+        <div class="edit-actions"><button class="btn btn-success btn-sm" onclick="saveEdit(${u.id})">Save</button><button class="btn btn-sm" onclick="cancelEdit(${u.id})">Cancel</button></div>
+      </div>`;
+    feed.appendChild(card);
+    if(adminUnlocked){
+      const w=card.querySelector('#cu-btns-'+u.id);
+      const eb=document.createElement('button');eb.className='btn-edit';eb.textContent='✎ edit';eb.onclick=()=>toggleEdit(u.id);
+      const db=document.createElement('button');db.className='del-btn';db.style.float='none';db.textContent='✕';db.onclick=()=>deleteUpdate(u.id);
+      w.appendChild(eb);w.appendChild(db);
+    }
+  });
+}
+function toggleEdit(id){document.getElementById('cu-edit-'+id).classList.toggle('open');}
+function cancelEdit(id){document.getElementById('cu-edit-'+id).classList.remove('open');}
+function saveEdit(id){
+  const u=crisisUpdates.find(x=>x.id===id);if(!u)return;
+  u.time=document.getElementById('cu-et-'+id).value.trim();
+  u.sev=document.getElementById('cu-es-'+id).value;
+  u.title=document.getElementById('cu-eh-'+id).value.trim();
+  u.body=document.getElementById('cu-eb-'+id).value.trim();
+  u.source=document.getElementById('cu-esr-'+id).value.trim();
+  renderCrisisFeed();
+}
+function deleteUpdate(id){if(!confirm('Delete this update?'))return;crisisUpdates=crisisUpdates.filter(x=>x.id!==id);renderCrisisFeed();}
+function postCrisisUpdate(doFlash){
+  const time=document.getElementById('cu-time').value.trim();
+  const sev=document.getElementById('cu-sev').value;
+  const title=document.getElementById('cu-title').value.trim();
+  const body=document.getElementById('cu-body').value.trim();
+  const source=document.getElementById('cu-source').value.trim();
+  if(!title||!body){alert('Fill in headline and body.');return;}
+  crisisUpdates.push({id:nextCuId++,time,sev,title,body,source});
+  renderCrisisFeed();
+  ['cu-time','cu-title','cu-body','cu-source'].forEach(i=>document.getElementById(i).value='');
+  flash('cu-flash');
+  if(doFlash&&sev!=='eyes'){const s=sevMap[sev];showAlert(s.label,title,body);}
+}
+
+function showPRAdminBtns(){
+  prIds.forEach(id=>{
+    const w=document.getElementById('pr-admin-btns-'+id);if(!w)return;
+    w.style.display='flex';if(w.children.length>0)return;
+    const eb=document.createElement('button');eb.className='btn-edit btn-sm';eb.textContent='✎ edit';eb.onclick=()=>togglePREdit(id);
+    const db=document.createElement('button');db.className='del-btn';db.textContent='✕';db.onclick=()=>deletePR(id);
+    w.appendChild(eb);w.appendChild(db);
+  });
+}
+function hidePRAdminBtns(){document.querySelectorAll('[id^="pr-admin-btns-"]').forEach(el=>el.style.display='none');}
+function togglePREdit(id){document.getElementById('pr-edit-'+id).classList.toggle('open');}
+window.togglePREdit = togglePREdit;
+function savePR(id){
+  const card=document.getElementById('pr-card-'+id);
+  card.querySelector('.pr-from').textContent=document.getElementById('pr-ef-'+id).value;
+  card.querySelector('.pr-title-text').textContent=document.getElementById('pr-et-'+id).value;
+  card.querySelector('.pr-time-txt').textContent=document.getElementById('pr-etime-'+id).value;
+  document.getElementById('pr-body-'+id).textContent=document.getElementById('pr-eb-'+id).value;
+  togglePREdit(id);
+}
+function deletePR(id){if(!confirm('Delete this press release?'))return;const el=document.getElementById('pr-card-'+id);if(el)el.remove();prIds=prIds.filter(x=>x!==id);}
+function postPressRelease(){
+  const from=document.getElementById('pr-from').value.trim();
+  const time=document.getElementById('pr-time').value.trim();
+  const title=document.getElementById('pr-title-input').value.trim();
+  const body=document.getElementById('pr-body-input').value.trim();
+  if(!title||!body){alert('Fill in title and body.');return;}
+  const id=nextPrId++;prIds.push(id);
+  const card=document.createElement('div');card.className='pr-card';card.id='pr-card-'+id;
+  card.innerHTML=`
+    <div class="pr-header">
+      <div><div class="pr-from">${from||'COMMITTEE RELEASE'}</div><div class="pr-title-text">${title}</div></div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;"><span class="pr-time-txt">${time||'Now'}</span><div id="pr-admin-btns-${id}" style="display:flex;gap:5px;"></div></div>
+    </div>
+    <div class="pr-body-txt" id="pr-body-${id}">${body}</div>
+    <div class="pr-edit-form" id="pr-edit-${id}">
+      <div><label>Issuing Party</label><input type="text" id="pr-ef-${id}" value="${(from||'COMMITTEE RELEASE').replace(/"/g,'&quot;')}"></div>
+      <div><label>Title</label><input type="text" id="pr-et-${id}" value="${title.replace(/"/g,'&quot;')}"></div>
+      <div><label>Time</label><input type="text" id="pr-etime-${id}" value="${time||'Now'}"></div>
+      <div><label>Body</label><textarea id="pr-eb-${id}" style="min-height:110px;">${body}</textarea></div>
+      <div class="edit-actions"><button class="btn btn-success btn-sm" onclick="savePR(${id})">Save</button><button class="btn btn-sm" onclick="togglePREdit(${id})">Cancel</button></div>
+    </div>`;
+  const feed=document.getElementById('press-feed');feed.insertBefore(card,feed.firstChild);
+  const w=card.querySelector('#pr-admin-btns-'+id);
+  const eb=document.createElement('button');eb.className='btn-edit btn-sm';eb.textContent='✎ edit';eb.onclick=()=>togglePREdit(id);
+  const db=document.createElement('button');db.className='del-btn';db.textContent='✕';db.onclick=()=>deletePR(id);
+  w.appendChild(eb);w.appendChild(db);
+  ['pr-from','pr-time','pr-title-input','pr-body-input'].forEach(i=>document.getElementById(i).value='');
+  flash('pr-flash');
+}
+
+function openVote(){
+  const title=document.getElementById('vote-title-input').value.trim();
+  if(!title){alert('Enter a motion title.');return;}
+  votes.push({id:nextVoteId++,title,open:true,forV:[],against:[],abstain:[]});
+  renderVoteBoard();renderVoteAdminList();
+  document.getElementById('vote-title-input').value='';flash('vote-flash');
+}
+function recordVote(voteId,type){
+  const v=votes.find(x=>x.id===voteId);if(!v||!v.open)return;
+  const country=prompt('Enter country name:');if(!country)return;
+  v.forV=v.forV.filter(x=>x!==country);v.against=v.against.filter(x=>x!==country);v.abstain=v.abstain.filter(x=>x!==country);
+  if(type==='for')v.forV.push(country);else if(type==='against')v.against.push(country);else v.abstain.push(country);
+  renderVoteBoard();renderVoteAdminList();
+}
+function closeVote(id){const v=votes.find(x=>x.id===id);if(v)v.open=false;renderVoteBoard();renderVoteAdminList();}
+function deleteVote(id){if(!confirm('Delete vote?'))return;votes=votes.filter(x=>x.id!==id);renderVoteBoard();renderVoteAdminList();}
+function renderVoteBoard(){
+  const board=document.getElementById('vote-board');
+  if(!votes.length){board.innerHTML='<div style="background:var(--surface);border:1px solid var(--border);padding:24px;text-align:center;"><div style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);margin-bottom:8px;">NO ACTIVE VOTES</div><div style="font-size:13px;color:#555;">The chair will open votes from the Admin panel.</div></div>';return;}
+  board.innerHTML='';
+  votes.forEach(v=>{
+    const total=v.forV.length+v.against.length+v.abstain.length||1;
+    const fp=Math.round(v.forV.length/total*100),ap=Math.round(v.against.length/total*100),abp=Math.round(v.abstain.length/total*100);
+    const el=document.createElement('div');el.className='vote-item';
+    el.innerHTML=`<div class="vote-header"><div class="vote-title">${v.title}</div><span class="vote-status ${v.open?'open':'closed'}">${v.open?'● OPEN':'◯ CLOSED'}</span></div>
+    <div class="vote-tally">
+      <div class="tally-col tally-for"><div class="tally-num">${v.forV.length}</div><div class="tally-lbl">IN FAVOUR</div></div>
+      <div class="tally-col tally-against"><div class="tally-num">${v.against.length}</div><div class="tally-lbl">AGAINST</div></div>
+      <div class="tally-col tally-abstain"><div class="tally-num">${v.abstain.length}</div><div class="tally-lbl">ABSTAIN</div></div>
+    </div>
+    <div class="vote-bar"><div class="vote-bar-for" style="width:${fp}%"></div><div class="vote-bar-against" style="width:${ap}%"></div><div class="vote-bar-abstain" style="width:${abp}%"></div></div>
+    ${v.forV.length||v.against.length||v.abstain.length?`<div class="vote-delegates">${v.forV.length?`<span style="color:var(--green-bright)">✓ ${v.forV.join(', ')}</span> `:''}${v.against.length?`<span style="color:var(--red)">✕ ${v.against.join(', ')}</span> `:''}${v.abstain.length?`<span style="color:#555">— ${v.abstain.join(', ')}</span>`:''}  </div>`:''}`;
+    board.appendChild(el);
+  });
+}
+function renderVoteAdminList(){
+  const el=document.getElementById('vote-admin-list');if(!el)return;
+  if(!votes.length){el.innerHTML='';return;}
+  el.innerHTML='<div style="font-family:\'IBM Plex Mono\',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:9px;">MANAGE VOTES</div>';
+  votes.forEach(v=>{
+    const row=document.createElement('div');row.style.cssText='display:flex;align-items:center;gap:7px;padding:7px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;';
+    row.innerHTML=`<span style="flex:1;font-size:12px;color:#ccc;">${v.title}</span>
+      ${v.open?`<button class="btn btn-sm" onclick="recordVote(${v.id},'for')" style="border-color:var(--green-bright);color:var(--green-bright);">+ For</button>
+      <button class="btn btn-sm" onclick="recordVote(${v.id},'against')" style="border-color:var(--red);color:var(--red);">+ Against</button>
+      <button class="btn btn-sm" onclick="recordVote(${v.id},'abstain')">+ Abstain</button>
+      <button class="btn btn-sm" onclick="closeVote(${v.id})">Close</button>`:'<span style="font-family:\'IBM Plex Mono\',monospace;font-size:9px;color:#555;">CLOSED</span>'}
+      <button class="del-btn" onclick="deleteVote(${v.id})">✕</button>`;
+    el.appendChild(row);
+  });
+}
+
+function addSpeaker(){
+  const name=document.getElementById('spk-name').value.trim();
+  const country=document.getElementById('spk-country').value.trim();
+  const dur=parseInt(document.getElementById('spk-duration').value)||90;
+  if(!name){alert('Enter delegate name.');return;}
+  speakers.push({name,country,duration:dur});renderSpeakerQueue();
+  document.getElementById('spk-name').value='';document.getElementById('spk-country').value='';flash('spk-flash');
+}
+function removeSpeaker(idx){speakers.splice(idx,1);renderSpeakerQueue();}
+function renderSpeakerQueue(){
+  const q=document.getElementById('speaker-queue');
+  if(!speakers.length){q.innerHTML='<div style="padding:18px;text-align:center;color:#444;font-family:\'IBM Plex Mono\',monospace;font-size:11px;">Queue is empty — add speakers from Admin panel</div>';return;}
+  q.innerHTML='';
+  speakers.forEach((s,i)=>{
+    const row=document.createElement('div');row.className='queue-item';
+    row.innerHTML=`<span class="queue-num">${i+1}</span><span class="queue-name">${s.name}</span><span class="queue-country">${s.country}</span>`;
+    if(adminUnlocked){const db=document.createElement('button');db.className='del-btn';db.textContent='✕';db.onclick=()=>removeSpeaker(i);row.appendChild(db);}
+    q.appendChild(row);
+  });
+}
+function startSpeech(){
+  if(speechRunning)return;
+  if(!speakers.length&&currentSpeakerIdx<0){alert('No speakers in queue.');return;}
+  if(currentSpeakerIdx<0)nextSpeaker();
+  speechRunning=true;
+  speechInterval=setInterval(()=>{
+    if(speechSecsLeft>0){speechSecsLeft--;updateSpeechTimer();}
+    else{clearInterval(speechInterval);speechRunning=false;document.getElementById('speech-timer').textContent='TIME';document.getElementById('speech-timer').className='speech-timer';}
+  },1000);
+}
+function pauseSpeech(){clearInterval(speechInterval);speechRunning=false;}
+function nextSpeaker(){
+  clearInterval(speechInterval);speechRunning=false;
+  if(!speakers.length){
+    document.getElementById('speaker-name').textContent='— FLOOR OPEN —';
+    document.getElementById('speaker-name').style.color='#444';
+    document.getElementById('speaker-country').textContent='';
+    document.getElementById('speech-timer').textContent='—';
+    document.getElementById('speech-timer').className='speech-timer ok';
+    currentSpeakerIdx=-1;return;
+  }
+  const s=speakers.shift();currentSpeakerIdx=0;speechSecsLeft=s.duration;
+  document.getElementById('speaker-name').textContent=s.name;
+  document.getElementById('speaker-name').style.color='#fff';
+  document.getElementById('speaker-country').textContent=s.country;
+  updateSpeechTimer();renderSpeakerQueue();
+}
+function updateSpeechTimer(){
+  const el=document.getElementById('speech-timer');
+  el.textContent=Math.floor(speechSecsLeft/60)+':'+String(speechSecsLeft%60).padStart(2,'0');
+  el.className='speech-timer '+(speechSecsLeft>30?'ok':speechSecsLeft>10?'warn':'');
+}
+
+function addDirective(){
+  const from=document.getElementById('bc-from').value.trim();
+  const msg=document.getElementById('bc-msg').value.trim();if(!msg)return;
+  const feed=document.getElementById('bc-feed');
+  if(feed.querySelector('div[style*="text-align"]'))feed.innerHTML='';
+  const now=new Date();const t=now.getHours()+':'+String(now.getMinutes()).padStart(2,'0')+' UTC';
+  const item=document.createElement('div');item.className='bc-item';
+  item.innerHTML=`<div class="bc-meta">${from||'UNKNOWN'} · ${t}</div><div class="bc-body">${msg}</div>`;
+  feed.insertBefore(item,feed.firstChild);
+  document.getElementById('bc-from').value='';document.getElementById('bc-msg').value='';
+}
+
+renderCrisisFeed();
+renderVoteBoard();
+renderSpeakerQueue();
+</script>
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getDatabase, ref, set, onValue, remove, push, update } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+
+const firebaseConfig = {
+  databaseURL: 'https://mun1-c5c97-default-rtdb.asia-southeast1.firebasedatabase.app/'
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// ── CONNECTION STATUS ──
+const connRef = ref(db, '.info/connected');
+onValue(connRef, snap => {
+  const el = document.getElementById('fb-status');
+  if (!el) return;
+  if (snap.val()) {
+    el.textContent = '● SYNCED';
+    el.style.color = 'var(--green-bright)';
+  } else {
+    el.textContent = '○ OFFLINE';
+    el.style.color = 'var(--red)';
+  }
+});
+
+// ── SESSION STATUS ──
+window.setSession = function(s) {
+  const b = document.getElementById('session-badge');
+  b.className = 'session-badge';
+  if (s === 'open') { b.classList.add('session-open'); b.textContent = '● SESSION OPEN'; }
+  else if (s === 'recess') { b.classList.add('session-recess'); b.textContent = '◐ IN RECESS'; }
+  else { b.classList.add('session-closed'); b.textContent = '◯ SESSION CLOSED'; }
+  set(ref(db, 'session/status'), s);
+};
+onValue(ref(db, 'session/status'), snap => {
+  if (!snap.val()) return;
+  const s = snap.val();
+  const b = document.getElementById('session-badge');
+  b.className = 'session-badge';
+  if (s === 'open') { b.classList.add('session-open'); b.textContent = '● SESSION OPEN'; }
+  else if (s === 'recess') { b.classList.add('session-recess'); b.textContent = '◐ IN RECESS'; }
+  else { b.classList.add('session-closed'); b.textContent = '◯ SESSION CLOSED'; }
+});
+
+// ── TICKER ──
+window.updateTicker = function() {
+  const txt = document.getElementById('ticker-edit').value;
+  set(ref(db, 'session/ticker'), txt);
+  flash('ticker-flash');
+};
+onValue(ref(db, 'session/ticker'), snap => {
+  if (!snap.val()) return;
+  document.querySelectorAll('.ticker-inner').forEach(el => el.innerHTML = snap.val());
+});
+
+// ── FLASH ALERT ──
+window.showAlert = function(tag, title, body) {
+  document.getElementById('alert-tag').textContent = tag;
+  document.getElementById('alert-title').textContent = title;
+  document.getElementById('alert-body').textContent = body;
+  document.getElementById('alert-overlay').style.display = 'flex';
+  set(ref(db, 'session/alert'), { tag, title, body, ts: Date.now() });
+};
+onValue(ref(db, 'session/alert'), snap => {
+  if (!snap.val()) return;
+  const { tag, title, body, ts } = snap.val();
+  // Only show if recent (within 30s) and not the admin who sent it
+  if (Date.now() - ts < 30000 && !adminUnlocked) {
+    document.getElementById('alert-tag').textContent = tag;
+    document.getElementById('alert-title').textContent = title;
+    document.getElementById('alert-body').textContent = body;
+    document.getElementById('alert-overlay').style.display = 'flex';
+  }
+});
+
+// ── CRISIS UPDATES ──
+window.postCrisisUpdate = function(doFlash) {
+  const time   = document.getElementById('cu-time').value.trim();
+  const sev    = document.getElementById('cu-sev').value;
+  const title  = document.getElementById('cu-title').value.trim();
+  const body   = document.getElementById('cu-body').value.trim();
+  const source = document.getElementById('cu-source').value.trim();
+  if (!title || !body) { alert('Fill in headline and body.'); return; }
+  const newRef = push(ref(db, 'crisisUpdates'));
+  set(newRef, { time, sev, title, body, source, ts: Date.now(), isNew: true });
+  ['cu-time','cu-title','cu-body','cu-source'].forEach(i => document.getElementById(i).value = '');
+  flash('cu-flash');
+  tickerBurst();
+  if (doFlash && sev !== 'eyes') {
+    const s = sevMap[sev];
+    showAlert(s.label, title, body);
+  }
+};
+
+window.saveEdit = function(fbKey) {
+  const time  = document.getElementById('cu-et-' + fbKey).value.trim();
+  const sev   = document.getElementById('cu-es-' + fbKey).value;
+  const title = document.getElementById('cu-eh-' + fbKey).value.trim();
+  const body  = document.getElementById('cu-eb-' + fbKey).value.trim();
+  const source= document.getElementById('cu-esr-' + fbKey).value.trim();
+  update(ref(db, 'crisisUpdates/' + fbKey), { time, sev, title, body, source });
+  document.getElementById('cu-edit-' + fbKey).classList.remove('open');
+};
+
+window.deleteUpdate = function(fbKey) {
+  if (!confirm('Delete this update?')) return;
+  remove(ref(db, 'crisisUpdates/' + fbKey));
+};
+
+onValue(ref(db, 'crisisUpdates'), snap => {
+  const data = snap.val() || {};
+  // Convert to array sorted by ts
+  crisisUpdates = Object.entries(data).map(([key, v]) => ({ ...v, fbKey: key }));
+  crisisUpdates.sort((a, b) => (a.ts || 0) - (b.ts || 0));
+  renderCrisisFeed();
+});
+
+// Override renderCrisisFeed to use fbKey
+window.renderCrisisFeed = function() {
+  const feed = document.getElementById('crisis-feed'); feed.innerHTML = '';
+  const visible = adminUnlocked ? [...crisisUpdates] : crisisUpdates.filter(u => u.sev !== 'eyes');
+  [...visible].reverse().forEach(u => {
+    const key = u.fbKey || u.id;
+    const s = sevMap[u.sev] || sevMap.critical;
+    const isEyes = u.sev === 'eyes';
+    const card = document.createElement('div');
+    const isRecent = u.ts && (Date.now() - u.ts < 60000);
+    card.className = 'update-card ' + (s.cls || 'crit') + (isRecent ? ' new-card' : '');
+    card.id = 'cu-card-' + key;
+    card.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div class="update-meta">
+          ${isEyes ? '<span class="eyes-label">⬛ EYES ONLY — ADMIN</span>' : ''}
+          <span class="update-time">${u.time || ''}</span>
+          <span class="update-severity ${s.badge}">${s.label}</span>
+        </div>
+        <div style="display:flex;gap:5px;" id="cu-btns-${key}"></div>
+      </div>
+      <div class="update-title">${u.title}${isRecent?'<span class="new-badge">NEW</span>':''}</div>
+      <div class="update-body ${isEyes && !adminUnlocked ? 'eyes-blur' : ''}">${u.body}</div>
+      ${u.source ? `<div class="update-source">Source: ${u.source}</div>` : ''}
+      <div class="edit-form" id="cu-edit-${key}">
+        <div class="edit-form-row">
+          <div><label>Time</label><input type="text" id="cu-et-${key}" value="${u.time || ''}"></div>
+          <div><label>Severity</label><select id="cu-es-${key}">
+            <option value="critical" ${u.sev==='critical'?'selected':''}>Critical</option>
+            <option value="warning"  ${u.sev==='warning'?'selected':''}>Warning</option>
+            <option value="info"     ${u.sev==='info'?'selected':''}>Info</option>
+            <option value="resolved" ${u.sev==='resolved'?'selected':''}>Resolved</option>
+            <option value="eyes"     ${u.sev==='eyes'?'selected':''}>Eyes Only</option>
+          </select></div>
+        </div>
+        <div><label>Headline</label><input type="text" id="cu-eh-${key}" value="${(u.title||'').replace(/"/g,'&quot;')}"></div>
+        <div><label>Body</label><textarea id="cu-eb-${key}">${u.body||''}</textarea></div>
+        <div><label>Source</label><input type="text" id="cu-esr-${key}" value="${(u.source||'').replace(/"/g,'&quot;')}"></div>
+        <div class="edit-actions">
+          <button class="btn btn-success btn-sm" onclick="saveEdit('${key}')">Save</button>
+          <button class="btn btn-sm" onclick="cancelEdit('${key}')">Cancel</button>
+        </div>
+      </div>`;
+    feed.appendChild(card);
+    if (adminUnlocked) {
+      const w = card.querySelector('#cu-btns-' + key);
+      const eb = document.createElement('button'); eb.className = 'btn-edit'; eb.textContent = '✎ edit'; eb.onclick = () => toggleEdit(key);
+      const db2 = document.createElement('button'); db2.className = 'del-btn'; db2.style.float = 'none'; db2.textContent = '✕'; db2.onclick = () => deleteUpdate(key);
+      w.appendChild(eb); w.appendChild(db2);
+    }
+  });
+};
+
+// ── PRESS RELEASES ──
+window.postPressRelease = function() {
+  const from  = document.getElementById('pr-from').value.trim();
+  const time  = document.getElementById('pr-time').value.trim();
+  const title = document.getElementById('pr-title-input').value.trim();
+  const body  = document.getElementById('pr-body-input').value.trim();
+  if (!title || !body) { alert('Fill in title and body.'); return; }
+  push(ref(db, 'pressReleases'), { from: from || 'COMMITTEE RELEASE', time: time || '', title, body, ts: Date.now() });
+  ['pr-from','pr-time','pr-title-input','pr-body-input'].forEach(i => document.getElementById(i).value = '');
+  flash('pr-flash');
+};
+
+window.deletePRfb = function(key) {
+  if (!confirm('Delete this press release?')) return;
+  remove(ref(db, 'pressReleases/' + key));
+};
+
+window.savePRfb = function(key) {
+  const from  = document.getElementById('pr-ef-' + key).value;
+  const title = document.getElementById('pr-et-' + key).value;
+  const time  = document.getElementById('pr-etime-' + key).value;
+  const body  = document.getElementById('pr-eb-' + key).value;
+  update(ref(db, 'pressReleases/' + key), { from, title, time, body });
+  document.getElementById('pr-edit-' + key).classList.remove('open');
+};
+
+onValue(ref(db, 'pressReleases'), snap => {
+  const data = snap.val() || {};
+  const feed = document.getElementById('press-feed');
+  // Keep the two hardcoded starter PRs (ids 1 & 2), clear the rest
+  const existing = feed.querySelectorAll('.pr-card[data-fb]');
+  existing.forEach(el => el.remove());
+  const items = Object.entries(data).map(([k,v]) => ({...v, key: k})).sort((a,b) => (b.ts||0)-(a.ts||0));
+  items.forEach(pr => {
+    const key = pr.key;
+    const card = document.createElement('div');
+    card.className = 'pr-card'; card.setAttribute('data-fb', key);
+    card.innerHTML = `
+      <div class="pr-header">
+        <div><div class="pr-from" id="pr-from-${key}">${pr.from||''}</div><div class="pr-title-text" id="pr-title-${key}">${pr.title||''}</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
+          <span class="pr-time-txt" id="pr-time-${key}">${pr.time||''}</span>
+          <div id="pr-admin-btns-${key}" style="display:none;gap:5px;flex-wrap:wrap;"></div>
+        </div>
+      </div>
+      <div class="pr-body-txt" id="pr-body-${key}">${pr.body||''}</div>
+      <div class="pr-edit-form" id="pr-edit-${key}">
+        <div><label>Issuing Party</label><input type="text" id="pr-ef-${key}" value="${(pr.from||'').replace(/"/g,'&quot;')}"></div>
+        <div><label>Title</label><input type="text" id="pr-et-${key}" value="${(pr.title||'').replace(/"/g,'&quot;')}"></div>
+        <div><label>Time</label><input type="text" id="pr-etime-${key}" value="${pr.time||''}"></div>
+        <div><label>Body</label><textarea id="pr-eb-${key}" style="min-height:110px;">${pr.body||''}</textarea></div>
+        <div class="edit-actions">
+          <button class="btn btn-success btn-sm" onclick="savePRfb('${key}')">Save</button>
+          <button class="btn btn-sm" onclick="togglePREdit('${key}')">Cancel</button>
+        </div>
+      </div>`;
+    feed.insertBefore(card, feed.firstChild);
+    if (adminUnlocked) {
+      const w = card.querySelector('#pr-admin-btns-' + key);
+      w.style.display = 'flex';
+      const eb = document.createElement('button'); eb.className = 'btn-edit btn-sm'; eb.textContent = '✎ edit'; eb.onclick = () => togglePREdit(key);
+      const db2 = document.createElement('button'); db2.className = 'del-btn'; db2.textContent = '✕'; db2.onclick = () => deletePRfb(key);
+      w.appendChild(eb); w.appendChild(db2);
+    }
+  });
+  if (adminUnlocked) showPRAdminBtns();
+});
+
+// ── VOTES ──
+window.openVote = function() {
+  const title = document.getElementById('vote-title-input').value.trim();
+  if (!title) { alert('Enter a motion title.'); return; }
+  push(ref(db, 'votes'), { title, open: true, forV: [], against: [], abstain: [], ts: Date.now() });
+  document.getElementById('vote-title-input').value = '';
+  flash('vote-flash');
+};
+
+window.recordVote = function(key, type) {
+  const v = votes.find(x => x.fbKey === key); if (!v || !v.open) return;
+  const country = prompt('Enter country name:'); if (!country) return;
+  const forV    = (v.forV    || []).filter(x => x !== country);
+  const against = (v.against || []).filter(x => x !== country);
+  const abstain = (v.abstain || []).filter(x => x !== country);
+  if (type === 'for') forV.push(country);
+  else if (type === 'against') against.push(country);
+  else abstain.push(country);
+  update(ref(db, 'votes/' + key), { forV, against, abstain });
+};
+
+window.closeVote = function(key) {
+  update(ref(db, 'votes/' + key), { open: false });
+};
+
+window.deleteVote = function(key) {
+  if (!confirm('Delete vote?')) return;
+  remove(ref(db, 'votes/' + key));
+};
+
+onValue(ref(db, 'votes'), snap => {
+  const data = snap.val() || {};
+  votes = Object.entries(data).map(([key, v]) => ({ ...v, fbKey: key, forV: v.forV||[], against: v.against||[], abstain: v.abstain||[] }));
+  votes.sort((a,b) => (a.ts||0)-(b.ts||0));
+  renderVoteBoard();
+  if (adminUnlocked) renderVoteAdminList();
+});
+
+window.renderVoteBoard = function() {
+  const board = document.getElementById('vote-board');
+  if (!votes.length) {
+    board.innerHTML = '<div style="background:var(--surface);border:1px solid var(--border);padding:24px;text-align:center;"><div style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);margin-bottom:8px;">NO ACTIVE VOTES</div><div style="font-size:13px;color:#555;">The chair will open votes from the Admin panel.</div></div>';
+    return;
+  }
+  board.innerHTML = '';
+  votes.forEach(v => {
+    const total = (v.forV.length + v.against.length + v.abstain.length) || 1;
+    const fp = Math.round(v.forV.length/total*100), ap = Math.round(v.against.length/total*100), abp = Math.round(v.abstain.length/total*100);
+    const el = document.createElement('div'); el.className = 'vote-item';
+    el.innerHTML = `<div class="vote-header"><div class="vote-title">${v.title}</div><span class="vote-status ${v.open?'open':'closed'}">${v.open?'● OPEN':'◯ CLOSED'}</span></div>
+      <div class="vote-tally">
+        <div class="tally-col tally-for"><div class="tally-num">${v.forV.length}</div><div class="tally-lbl">IN FAVOUR</div></div>
+        <div class="tally-col tally-against"><div class="tally-num">${v.against.length}</div><div class="tally-lbl">AGAINST</div></div>
+        <div class="tally-col tally-abstain"><div class="tally-num">${v.abstain.length}</div><div class="tally-lbl">ABSTAIN</div></div>
+      </div>
+      <div class="vote-bar"><div class="vote-bar-for" style="width:${fp}%"></div><div class="vote-bar-against" style="width:${ap}%"></div><div class="vote-bar-abstain" style="width:${abp}%"></div></div>
+      ${v.forV.length||v.against.length||v.abstain.length?`<div class="vote-delegates">${v.forV.length?`<span style="color:var(--green-bright)">✓ ${v.forV.join(', ')}</span> `:''}${v.against.length?`<span style="color:var(--red)">✕ ${v.against.join(', ')}</span> `:''}${v.abstain.length?`<span style="color:#555">— ${v.abstain.join(', ')}</span>`:''}  </div>`:''}`;
+    board.appendChild(el);
+  });
+};
+
+window.renderVoteAdminList = function() {
+  const el = document.getElementById('vote-admin-list'); if (!el) return;
+  if (!votes.length) { el.innerHTML = ''; return; }
+  el.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:9px;">MANAGE VOTES</div>';
+  votes.forEach(v => {
+    const key = v.fbKey;
+    const row = document.createElement('div'); row.style.cssText = 'display:flex;align-items:center;gap:7px;padding:7px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;';
+    row.innerHTML = `<span style="flex:1;font-size:12px;color:#ccc;">${v.title}</span>
+      ${v.open ? `<button class="btn btn-sm" onclick="recordVote('${key}','for')" style="border-color:var(--green-bright);color:var(--green-bright);">+ For</button>
+      <button class="btn btn-sm" onclick="recordVote('${key}','against')" style="border-color:var(--red);color:var(--red);">+ Against</button>
+      <button class="btn btn-sm" onclick="recordVote('${key}','abstain')">+ Abstain</button>
+      <button class="btn btn-sm" onclick="closeVote('${key}')">Close</button>` : '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:9px;color:#555;">CLOSED</span>'}
+      <button class="del-btn" onclick="deleteVote('${key}')">✕</button>`;
+    el.appendChild(row);
+  });
+};
+
+// ── SITUATION BOARD SYNC ──
+
+// Override saveSitState to push to Firebase
+window.saveSitState = function() {
+  // Collect from inputs
+  const defconIn = document.getElementById('admin-defcon');
+  const defconLblIn = document.getElementById('admin-defcon-lbl');
+  if (defconIn) sitState.defcon = parseInt(defconIn.value) || 2;
+  if (defconLblIn) sitState.defconLbl = defconLblIn.value || 'US DEFCON LEVEL';
+  collectBarsFromInputs();
+  collectFrontsFromInputs();
+  sitState.offramps = sitState.offramps.map((_, i) => {
+    const el = document.getElementById('aor-' + i);
+    return el ? el.value : _;
+  });
+  // Push to Firebase
+  set(ref(db, 'sitState'), {
+    defcon: sitState.defcon,
+    defconLbl: sitState.defconLbl,
+    bars: sitState.bars,
+    fronts: sitState.fronts,
+    offramps: sitState.offramps,
+  });
+  flash('sit-flash');
+};
+
+// Listen for sit state changes and apply to all clients
+onValue(ref(db, 'sitState'), snap => {
+  if (!snap.val()) return;
+  const s = snap.val();
+  if (s.defcon    !== undefined) sitState.defcon    = s.defcon;
+  if (s.defconLbl !== undefined) sitState.defconLbl = s.defconLbl;
+  if (s.bars)     sitState.bars    = s.bars;
+  if (s.fronts)   sitState.fronts  = s.fronts;
+  if (s.offramps) sitState.offramps = s.offramps;
+  applySitState();
+  animateBars();
+  // Animate defcon
+  const dn = document.getElementById('defcon-num');
+  if (dn) {
+    let n = 9; dn.textContent = n;
+    const target = sitState.defcon;
+    const iv = setInterval(() => { n--; dn.textContent = n; if (n <= target) { clearInterval(iv); dn.textContent = target; } }, 120);
+  }
+  if (adminUnlocked) renderSitAdmin();
+});
+
+// ── TIMER SYNC ──
+// Push timer state when chair starts/stops/resets
+const origStartTimer = window.startTimer;
+const origStopTimer  = window.stopTimer;
+const origResetTimer = window.resetTimer;
+
+window.startTimer = function() {
+  origStartTimer();
+  const mins = parseInt(document.getElementById('timer-mins').value) || 60;
+  set(ref(db, 'timer'), { running: true, secsLeft: timerSeconds || mins * 60, startedAt: Date.now() });
+};
+window.stopTimer = function() {
+  origStopTimer();
+  set(ref(db, 'timer'), { running: false, secsLeft: timerSeconds });
+};
+window.resetTimer = function() {
+  origResetTimer();
+  set(ref(db, 'timer'), { running: false, secsLeft: 0 });
+};
+
+onValue(ref(db, 'timer'), snap => {
+  if (!snap.val()) return;
+  const t = snap.val();
+  // Don't apply if this client is the admin running the timer
+  if (adminUnlocked) return;
+  if (t.running && t.startedAt) {
+    // Calculate how many seconds have elapsed since timer started
+    const elapsed = Math.floor((Date.now() - t.startedAt) / 1000);
+    timerSeconds = Math.max((t.secsLeft || 0) - elapsed, 0);
+    if (!timerRunning) {
+      timerRunning = true;
+      document.getElementById('timer-display').style.display = 'inline';
+      document.getElementById('timer-display-label').style.display = 'inline';
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (timerSeconds > 0) { timerSeconds--; updateTimerDisplays(); }
+        else {
+          clearInterval(timerInterval); timerRunning = false;
+          document.getElementById('timer-display-label').textContent = 'MIDNIGHT';
+        }
+      }, 1000);
+      updateTimerDisplays();
+    }
+  } else {
+    clearInterval(timerInterval); timerRunning = false;
+    timerSeconds = t.secsLeft || 0;
+    if (timerSeconds === 0) {
+      document.getElementById('timer-display').style.display = 'none';
+      document.getElementById('timer-display-label').style.display = 'none';
+      document.getElementById('timer-display-label').textContent = 'MINUTES TO MIDNIGHT';
+    }
+    updateTimerDisplays();
+  }
+});
+
+// ── SPEAKERS SYNC ──
+// Push speaker state when chair changes it
+function pushSpeakerState() {
+  set(ref(db, 'speakers'), {
+    queue: speakers,
+    current: currentSpeakerIdx >= 0 ? {
+      name: document.getElementById('speaker-name').textContent,
+      country: document.getElementById('speaker-country').textContent,
+      secsLeft: speechSecsLeft,
+      running: speechRunning,
+      updatedAt: Date.now(),
+    } : null,
+  });
+}
+
+const origNextSpeaker = window.nextSpeaker;
+window.nextSpeaker = function() {
+  origNextSpeaker();
+  pushSpeakerState();
+};
+const origAddSpeaker = window.addSpeaker;
+window.addSpeaker = function() {
+  origAddSpeaker();
+  pushSpeakerState();
+};
+const origStartSpeech = window.startSpeech;
+window.startSpeech = function() {
+  origStartSpeech();
+  pushSpeakerState();
+};
+const origPauseSpeech = window.pauseSpeech;
+window.pauseSpeech = function() {
+  origPauseSpeech();
+  pushSpeakerState();
+};
+
+onValue(ref(db, 'speakers'), snap => {
+  if (!snap.val() || adminUnlocked) return;
+  const data = snap.val();
+  // Update queue display
+  if (data.queue) {
+    speakers = data.queue;
+    renderSpeakerQueue();
+  }
+  // Update current speaker display
+  if (data.current) {
+    const c = data.current;
+    const nameEl = document.getElementById('speaker-name');
+    const countryEl = document.getElementById('speaker-country');
+    if (nameEl) { nameEl.textContent = c.name; nameEl.style.color = '#fff'; }
+    if (countryEl) countryEl.textContent = c.country;
+    // Sync timer — account for elapsed time
+    const elapsed = Math.floor((Date.now() - (c.updatedAt || Date.now())) / 1000);
+    speechSecsLeft = Math.max((c.secsLeft || 0) - (c.running ? elapsed : 0), 0);
+    updateSpeechTimer();
+    if (c.running && !speechRunning) {
+      speechRunning = true;
+      clearInterval(speechInterval);
+      speechInterval = setInterval(() => {
+        if (speechSecsLeft > 0) { speechSecsLeft--; updateSpeechTimer(); }
+        else { clearInterval(speechInterval); speechRunning = false; document.getElementById('speech-timer').textContent = 'TIME'; document.getElementById('speech-timer').className = 'speech-timer'; }
+      }, 1000);
+    } else if (!c.running) {
+      clearInterval(speechInterval); speechRunning = false;
+    }
+  } else {
+    const nameEl = document.getElementById('speaker-name');
+    if (nameEl) { nameEl.textContent = '— FLOOR OPEN —'; nameEl.style.color = '#444'; }
+    const countryEl = document.getElementById('speaker-country');
+    if (countryEl) countryEl.textContent = '';
+    const timerEl = document.getElementById('speech-timer');
+    if (timerEl) { timerEl.textContent = '—'; timerEl.className = 'speech-timer ok'; }
+  }
+});
+
+console.log('Firebase sync active');
+</script>
+</body>
+</html>
