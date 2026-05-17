@@ -735,6 +735,10 @@ All delegations are expected to engage in good faith. Time is not a luxury we po
     <div id="pw-error" style="display:none;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--red);margin-top:9px;">✕ Incorrect password.</div>
   </div>
   <div id="admin-content" style="display:none;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--green-bright);">● ADMIN UNLOCKED — SESSION ACTIVE</div>
+      <button class="btn btn-sm" onclick="lockAdmin()" style="border-color:var(--muted);color:var(--muted);">🔒 Lock Admin</button>
+    </div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;">
       <div class="admin-wrap" style="margin-bottom:0;">
@@ -1904,25 +1908,19 @@ window.addEventListener('load',()=>{
   renderCasualtyGrid();
   renderAssetGrid();
   updateDoomClockDisplay();
-  // Mark page as fully loaded after a short delay so Firebase listeners
-  // don't fire overlays/banners on initial data hydration
+  // Restore admin session if previously logged in
+  if(sessionStorage.getItem('adminUnlocked')==='1'){
+    // Small delay to let Firebase hydrate first
+    setTimeout(unlockAdmin, 800);
+  }
   setTimeout(()=>{ pageLoaded = true; }, 2500);
 });
 
 function showTab(id,btn){
-  if(id==='admin'){
-    adminUnlocked=false;
-    renderCrisisFeed();hidePRAdminBtns();
+  if(id==='admin' && !adminUnlocked){
+    // Just show the lock screen, don't wipe anything
     document.getElementById('admin-lock').style.display='block';
     document.getElementById('admin-content').style.display='none';
-    document.getElementById('admin-pw').value='';
-    document.getElementById('pw-error').style.display='none';
-    // Lock speech controls
-    document.getElementById('speech-controls-locked').style.display='inline-block';
-    document.getElementById('speech-controls-unlocked').style.display='none';
-    // Hide roll call
-    document.getElementById('rollcall-section').style.display='none';
-    resetRollCallHighlights();
   }
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -1932,20 +1930,40 @@ function showTab(id,btn){
 
 function checkAdminPw(){
   if(document.getElementById('admin-pw').value==='chairsgoated'){
-    adminUnlocked=true;
-    document.getElementById('admin-lock').style.display='none';
-    document.getElementById('admin-content').style.display='block';
-    document.getElementById('pw-error').style.display='none';
-    renderCrisisFeed();showPRAdminBtns();renderVoteAdminList();renderSpeakerQueue();
-    document.getElementById('speech-controls-locked').style.display='none';
-    document.getElementById('speech-controls-unlocked').style.display='flex';
-    document.getElementById('rollcall-section').style.display='block';
-    initRollCallCards();
-    renderSitAdmin();
-    renderCasualtyAdmin();
-    renderAssetAdmin();
-    renderDirectiveAdmin();
+    unlockAdmin();
   } else {document.getElementById('pw-error').style.display='block';document.getElementById('admin-pw').value='';}
+}
+
+function unlockAdmin(){
+  adminUnlocked=true;
+  sessionStorage.setItem('adminUnlocked','1');
+  document.getElementById('admin-lock').style.display='none';
+  document.getElementById('admin-content').style.display='block';
+  document.getElementById('pw-error').style.display='none';
+  renderCrisisFeed();showPRAdminBtns();renderVoteAdminList();renderSpeakerQueue();
+  document.getElementById('speech-controls-locked').style.display='none';
+  document.getElementById('speech-controls-unlocked').style.display='flex';
+  document.getElementById('rollcall-section').style.display='block';
+  initRollCallCards();
+  renderSitAdmin();
+  renderCasualtyAdmin();
+  renderAssetAdmin();
+  renderDirectiveAdmin();
+}
+
+function lockAdmin(){
+  adminUnlocked=false;
+  sessionStorage.removeItem('adminUnlocked');
+  renderCrisisFeed();
+  hidePRAdminBtns();
+  document.getElementById('admin-lock').style.display='block';
+  document.getElementById('admin-content').style.display='none';
+  document.getElementById('admin-pw').value='';
+  document.getElementById('pw-error').style.display='none';
+  document.getElementById('speech-controls-locked').style.display='inline-block';
+  document.getElementById('speech-controls-unlocked').style.display='none';
+  document.getElementById('rollcall-section').style.display='none';
+  resetRollCallHighlights();
 }
 
 function flash(id){const el=document.getElementById(id);if(!el)return;el.style.display='block';setTimeout(()=>el.style.display='none',3000);}
@@ -2074,61 +2092,25 @@ function resetRollCall(){
 }
 function resetRollCallHighlights(){ /* no-op — buttons approach needs no cleanup */ }
 
-function renderCrisisFeed(){
-  const feed=document.getElementById('crisis-feed');feed.innerHTML='';
-  const visible=adminUnlocked?[...crisisUpdates]:[...crisisUpdates].filter(u=>u.sev!=='eyes');
-  [...visible].reverse().forEach(u=>{
-    const s=sevMap[u.sev];const isEyes=u.sev==='eyes';
-    const card=document.createElement('div');card.className='update-card '+(s.cls||'crit');card.id='cu-card-'+u.id;
-    card.innerHTML=`
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-        <div class="update-meta">
-          ${isEyes?'<span class="eyes-label">⬛ EYES ONLY — ADMIN</span>':''}
-          <span class="update-time">${u.time||''}</span>
-          <span class="update-severity ${s.badge}">${s.label}</span>
-        </div>
-        <div style="display:flex;gap:5px;" id="cu-btns-${u.id}"></div>
-      </div>
-      <div class="update-title">${u.title}</div>
-      <div class="update-body ${isEyes&&!adminUnlocked?'eyes-blur':''}">${u.body}</div>
-      ${u.source?`<div class="update-source">Source: ${u.source}</div>`:''}
-      <div class="edit-form" id="cu-edit-${u.id}">
-        <div class="edit-form-row">
-          <div><label>Time</label><input type="text" id="cu-et-${u.id}" value="${u.time}"></div>
-          <div><label>Severity</label><select id="cu-es-${u.id}">
-            <option value="critical" ${u.sev==='critical'?'selected':''}>Critical</option>
-            <option value="warning" ${u.sev==='warning'?'selected':''}>Warning</option>
-            <option value="info" ${u.sev==='info'?'selected':''}>Info</option>
-            <option value="resolved" ${u.sev==='resolved'?'selected':''}>Resolved</option>
-            <option value="eyes" ${u.sev==='eyes'?'selected':''}>Eyes Only</option>
-          </select></div>
-        </div>
-        <div><label>Headline</label><input type="text" id="cu-eh-${u.id}" value="${u.title.replace(/"/g,'&quot;')}"></div>
-        <div><label>Body</label><textarea id="cu-eb-${u.id}">${u.body}</textarea></div>
-        <div><label>Source</label><input type="text" id="cu-esr-${u.id}" value="${(u.source||'').replace(/"/g,'&quot;')}"></div>
-        <div class="edit-actions"><button class="btn btn-success btn-sm" onclick="saveEdit(${u.id})">Save</button><button class="btn btn-sm" onclick="cancelEdit(${u.id})">Cancel</button></div>
-      </div>`;
-    feed.appendChild(card);
-    if(adminUnlocked){
-      const w=card.querySelector('#cu-btns-'+u.id);
-      const eb=document.createElement('button');eb.className='btn-edit';eb.textContent='✎ edit';eb.onclick=()=>toggleEdit(u.id);
-      const db=document.createElement('button');db.className='del-btn';db.style.float='none';db.textContent='✕';db.onclick=()=>deleteUpdate(u.id);
-      w.appendChild(eb);w.appendChild(db);
-    }
-  });
+// renderCrisisFeed is fully managed by the Firebase module
+// This stub prevents reference errors before Firebase initialises
+function renderCrisisFeed(){ /* Firebase module overrides this */ }
+function toggleEdit(key){
+  const form=document.getElementById('cu-edit-'+key);
+  if(form)form.classList.toggle('open');
 }
-function toggleEdit(id){document.getElementById('cu-edit-'+id).classList.toggle('open');}
-function cancelEdit(id){document.getElementById('cu-edit-'+id).classList.remove('open');}
-function saveEdit(id){
-  const u=crisisUpdates.find(x=>x.id===id);if(!u)return;
-  u.time=document.getElementById('cu-et-'+id).value.trim();
-  u.sev=document.getElementById('cu-es-'+id).value;
-  u.title=document.getElementById('cu-eh-'+id).value.trim();
-  u.body=document.getElementById('cu-eb-'+id).value.trim();
-  u.source=document.getElementById('cu-esr-'+id).value.trim();
-  renderCrisisFeed();
+function cancelEdit(key){
+  const form=document.getElementById('cu-edit-'+key);
+  if(form)form.classList.remove('open');
 }
-function deleteUpdate(id){if(!confirm('Delete this update?'))return;crisisUpdates=crisisUpdates.filter(x=>x.id!==id);renderCrisisFeed();}
+function saveEdit(key){
+  // saveEdit is overridden by Firebase module — this is a local fallback only
+  const form=document.getElementById('cu-edit-'+key);
+  if(form)form.classList.remove('open');
+}
+function deleteUpdate(key){
+  // deleteUpdate is overridden by Firebase module
+}
 function postCrisisUpdate(doFlash){
   const time=document.getElementById('cu-time').value.trim();
   const sev=document.getElementById('cu-sev').value;
@@ -2310,9 +2292,9 @@ function addDirective(){
   document.getElementById('bc-from').value='';document.getElementById('bc-msg').value='';
 }
 
-renderCrisisFeed();
-renderVoteBoard();
-renderSpeakerQueue();
+// renderCrisisFeed is fully handled by the Firebase module below
+// This stub prevents errors if called before Firebase loads
+function renderCrisisFeed(){ /* overridden by Firebase module */ }
 </script>
 
 <!-- Firebase -->
@@ -2432,7 +2414,9 @@ onValue(ref(db, 'crisisUpdates'), snap => {
   if (!adminUnlocked && crisisUpdates.length > prev && prev > 0) {
     showTransmissionFlash();
   }
-  renderCrisisFeed();
+  // Don't re-render if an edit form is currently open — would lose the user's edits
+  const editOpen = document.querySelector('.edit-form.open');
+  if (!editOpen) renderCrisisFeed();
 });
 
 // Override renderCrisisFeed to use fbKey
