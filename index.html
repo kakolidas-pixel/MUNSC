@@ -2397,8 +2397,10 @@ window._fbSaveEdit = function(fbKey) {
   const title = document.getElementById('cu-eh-' + fbKey).value.trim();
   const body  = document.getElementById('cu-eb-' + fbKey).value.trim();
   const source= document.getElementById('cu-esr-' + fbKey).value.trim();
+  // Close form first so onValue re-render isn't blocked
+  const form = document.getElementById('cu-edit-' + fbKey);
+  if (form) form.classList.remove('open');
   update(ref(db, 'crisisUpdates/' + fbKey), { time, sev, title, body, source });
-  document.getElementById('cu-edit-' + fbKey).classList.remove('open');
 };
 window.saveEdit = window._fbSaveEdit;
 
@@ -2416,9 +2418,10 @@ onValue(ref(db, 'crisisUpdates'), snap => {
   if (!adminUnlocked && crisisUpdates.length > prev && prev > 0) {
     showTransmissionFlash();
   }
-  // Don't re-render if an edit form is currently open — would lose the user's edits
+  // Only skip re-render if a form is open AND the user is actively focused in an input
   const editOpen = document.querySelector('.edit-form.open');
-  if (!editOpen) renderCrisisFeed();
+  const userTyping = editOpen && editOpen.contains(document.activeElement);
+  if (!userTyping) renderCrisisFeed();
 });
 
 // Override renderCrisisFeed to use fbKey
@@ -2468,7 +2471,8 @@ window.renderCrisisFeed = function() {
     if (adminUnlocked) {
       const w = card.querySelector('#cu-btns-' + key);
       const eb = document.createElement('button'); eb.className = 'btn-edit'; eb.textContent = '✎ edit'; eb.onclick = () => toggleEdit(key);
-      const db2 = document.createElement('button'); db2.className = 'del-btn'; db2.style.float = 'none'; db2.textContent = '✕'; db2.onclick = () => deleteUpdate(key);
+      const db2 = document.createElement('button'); db2.className = 'del-btn'; db2.style.float = 'none'; db2.textContent = '✕';
+      db2.onclick = () => { if(confirm('Delete this update?')) remove(ref(db, 'crisisUpdates/' + key)); };
       w.appendChild(eb); w.appendChild(db2);
     }
   });
