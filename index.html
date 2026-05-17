@@ -2104,12 +2104,12 @@ function cancelEdit(key){
   if(form)form.classList.remove('open');
 }
 function saveEdit(key){
-  // saveEdit is overridden by Firebase module — this is a local fallback only
-  const form=document.getElementById('cu-edit-'+key);
-  if(form)form.classList.remove('open');
+  // Delegates to Firebase version once loaded
+  if(window._fbSaveEdit) window._fbSaveEdit(key);
+  else { const form=document.getElementById('cu-edit-'+key); if(form)form.classList.remove('open'); }
 }
 function deleteUpdate(key){
-  // deleteUpdate is overridden by Firebase module
+  if(window._fbDeleteUpdate) window._fbDeleteUpdate(key);
 }
 function postCrisisUpdate(doFlash){
   const time=document.getElementById('cu-time').value.trim();
@@ -2391,7 +2391,7 @@ window.postCrisisUpdate = function(doFlash) {
   }
 };
 
-window.saveEdit = function(fbKey) {
+window._fbSaveEdit = function(fbKey) {
   const time  = document.getElementById('cu-et-' + fbKey).value.trim();
   const sev   = document.getElementById('cu-es-' + fbKey).value;
   const title = document.getElementById('cu-eh-' + fbKey).value.trim();
@@ -2400,11 +2400,13 @@ window.saveEdit = function(fbKey) {
   update(ref(db, 'crisisUpdates/' + fbKey), { time, sev, title, body, source });
   document.getElementById('cu-edit-' + fbKey).classList.remove('open');
 };
+window.saveEdit = window._fbSaveEdit;
 
-window.deleteUpdate = function(fbKey) {
+window._fbDeleteUpdate = function(fbKey) {
   if (!confirm('Delete this update?')) return;
   remove(ref(db, 'crisisUpdates/' + fbKey));
 };
+window.deleteUpdate = window._fbDeleteUpdate;
 
 onValue(ref(db, 'crisisUpdates'), snap => {
   const data = snap.val() || {};
