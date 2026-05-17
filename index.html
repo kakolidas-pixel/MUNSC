@@ -259,6 +259,71 @@ header{box-shadow:0 0 18px 2px rgba(192,57,43,.35),0 0 40px 4px rgba(192,57,43,.
 /* Typewriter alert title */
 .typewriter{overflow:hidden;border-right:2px solid var(--red);white-space:nowrap;animation:typing .6s steps(30,end) forwards,blink-caret .5s step-end 6 forwards;}
 @keyframes typing{from{width:0}to{width:100%}}
+
+/* ── ESCALATION EVENT OVERLAY ── */
+#escalation-overlay{position:fixed;inset:0;z-index:10000;display:none;flex-direction:column;align-items:center;justify-content:center;background:#000;cursor:pointer;}
+#escalation-overlay.active{display:flex;}
+.esc-bg{position:absolute;inset:0;background:var(--red);animation:escPulse 0.6s ease-in-out infinite alternate;}
+@keyframes escPulse{from{opacity:.15}to{opacity:.35}}
+.esc-scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.4) 3px,rgba(0,0,0,.4) 6px);pointer-events:none;}
+.esc-content{position:relative;text-align:center;padding:40px;}
+.esc-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:6px;color:var(--red);margin-bottom:16px;animation:blink 0.5s step-end infinite;}
+.esc-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,96px);letter-spacing:6px;color:#fff;line-height:1;text-shadow:0 0 40px rgba(192,57,43,.8),0 0 80px rgba(192,57,43,.4);animation:escFlicker 3s ease-in-out infinite;}
+@keyframes escFlicker{0%,100%{opacity:1}92%{opacity:1}93%{opacity:.4}94%{opacity:1}96%{opacity:.6}97%{opacity:1}}
+.esc-msg{font-family:'IBM Plex Mono',monospace;font-size:14px;letter-spacing:2px;color:#ccc;margin-top:20px;max-width:600px;line-height:1.8;white-space:pre-wrap;}
+.esc-dismiss{margin-top:32px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:#555;animation:blink 1.4s step-end infinite;}
+.esc-corner{position:absolute;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(192,57,43,.6);}
+.esc-corner.tl{top:20px;left:24px;}
+.esc-corner.tr{top:20px;right:24px;}
+.esc-corner.bl{bottom:20px;left:24px;}
+.esc-corner.br{bottom:20px;right:24px;}
+
+/* ── TRANSMISSION RECEIVED ── */
+#transmission-flash{position:fixed;top:0;left:0;right:0;z-index:9997;pointer-events:none;display:none;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:4px;color:#fff;background:var(--red);padding:8px 28px;text-align:center;}
+@keyframes transmissionIn{0%{opacity:0;transform:translateY(-100%)}15%{opacity:1;transform:translateY(0)}75%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-100%)}}
+
+/* ── FLAG WAVE ── */
+@keyframes flagWave{0%,100%{transform:rotate(0deg) scale(1)}25%{transform:rotate(-8deg) scale(1.1)}75%{transform:rotate(8deg) scale(1.1)}}
+.del-flag{display:inline-block;animation:flagWave 3s ease-in-out infinite;}
+.del-card:nth-child(2) .del-flag{animation-delay:.2s;}
+.del-card:nth-child(3) .del-flag{animation-delay:.4s;}
+.del-card:nth-child(4) .del-flag{animation-delay:.6s;}
+.del-card:nth-child(5) .del-flag{animation-delay:.8s;}
+.del-card:nth-child(6) .del-flag{animation-delay:1s;}
+.del-card:nth-child(7) .del-flag{animation-delay:1.2s;}
+.del-card:nth-child(8) .del-flag{animation-delay:.3s;}
+.del-card:nth-child(9) .del-flag{animation-delay:.5s;}
+.del-card:nth-child(10) .del-flag{animation-delay:.7s;}
+.del-card:nth-child(11) .del-flag{animation-delay:.9s;}
+.del-card:nth-child(12) .del-flag{animation-delay:1.1s;}
+.del-card:nth-child(13) .del-flag{animation-delay:.25s;}
+.del-card:nth-child(14) .del-flag{animation-delay:.45s;}
+.del-card:nth-child(15) .del-flag{animation-delay:.65s;}
+.del-card:nth-child(16) .del-flag{animation-delay:.85s;}
+.del-card:nth-child(17) .del-flag{animation-delay:1.05s;}
+.del-card:nth-child(18) .del-flag{animation-delay:.15s;}
+.del-card:nth-child(19) .del-flag{animation-delay:.35s;}
+.del-card:nth-child(20) .del-flag{animation-delay:.55s;}
+.del-card:nth-child(21) .del-flag{animation-delay:.75s;}
+.del-card:nth-child(22) .del-flag{animation-delay:.95s;}
+.del-card:nth-child(23) .del-flag{animation-delay:1.15s;}
+.del-card:nth-child(24) .del-flag{animation-delay:.1s;}
+
+/* ── DEFCON COLOR SHIFT ── */
+:root.defcon-1{--red:#ff0000;--red-dim:#8b0000;}
+:root.defcon-2{--red:#c0392b;--red-dim:#5a1a14;}
+:root.defcon-3{--red:#d4860a;--red-dim:#7a4d06;}
+:root.defcon-4{--red:#27ae60;--red-dim:#1e8449;}
+:root.defcon-5{--red:#3498db;--red-dim:#1a5276;}
+
+/* ── TIMELINE TYPEWRITER ── */
+.tl-body{font-size:13px;line-height:1.65;color:#bbb;}
+.tl-body strong{color:#e8e8e8;font-weight:500;}
+.tl-body.typing-out{color:transparent;}
+.tl-body.typing-out::after{content:attr(data-text);color:#bbb;white-space:pre-wrap;}
+
+/* crisis update line breaks */
+.update-body{white-space:pre-wrap;}
 @keyframes blink-caret{from,to{border-color:transparent}50%{border-color:var(--red)}}
 
 @media(max-width:768px){
@@ -270,6 +335,23 @@ header{box-shadow:0 0 18px 2px rgba(192,57,43,.35),0 0 40px 4px rgba(192,57,43,.
 </style>
 </head>
 <body>
+
+<div id="transmission-flash">⬛ INCOMING TRANSMISSION — CRISIS UPDATE RECEIVED</div>
+
+<div id="escalation-overlay" onclick="dismissEscalation()">
+  <div class="esc-bg"></div>
+  <div class="esc-scanlines"></div>
+  <div class="esc-corner tl" id="esc-ts"></div>
+  <div class="esc-corner tr">MENA CRISIS COMMITTEE</div>
+  <div class="esc-corner bl">CLASSIFICATION: URGENT</div>
+  <div class="esc-corner br">EYES OF ALL DELEGATIONS</div>
+  <div class="esc-content">
+    <div class="esc-tag">⚠ ESCALATION EVENT</div>
+    <div class="esc-title" id="esc-title">CRITICAL EVENT</div>
+    <div class="esc-msg" id="esc-msg"></div>
+    <div class="esc-dismiss">— CLICK ANYWHERE TO DISMISS —</div>
+  </div>
+</div>
 
 <div id="static-overlay"><canvas id="static-canvas"></canvas></div>
 
@@ -652,6 +734,17 @@ All delegations are expected to engage in good faith. Time is not a luxury we po
       </div>
     </div>
 
+    <div class="admin-wrap" style="border-color:var(--red);background:#0a0000;">
+      <h2 style="color:var(--red);">⚠ Escalation Event</h2>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:#666;margin-bottom:14px;">FULL-SCREEN TAKEOVER ON ALL DEVICES</div>
+      <div class="form-row single"><div><label>Event Title (large text)</label><input type="text" id="esc-title-input" placeholder="e.g. NUCLEAR LAUNCH DETECTED" value="ESCALATION DETECTED"></div></div>
+      <div class="form-row single"><div><label>Message</label><textarea id="esc-msg-input" style="min-height:80px;" placeholder="Describe the escalation event..."></textarea></div></div>
+      <div style="display:flex;gap:8px;margin-top:4px;">
+        <button class="btn btn-primary" onclick="triggerEscalation()" style="border-color:var(--red);background:var(--red-dim);flex:1;font-size:12px;padding:12px;">⚠ TRIGGER ESCALATION EVENT</button>
+        <button class="btn btn-sm" onclick="dismissEscalation()">Dismiss</button>
+      </div>
+    </div>
+
     <div class="admin-wrap">
       <h2>Post Crisis Update</h2>
       <div class="form-row">
@@ -790,7 +883,7 @@ function animateDefcon(){
   const target=sitState.defcon;
   const iv=setInterval(()=>{
     n--;el.textContent=n;
-    if(n<=target){clearInterval(iv);el.textContent=target;}
+    if(n<=target){clearInterval(iv);el.textContent=target;applyDefconColor(target);}
   },120);
 }
 
@@ -991,7 +1084,7 @@ function saveSitState(){
   animateBars();
   // Re-animate defcon
   const dn=document.getElementById('defcon-num');
-  if(dn){let n=9;dn.textContent=n;const target=sitState.defcon;const iv=setInterval(()=>{n--;dn.textContent=n;if(n<=target){clearInterval(iv);dn.textContent=target;}},120);}
+  if(dn){let n=9;dn.textContent=n;const target=sitState.defcon;const iv=setInterval(()=>{n--;dn.textContent=n;if(n<=target){clearInterval(iv);dn.textContent=target;applyDefconColor(target);}},120);}
   flash('sit-flash');
 }
 
@@ -1027,7 +1120,58 @@ function animateBars(){
   });
 }
 
-/* ── GLITCH TITLE ── */
+/* ── ESCALATION EVENT ── */
+function triggerEscalation(){
+  const title=document.getElementById('esc-title-input').value.trim()||'ESCALATION DETECTED';
+  const msg=document.getElementById('esc-msg-input').value.trim();
+  showEscalation(title,msg);
+}
+function showEscalation(title,msg){
+  document.getElementById('esc-title').textContent=title;
+  document.getElementById('esc-msg').textContent=msg;
+  // Update corner timestamp
+  const now=new Date();
+  document.getElementById('esc-ts').textContent=now.getHours()+':'+String(now.getMinutes()).padStart(2,'0')+' UTC';
+  document.getElementById('escalation-overlay').classList.add('active');
+}
+function dismissEscalation(){
+  document.getElementById('escalation-overlay').classList.remove('active');
+}
+
+/* ── TRANSMISSION FLASH ── */
+function showTransmissionFlash(){
+  const el=document.getElementById('transmission-flash');
+  el.style.display='block';
+  el.style.animation='none';
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      el.style.animation='transmissionIn 2.5s ease forwards';
+    });
+  });
+  setTimeout(()=>{el.style.display='none';el.style.animation='';},2600);
+}
+
+/* ── DEFCON COLOR SHIFT ── */
+function applyDefconColor(level){
+  const root=document.documentElement;
+  root.classList.remove('defcon-1','defcon-2','defcon-3','defcon-4','defcon-5');
+  root.classList.add('defcon-'+level);
+}
+
+/* ── TIMELINE TYPEWRITER ── */
+function animateTimeline(){
+  const items=document.querySelectorAll('.tl-body');
+  items.forEach((el,i)=>{
+    const text=el.innerHTML;
+    el.style.opacity='0';
+    setTimeout(()=>{
+      el.style.transition='opacity 0.3s';
+      el.style.opacity='1';
+    },i*180+400);
+  });
+}
+
+
 function triggerGlitch(){
   const el=document.getElementById('hd-title');
   if(!el)return;
@@ -1096,8 +1240,10 @@ function tickerBurst(){
 /* ── INIT ── */
 window.addEventListener('load',()=>{
   applySitState();
+  applyDefconColor(sitState.defcon);
   setTimeout(animateDefcon,600);
   setTimeout(animateBars,900);
+  setTimeout(animateTimeline,400);
   setTimeout(triggerGlitch,2200);
 });
 
@@ -1595,6 +1741,7 @@ window.postCrisisUpdate = function(doFlash) {
   ['cu-time','cu-title','cu-body','cu-source'].forEach(i => document.getElementById(i).value = '');
   flash('cu-flash');
   tickerBurst();
+  showTransmissionFlash();
   if (doFlash && sev !== 'eyes') {
     const s = sevMap[sev];
     showAlert(s.label, title, body);
@@ -1618,9 +1765,12 @@ window.deleteUpdate = function(fbKey) {
 
 onValue(ref(db, 'crisisUpdates'), snap => {
   const data = snap.val() || {};
-  // Convert to array sorted by ts
+  const prev = crisisUpdates.length;
   crisisUpdates = Object.entries(data).map(([key, v]) => ({ ...v, fbKey: key }));
   crisisUpdates.sort((a, b) => (a.ts || 0) - (b.ts || 0));
+  if (!adminUnlocked && crisisUpdates.length > prev && prev > 0) {
+    showTransmissionFlash();
+  }
   renderCrisisFeed();
 });
 
@@ -1860,14 +2010,38 @@ onValue(ref(db, 'sitState'), snap => {
   if (s.offramps) sitState.offramps = s.offramps;
   applySitState();
   animateBars();
+  applyDefconColor(sitState.defcon);
   // Animate defcon
   const dn = document.getElementById('defcon-num');
   if (dn) {
     let n = 9; dn.textContent = n;
     const target = sitState.defcon;
-    const iv = setInterval(() => { n--; dn.textContent = n; if (n <= target) { clearInterval(iv); dn.textContent = target; } }, 120);
+    const iv = setInterval(() => { n--; dn.textContent = n; if (n <= target) { clearInterval(iv); dn.textContent = target; applyDefconColor(target); } }, 120);
   }
   if (adminUnlocked) renderSitAdmin();
+});
+
+// ── ESCALATION EVENT SYNC ──
+window.triggerEscalation = function() {
+  const title = document.getElementById('esc-title-input').value.trim() || 'ESCALATION DETECTED';
+  const msg   = document.getElementById('esc-msg-input').value.trim();
+  showEscalation(title, msg);
+  set(ref(db, 'escalation'), { title, msg, active: true, ts: Date.now() });
+};
+
+window.dismissEscalation = function() {
+  document.getElementById('escalation-overlay').classList.remove('active');
+  if (adminUnlocked) set(ref(db, 'escalation'), { active: false, ts: Date.now() });
+};
+
+onValue(ref(db, 'escalation'), snap => {
+  if (!snap.val()) return;
+  const e = snap.val();
+  if (e.active && !adminUnlocked) {
+    showEscalation(e.title || 'ESCALATION DETECTED', e.msg || '');
+  } else if (!e.active) {
+    document.getElementById('escalation-overlay').classList.remove('active');
+  }
 });
 
 // ── TIMER SYNC ──
