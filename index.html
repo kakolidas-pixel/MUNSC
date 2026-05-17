@@ -365,6 +365,15 @@ header{box-shadow:0 0 18px 2px rgba(192,57,43,.35),0 0 40px 4px rgba(192,57,43,.
 .xpost-pinned-banner{display:flex;align-items:center;gap:6px;font-size:12px;color:#555;margin-bottom:6px;padding-left:56px;}
 .xpost-del-btn{margin-left:auto;background:none;border:none;color:#333;cursor:pointer;font-size:13px;padding:2px 8px;border-radius:4px;transition:all .15s;}
 .xpost-del-btn:hover{background:#1f0505;color:var(--red);}
+.xpost-pin-btn{background:none;border:none;color:#444;cursor:pointer;font-size:13px;padding:2px 6px;border-radius:4px;transition:all .15s;}
+.xpost-pin-btn:hover{background:#1a1a00;color:#ffd700;}
+.xpost-pin-btn.pinned{color:#ffd700;}
+.xpost-order-btns{display:flex;flex-direction:column;gap:1px;margin-left:auto;flex-shrink:0;}
+.xpost-move-btn{background:#1a1a1a;border:1px solid #2a2a2a;color:#888;cursor:pointer;font-size:10px;line-height:1;padding:2px 6px;border-radius:3px;transition:all .15s;font-family:monospace;}
+.xpost-move-btn:hover{background:#1d9bf0;border-color:#1d9bf0;color:#fff;}
+.xpost-move-btn:disabled{opacity:.2;cursor:default;}
+.xpost.reorder-flash{animation:reorder-flash .25s ease;}
+@keyframes reorder-flash{0%{background:#0d2a3a}100%{background:transparent}}
 /* Community note */
 .xpost-note{background:#0a1628;border:1px solid #1d3a5f;border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:13px;color:#8bb8e8;line-height:1.5;}
 .xpost-note-hd{font-weight:700;color:#1d9bf0;margin-bottom:3px;font-size:12px;}
@@ -2180,6 +2189,7 @@ function unlockAdmin(){
   renderCasualtyAdmin();
   renderAssetAdmin();
   renderDirectiveAdmin();
+  if(window.renderXitter) window.renderXitter();
 }
 
 function lockAdmin(){
@@ -2195,6 +2205,7 @@ function lockAdmin(){
   document.getElementById('speech-controls-unlocked').style.display='none';
   document.getElementById('rollcall-section').style.display='none';
   resetRollCallHighlights();
+  if(window.renderXitter) window.renderXitter();
 }
 
 function flash(id){const el=document.getElementById(id);if(!el)return;el.style.display='block';setTimeout(()=>el.style.display='none',3000);}
@@ -3342,6 +3353,9 @@ function fmtStatsModule(stats){
   return{likes:p[0]||'0',reposts:p[1]||'0',views:p[2]||'0'};
 }
 
+// Manual order override: array of post IDs in desired order (admins can drag)
+let xManualOrder = [];
+
 window.renderXitter = function() {
   const feed = document.getElementById('xpost-feed');
   if (!feed) return;
@@ -3353,12 +3367,23 @@ window.renderXitter = function() {
     feed.appendChild(empty);
     return;
   }
-  const sorted = [...xPosts].sort((a,b)=>{
-    if(a.pinned&&!b.pinned)return -1;
-    if(!a.pinned&&b.pinned)return 1;
-    return(b.ts||0)-(a.ts||0);
-  });
+
+  // Build sorted list: pinned first, then by manual order / timestamp
+  const pinnedPosts = xPosts.filter(p=>p.pinned);
+  const unpinnedPosts = xPosts.filter(p=>!p.pinned);
+
+  function applyManualOrder(arr) {
+    if (!xManualOrder.length) return arr.slice().sort((a,b)=>(b.ts||0)-(a.ts||0));
+    const ordered = [];
+    xManualOrder.forEach(id=>{ const p=arr.find(x=>x.id===id); if(p) ordered.push(p); });
+    arr.forEach(p=>{ if(!xManualOrder.includes(p.id)) ordered.push(p); });
+    return ordered;
+  }
+
+  const sorted = [...applyManualOrder(pinnedPosts), ...applyManualOrder(unpinnedPosts)];
+
   feed.innerHTML='';
+
   sorted.forEach(p=>{
     const st=fmtStatsModule(p.stats);
     const card=document.createElement('div');
@@ -3373,6 +3398,8 @@ window.renderXitter = function() {
       card.appendChild(banner);
       card.style.borderLeft='3px solid #1d4a6b';
     }
+
+    // no drag setup needed — using buttons instead
 
     const avatar=document.createElement('div');
     avatar.className='xpost-avatar';
@@ -3391,8 +3418,43 @@ window.renderXitter = function() {
     const time=document.createElement('span');time.className='xpost-time';time.textContent=fmtXTimeModule(p.ts);
     header.append(name,verif,handle,dot,time);
     if(adminUnlocked){
+      // Up/Down reorder buttons
+      const orderBtns=document.createElement('div');
+      orderBtns.className='xpost-order-btns';
+      const upBtn=document.createElement('button');
+      upBtn.className='xpost-move-btn';upBtn.textContent='▲';upBtn.title='Move up';
+      const downBtn=document.createElement('button');
+      downBtn.className='xpost-move-btn';downBtn.textContent='▼';downBtn.title='Move down';
+      const idx=sorted.indexOf(p);
+      if(idx===0) upBtn.disabled=true;
+      if(idx===sorted.length-1) downBtn.disabled=true;
+      upBtn.onclick=()=>{
+        const cards=[...feed.querySelectorAll('.xpost[data-id]')];
+        const ids=cards.map(c=>c.dataset.id);
+        const i=ids.indexOf(p.id);if(i<=0)return;
+        [ids[i-1],ids[i]]=[ids[i],ids[i-1]];
+        window._fbSaveOrder(ids);
+      };
+      downBtn.onclick=()=>{
+        const cards=[...feed.querySelectorAll('.xpost[data-id]')];
+        const ids=cards.map(c=>c.dataset.id);
+        const i=ids.indexOf(p.id);if(i<0||i>=ids.length-1)return;
+        [ids[i],ids[i+1]]=[ids[i+1],ids[i]];
+        window._fbSaveOrder(ids);
+      };
+      orderBtns.append(upBtn,downBtn);
+      header.appendChild(orderBtns);
+      // Pin/unpin button
+      const pinBtn=document.createElement('button');
+      pinBtn.className='xpost-pin-btn'+(p.pinned?' pinned':'');
+      pinBtn.title=p.pinned?'Unpin post':'Pin to top';
+      pinBtn.textContent='📌';
+      pinBtn.onclick=()=>window._fbTogglePin&&window._fbTogglePin(p.id,!p.pinned);
+      header.appendChild(pinBtn);
+      // Delete button
       const delBtn=document.createElement('button');
       delBtn.className='xpost-del-btn';delBtn.textContent='✕';
+      delBtn.title='Delete post';
       delBtn.onclick=()=>window._fbDeleteXpost&&window._fbDeleteXpost(p.id);
       header.appendChild(delBtn);
     }
@@ -3460,11 +3522,29 @@ window.postXitter = function() {
   flash('xpost-flash');
 };
 
-window._fbDeleteXpost=function(fbKey){remove(ref(db,'xPosts/'+fbKey));};
+window._fbDeleteXpost=function(fbKey){
+  remove(ref(db,'xPosts/'+fbKey));
+  // Remove from order too
+  xManualOrder=xManualOrder.filter(id=>id!==fbKey);
+  set(ref(db,'xPostOrder'),xManualOrder.length?xManualOrder:null);
+};
+
+window._fbTogglePin=function(fbKey,newPinned){update(ref(db,'xPosts/'+fbKey),{pinned:newPinned});};
+
+window._fbSaveOrder=function(orderArr){
+  xManualOrder=orderArr;
+  set(ref(db,'xPostOrder'),orderArr.length?orderArr:null);
+};
 
 onValue(ref(db,'xPosts'),snap=>{
   const data=snap.val()||{};
   xPosts=Object.entries(data).map(([id,v])=>({...v,id}));
+  renderXitter();
+});
+
+onValue(ref(db,'xPostOrder'),snap=>{
+  const data=snap.val();
+  xManualOrder=Array.isArray(data)?data:[];
   renderXitter();
 });
 
