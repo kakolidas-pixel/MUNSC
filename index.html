@@ -327,8 +327,20 @@ header{box-shadow:0 0 18px 2px rgba(192,57,43,.35),0 0 40px 4px rgba(192,57,43,.
 /* crisis update line breaks */
 .update-body{white-space:pre-wrap;}
 
+/* ── LIVE EVENT TIMELINE ── */
+.lt-entry{position:relative;display:flex;flex-direction:column;gap:3px;padding:8px 0;border-bottom:1px solid var(--border);animation:slideInTop .35s cubic-bezier(.16,1,.3,1) forwards;}
+.lt-entry:last-child{border-bottom:none;}
+.lt-dot{position:absolute;left:-17px;top:12px;width:8px;height:8px;border-radius:50%;flex-shrink:0;border:2px solid var(--bg);}
+.lt-dot.crit{background:var(--red);box-shadow:0 0 8px rgba(192,57,43,.7);}
+.lt-dot.warn{background:var(--amber);box-shadow:0 0 6px rgba(212,134,10,.5);}
+.lt-dot.info{background:var(--blue);}
+.lt-dot.resolved{background:var(--green-bright);}
+.lt-dot.eyes{background:var(--purple);}
+.lt-time{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#aaa;letter-spacing:1px;}
+.lt-title{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#ccc;line-height:1.4;}
+.lt-badge{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1.5px;padding:1px 5px;align-self:flex-start;}
+
 /* ── DOOMSDAY CLOCK ── */
-.doom-clock-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0;}
 .doom-clock-svg{filter:drop-shadow(0 0 12px rgba(192,57,43,.5));}
 .doom-mins-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);margin-top:10px;text-align:center;}
 .doom-mins-val{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;color:var(--red);text-align:center;line-height:1;}
@@ -516,11 +528,16 @@ header{box-shadow:0 0 18px 2px rgba(192,57,43,.35),0 0 40px 4px rgba(192,57,43,.
           <div>→ Qatar / Oman mediation</div>
         </div>
       </div>
+      <div class="stat-card" style="flex:1;min-height:0;">
+        <h3 style="display:flex;align-items:center;gap:8px;">Live Event Timeline <span class="live" style="font-size:8px;letter-spacing:2px;">● LIVE</span></h3>
+        <div id="live-timeline" style="position:relative;padding-left:22px;display:flex;flex-direction:column;gap:0;max-height:280px;overflow-y:auto;">
+          <div style="position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--red),#1a1a1a);pointer-events:none;"></div>
+          <div id="live-timeline-empty" style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);padding:8px 0;">Waiting for crisis updates...</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-<!-- DELEGATES -->
 <div id="tab-delegates" class="section">
   <div class="sec-label">Committee Composition — 24 Delegations · ⭐ P5 Observer Status</div>
   <div class="del-grid">
@@ -2410,6 +2427,97 @@ window._fbDeleteUpdate = function(fbKey) {
 };
 window.deleteUpdate = window._fbDeleteUpdate;
 
+// ── LIVE TIMELINE RENDERER ──
+const ltRenderedKeys = new Set(); // track which keys are already in the timeline
+
+function renderLiveTimeline() {
+  const container = document.getElementById('live-timeline');
+  if (!container) return;
+  const empty = document.getElementById('live-timeline-empty');
+  const visible = [...crisisUpdates].filter(u => u.sev !== 'eyes');
+
+  if (!visible.length) {
+    if (empty) empty.style.display = 'block';
+    container.querySelectorAll('.lt-entry').forEach(e => e.remove());
+    ltRenderedKeys.clear();
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+
+  const sevMap2 = {
+    critical: { cls:'crit', badge:'sev-critical', label:'CRITICAL' },
+    warning:  { cls:'warn', badge:'sev-warning',  label:'WARNING'  },
+    info:     { cls:'info', badge:'sev-info',      label:'INFO'     },
+    resolved: { cls:'resolved', badge:'sev-resolved', label:'RESOLVED' },
+    eyes:     { cls:'eyes', badge:'sev-eyes',      label:'EYES ONLY'},
+  };
+
+  // Remove entries that no longer exist (deletions)
+  const currentKeys = new Set(visible.map(u => u.fbKey));
+  container.querySelectorAll('.lt-entry[data-key]').forEach(el => {
+    if (!currentKeys.has(el.dataset.key)) {
+      // Fade out deleted entry
+      el.style.transition = 'opacity .3s, transform .3s';
+      el.style.opacity = '0';
+      el.style.transform = 'translateX(20px)';
+      setTimeout(() => el.remove(), 320);
+      ltRenderedKeys.delete(el.dataset.key);
+    }
+  });
+
+  // Add or update entries — newest at top
+  const reversed = [...visible].reverse();
+  reversed.forEach((u, i) => {
+    const key = u.fbKey;
+    const s = sevMap2[u.sev] || sevMap2.critical;
+    const isNew = !ltRenderedKeys.has(key);
+    const existingEl = container.querySelector(`.lt-entry[data-key="${key}"]`);
+
+    if (existingEl) {
+      // Update in place — title or severity may have changed
+      existingEl.querySelector('.lt-time').textContent = u.time || '—';
+      existingEl.querySelector('.lt-title').textContent = u.title || '';
+      const badge = existingEl.querySelector('.lt-badge');
+      badge.className = `lt-badge ${s.badge}`;
+      badge.textContent = s.label;
+      const dot = existingEl.querySelector('.lt-dot');
+      dot.className = `lt-dot ${s.cls}`;
+    } else {
+      // Brand new entry — build and animate
+      const entry = document.createElement('div');
+      entry.className = 'lt-entry';
+      entry.dataset.key = key;
+      if (isNew && ltRenderedKeys.size > 0) {
+        // Only animate if timeline already had entries (not initial load)
+        entry.style.opacity = '0';
+        entry.style.transform = 'translateY(-12px)';
+        entry.style.transition = 'none';
+      }
+      entry.innerHTML = `
+        <div class="lt-dot ${s.cls}"></div>
+        <div class="lt-time">${u.time || '—'}</div>
+        <div class="lt-title">${u.title || ''}</div>
+        <span class="lt-badge ${s.badge}">${s.label}</span>`;
+      // Insert at correct position (newest first = index 0 in reversed = top)
+      const ref2 = container.querySelectorAll('.lt-entry')[i];
+      if (ref2) container.insertBefore(entry, ref2);
+      else container.appendChild(entry);
+      ltRenderedKeys.add(key);
+      // Trigger slide-in animation for new entries
+      if (isNew && ltRenderedKeys.size > 1) {
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          entry.style.transition = 'opacity .35s ease, transform .35s cubic-bezier(.16,1,.3,1)';
+          entry.style.opacity = '1';
+          entry.style.transform = 'translateY(0)';
+        }));
+      } else {
+        entry.style.opacity = '1';
+        entry.style.transform = 'translateY(0)';
+      }
+    }
+  });
+}
+
 onValue(ref(db, 'crisisUpdates'), snap => {
   const data = snap.val() || {};
   const prev = crisisUpdates.length;
@@ -2418,10 +2526,10 @@ onValue(ref(db, 'crisisUpdates'), snap => {
   if (!adminUnlocked && crisisUpdates.length > prev && prev > 0) {
     showTransmissionFlash();
   }
-  // Only skip re-render if a form is open AND the user is actively focused in an input
   const editOpen = document.querySelector('.edit-form.open');
   const userTyping = editOpen && editOpen.contains(document.activeElement);
   if (!userTyping) renderCrisisFeed();
+  renderLiveTimeline();
 });
 
 // Override renderCrisisFeed to use fbKey
@@ -2469,11 +2577,14 @@ window.renderCrisisFeed = function() {
       </div>`;
     feed.appendChild(card);
     if (adminUnlocked) {
-      const w = card.querySelector('#cu-btns-' + key);
+      // Use direct DOM reference instead of querySelector to avoid ID selector issues
+      const btnsDiv = card.querySelector('[id^="cu-btns-"]');
       const eb = document.createElement('button'); eb.className = 'btn-edit'; eb.textContent = '✎ edit'; eb.onclick = () => toggleEdit(key);
-      const db2 = document.createElement('button'); db2.className = 'del-btn'; db2.style.float = 'none'; db2.textContent = '✕';
-      db2.onclick = () => { if(confirm('Delete this update?')) remove(ref(db, 'crisisUpdates/' + key)); };
-      w.appendChild(eb); w.appendChild(db2);
+      const delBtn = document.createElement('button'); delBtn.className = 'del-btn'; delBtn.style.float = 'none'; delBtn.textContent = '✕';
+      delBtn.onclick = () => {
+        remove(ref(db, 'crisisUpdates/' + key));
+      };
+      if (btnsDiv) { btnsDiv.appendChild(eb); btnsDiv.appendChild(delBtn); }
     }
   });
 };
