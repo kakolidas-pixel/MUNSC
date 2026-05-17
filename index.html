@@ -1049,23 +1049,8 @@ All delegations are expected to engage in good faith. Time is not a luxury we po
         <div>
           <label>Leader / Account</label>
           <select id="xpost-leader">
-            <option value="trump">🇺🇸 Donald J. Trump · @realDonaldTrump · 🔵</option>
-            <option value="netanyahu">🇮🇱 Benjamin Netanyahu · @IsraeliPM · 🔵</option>
-            <option value="khamenei">🇮🇷 Khamenei · @khamenei_ir · 🔵</option>
-            <option value="vance">🇺🇸 JD Vance · @JDVance · 🔵</option>
-            <option value="erdogan">🇹🇷 Recep Tayyip Erdoğan · @RTErdogan · 🔵</option>
-            <option value="putin">🇷🇺 Vladimir Putin · @KremlinRussia · 🔵</option>
-            <option value="xi">🇨🇳 Xi Jinping · @XiJinping_MFA · 🔵</option>
-            <option value="mashal">🇵🇸 Khaled Mashal · @KhaledMashal · ⬛</option>
-            <option value="nasrallah">🇱🇧 Hassan Nasrallah · @NasrallahSG · ⬛</option>
-            <option value="mbs">🇸🇦 MBS · @MohammedBinSalman · 🔵</option>
-            <option value="modi">🇮🇳 Narendra Modi · @narendramodi · 🔵</option>
-            <option value="custom">✏️ Custom Account...</option>
+            <!-- populated by rebuildLeaderSelect() -->
           </select>
-        </div>
-        <div id="xpost-custom-wrap" style="display:none;">
-          <label>Custom Name · @handle · emoji avatar</label>
-          <input type="text" id="xpost-custom-name" placeholder="e.g. 🇩🇪 Olaf Scholz · @OlafScholz · 🔵">
         </div>
       </div>
       <div class="form-row single"><div><label>Post Text</label><textarea id="xpost-text" style="min-height:90px;" placeholder="What's happening?"></textarea></div></div>
@@ -1078,6 +1063,24 @@ All delegations are expected to engage in good faith. Time is not a luxury we po
         <button class="btn" onclick="postXitter()" style="border-color:#1d9bf0;color:#1d9bf0;margin-left:auto;">Post to ✕itter →</button>
       </div>
       <div class="flash" id="xpost-flash">✓ Posted.</div>
+    </div>
+
+    <div class="admin-wrap" style="border-color:#1d9bf0;background:#030d18;">
+      <h2 style="color:#1d9bf0;">👤 Manage Accounts</h2>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:#555;margin-bottom:14px;">ADD · RENAME · DELETE ACCOUNTS AVAILABLE IN THE POST COMPOSER</div>
+      <div id="admin-accounts-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;"></div>
+      <button class="btn btn-sm" onclick="addAccountRow()" style="border-color:#1d9bf0;color:#1d9bf0;">+ Add Account</button>
+      <button class="btn btn-primary btn-sm" onclick="saveAccounts()" style="margin-left:8px;">Save Accounts →</button>
+      <div class="flash" id="accounts-flash">✓ Accounts saved.</div>
+    </div>
+
+    <div class="admin-wrap" style="border-color:#1d9bf0;background:#030d18;">
+      <h2 style="color:#1d9bf0;">🔵 Community Notes</h2>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:#555;margin-bottom:14px;">EDIT OR REMOVE FACT-CHECKS SHOWN UNDER POSTS · LEAVE BLANK TO REMOVE</div>
+      <div id="admin-notes-list" style="display:flex;flex-direction:column;gap:10px;margin-bottom:12px;"></div>
+      <button class="btn btn-sm" onclick="addCommunityNoteRow()" style="border-color:#1d9bf0;color:#1d9bf0;">+ Add Note</button>
+      <button class="btn btn-primary btn-sm" onclick="saveCommunityNotes()" style="margin-left:8px;">Save Notes →</button>
+      <div class="flash" id="notes-flash">✓ Community notes updated.</div>
     </div>
 
   </div><!-- end admin-content -->
@@ -2163,16 +2166,6 @@ function fmtStats(stats){ if(!stats)return{likes:'0',reposts:'0',views:'0'}; con
 function renderXitter(){ /* overridden by Firebase module */ }
 function deleteXpost(id){ if(window._fbDeleteXpost)window._fbDeleteXpost(id); }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const leaderSelect = document.getElementById('xpost-leader');
-  if (leaderSelect) {
-    leaderSelect.addEventListener('change', function(){
-      const wrap = document.getElementById('xpost-custom-wrap');
-      if (wrap) wrap.style.display = this.value === 'custom' ? 'block' : 'none';
-    });
-  }
-});
-
 
 function unlockAdmin(){
   adminUnlocked=true;
@@ -2190,6 +2183,8 @@ function unlockAdmin(){
   renderAssetAdmin();
   renderDirectiveAdmin();
   if(window.renderXitter) window.renderXitter();
+  if(window.renderCommunityNotesAdmin) window.renderCommunityNotesAdmin();
+  if(window.renderAccountsAdmin) window.renderAccountsAdmin();
 }
 
 function lockAdmin(){
@@ -3320,7 +3315,7 @@ onValue(ref(db, 'directives'), snap => {
 
 
 // ── XITTER SYNC ──
-const xLeaders = {
+let xLeaders = {
   trump:     { name:'Donald J. Trump',    handle:'@realDonaldTrump', avatar:'🇺🇸', verified:'🔵' },
   netanyahu: { name:'Benjamin Netanyahu', handle:'@IsraeliPM',       avatar:'🇮🇱', verified:'🔵' },
   khamenei:  { name:'Khamenei',           handle:'@khamenei_ir',     avatar:'🇮🇷', verified:'🔵' },
@@ -3334,7 +3329,7 @@ const xLeaders = {
   modi:      { name:'Narendra Modi',      handle:'@narendramodi',    avatar:'🇮🇳', verified:'🔵' },
 };
 
-const communityNotes = {
+let communityNotes = {
   '@realDonaldTrump': 'Readers added context: The United States is officially at DEFCON 2. Experts note this is not a TV show.',
   '@khamenei_ir': 'Readers added context: This account has been suspended 7 times and is currently under UN review.',
   '@KremlinRussia': "Readers added context: Russia has denied involvement in all events mentioned in this post, as well as several events that have not yet occurred.",
@@ -3506,15 +3501,9 @@ window.postXitter = function() {
   const stats=document.getElementById('xpost-stats').value.trim();
   const pinned=document.getElementById('xpost-pin').checked;
   if(!text){alert('Write something first.');return;}
-  let name,handle,avatar,verified;
-  if(leaderKey==='custom'){
-    const raw=document.getElementById('xpost-custom-name').value.trim();
-    const parts=raw.split('·').map(s=>s.trim());
-    avatar=parts[0]||'👤';name=parts[0]||'Unknown';handle=parts[1]||'@unknown';verified=parts[2]||'';
-  } else {
-    const l=xLeaders[leaderKey]||xLeaders.trump;
-    name=l.name;handle=l.handle;avatar=l.avatar;verified=l.verified;
-  }
+  const l=xLeaders[leaderKey];
+  if(!l){alert('Select an account first.');return;}
+  const {name,handle,avatar,verified}=l;
   const newRef=push(ref(db,'xPosts'));
   set(newRef,{name,handle,avatar,verified,text,imgUrl,stats,pinned,ts:Date.now()});
   ['xpost-text','xpost-img-url','xpost-stats'].forEach(id=>document.getElementById(id).value='');
@@ -3548,7 +3537,144 @@ onValue(ref(db,'xPostOrder'),snap=>{
   renderXitter();
 });
 
+// ── COMMUNITY NOTES ADMIN ──
+function renderCommunityNotesAdmin(){
+  const list=document.getElementById('admin-notes-list');
+  if(!list)return;
+  list.innerHTML='';
+  Object.entries(communityNotes).forEach(([handle,note])=>{
+    list.appendChild(makeCommunityNoteRow(handle,note));
+  });
+}
+window.renderCommunityNotesAdmin=renderCommunityNotesAdmin;
+
+function makeCommunityNoteRow(handle,note){
+  const row=document.createElement('div');
+  row.style.cssText='display:grid;grid-template-columns:180px 1fr auto;gap:8px;align-items:start;';
+  const h=document.createElement('input');
+  h.type='text';h.value=handle;h.placeholder='@handle';h.style.cssText='font-family:IBM Plex Mono,monospace;font-size:11px;';
+  const n=document.createElement('textarea');
+  n.value=note;n.placeholder='Note text (leave blank to remove)';
+  n.style.cssText='min-height:52px;font-size:12px;resize:vertical;';
+  const del=document.createElement('button');
+  del.className='btn btn-sm';del.textContent='✕';del.style.cssText='border-color:var(--red);color:var(--red);margin-top:0;padding:4px 8px;';
+  del.onclick=()=>row.remove();
+  row.append(h,n,del);
+  return row;
+}
+
+window.addCommunityNoteRow=function(){
+  const list=document.getElementById('admin-notes-list');
+  if(list) list.appendChild(makeCommunityNoteRow('',''));
+};
+
+window.saveCommunityNotes=function(){
+  const list=document.getElementById('admin-notes-list');
+  if(!list)return;
+  const rows=list.querySelectorAll('div');
+  const obj={};
+  rows.forEach(row=>{
+    const inputs=row.querySelectorAll('input,textarea');
+    if(inputs.length<2)return;
+    const handle=inputs[0].value.trim();
+    const note=inputs[1].value.trim();
+    if(handle&&note) obj[handle]=note;
+  });
+  set(ref(db,'communityNotes'),Object.keys(obj).length?obj:null);
+  flash('notes-flash');
+};
+
+onValue(ref(db,'communityNotes'),snap=>{
+  const data=snap.val();
+  if(data&&typeof data==='object') communityNotes=data;
+  if(adminUnlocked) renderCommunityNotesAdmin();
+  renderXitter();
+});
+
+// ── ACCOUNTS ADMIN ──
+function rebuildLeaderSelect(){
+  const sel=document.getElementById('xpost-leader');
+  if(!sel)return;
+  const prev=sel.value;
+  sel.innerHTML='';
+  Object.entries(xLeaders).forEach(([key,l])=>{
+    const opt=document.createElement('option');
+    opt.value=key;
+    opt.textContent=`${l.avatar} ${l.name} · ${l.handle} · ${l.verified||''}`;
+    sel.appendChild(opt);
+  });
+  if(prev&&xLeaders[prev]) sel.value=prev;
+}
+window.rebuildLeaderSelect=rebuildLeaderSelect;
+
+function renderAccountsAdmin(){
+  const list=document.getElementById('admin-accounts-list');
+  if(!list)return;
+  list.innerHTML='';
+  // header
+  const hdr=document.createElement('div');
+  hdr.style.cssText='display:grid;grid-template-columns:80px 160px 130px 90px auto;gap:6px;margin-bottom:2px;';
+  hdr.innerHTML='<span style="font-family:IBM Plex Mono,monospace;font-size:9px;color:#555;letter-spacing:1px;">AVATAR</span><span style="font-family:IBM Plex Mono,monospace;font-size:9px;color:#555;letter-spacing:1px;">DISPLAY NAME</span><span style="font-family:IBM Plex Mono,monospace;font-size:9px;color:#555;letter-spacing:1px;">@HANDLE</span><span style="font-family:IBM Plex Mono,monospace;font-size:9px;color:#555;letter-spacing:1px;">BADGE</span><span></span>';
+  list.appendChild(hdr);
+  Object.entries(xLeaders).forEach(([key,l])=>{
+    list.appendChild(makeAccountRow(key,l));
+  });
+}
+window.renderAccountsAdmin=renderAccountsAdmin;
+
+function makeAccountRow(key,l){
+  const row=document.createElement('div');
+  row.dataset.key=key;
+  row.style.cssText='display:grid;grid-template-columns:80px 160px 130px 90px auto;gap:6px;align-items:center;';
+  const avatar=document.createElement('input');avatar.type='text';avatar.value=l.avatar||'';avatar.placeholder='🇺🇸';avatar.style.cssText='font-size:18px;text-align:center;';
+  const name=document.createElement('input');name.type='text';name.value=l.name||'';name.placeholder='Display Name';name.style.cssText='font-size:12px;';
+  const handle=document.createElement('input');handle.type='text';handle.value=l.handle||'';handle.placeholder='@handle';handle.style.cssText='font-size:12px;font-family:IBM Plex Mono,monospace;';
+  const verSel=document.createElement('select');verSel.style.cssText='font-size:12px;padding:6px 4px;';
+  [['🔵','🔵 Blue'],['🟡','🟡 Gold'],['⬛','⬛ None'],['','No badge']].forEach(([v,t])=>{
+    const o=document.createElement('option');o.value=v;o.textContent=t;if(l.verified===v)o.selected=true;
+    verSel.appendChild(o);
+  });
+  const del=document.createElement('button');del.className='btn btn-sm';del.textContent='✕';
+  del.style.cssText='border-color:var(--red);color:var(--red);padding:4px 8px;';
+  del.onclick=()=>row.remove();
+  row.append(avatar,name,handle,verSel,del);
+  row._getKey=()=>key;
+  row._getData=()=>({avatar:avatar.value.trim(),name:name.value.trim(),handle:handle.value.trim(),verified:verSel.value});
+  return row;
+}
+
+window.addAccountRow=function(){
+  const list=document.getElementById('admin-accounts-list');
+  if(!list)return;
+  const key='account_'+Date.now();
+  list.appendChild(makeAccountRow(key,{avatar:'',name:'',handle:'',verified:'🔵'}));
+};
+
+window.saveAccounts=function(){
+  const list=document.getElementById('admin-accounts-list');
+  if(!list)return;
+  const rows=[...list.querySelectorAll('div[data-key]')];
+  const obj={};
+  rows.forEach(row=>{
+    const d=row._getData();
+    if(d.name&&d.handle){
+      const key=row.dataset.key||('account_'+Date.now());
+      obj[key]=d;
+    }
+  });
+  set(ref(db,'xLeaders'),Object.keys(obj).length?obj:null);
+  flash('accounts-flash');
+};
+
+onValue(ref(db,'xLeaders'),snap=>{
+  const data=snap.val();
+  if(data&&typeof data==='object') xLeaders=data;
+  rebuildLeaderSelect();
+  if(adminUnlocked) renderAccountsAdmin();
+});
+
 console.log('Firebase sync active');
+rebuildLeaderSelect();
 </script>
 </body>
 </html>
