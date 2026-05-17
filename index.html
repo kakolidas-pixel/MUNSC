@@ -327,7 +327,68 @@ header{box-shadow:0 0 18px 2px rgba(192,57,43,.35),0 0 40px 4px rgba(192,57,43,.
 /* crisis update line breaks */
 .update-body{white-space:pre-wrap;}
 
-/* ── LIVE EVENT TIMELINE ── */
+/* ── ✕ITTER REVAMP ── */
+.xitter-page{display:grid;grid-template-columns:1fr 340px;gap:32px;max-width:1100px;margin:0 auto;align-items:start;}
+.xitter-feed-col{border-right:1px solid #1e1e1e;padding-right:32px;}
+.xitter-sidebar{position:sticky;top:80px;}
+/* Header */
+.xitter-masthead{display:flex;align-items:center;gap:14px;padding:0 0 20px;border-bottom:1px solid #1e1e1e;margin-bottom:0;}
+.xitter-logo-big{font-size:36px;font-weight:900;color:#fff;letter-spacing:-3px;line-height:1;}
+.xitter-brand-tag{font-size:11px;color:#555;font-style:italic;margin-top:2px;}
+.xitter-tabs{display:flex;border-bottom:1px solid #1e1e1e;margin-bottom:4px;}
+.xitter-tab{flex:1;text-align:center;padding:14px 0;font-size:15px;font-weight:600;color:#555;cursor:default;position:relative;}
+.xitter-tab.active{color:#fff;}
+.xitter-tab.active::after{content:'';position:absolute;bottom:0;left:25%;right:25%;height:3px;background:#1d9bf0;border-radius:2px;}
+/* Posts */
+.xpost{padding:14px 16px;border-bottom:1px solid #1e1e1e;display:flex;gap:12px;transition:background .1s;}
+.xpost:hover{background:#0d0d0d;}
+.xpost-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;background:#111;border:2px solid #222;overflow:hidden;}
+.xpost-right{flex:1;min-width:0;}
+.xpost-header{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:2px;}
+.xpost-name{font-size:15px;font-weight:700;color:#fff;}
+.xpost-verified{font-size:14px;}
+.xpost-verified.blue{color:#1d9bf0;}
+.xpost-verified.gold{color:#ffd700;}
+.xpost-verified.grey{color:#666;}
+.xpost-handle{font-size:14px;color:#555;}
+.xpost-dot{color:#555;font-size:12px;}
+.xpost-time{font-size:13px;color:#555;}
+.xpost-body{font-size:15px;color:#e7e9ea;line-height:1.55;margin-bottom:10px;white-space:pre-wrap;word-break:break-word;}
+.xpost-body .xhash{color:#1d9bf0;}
+.xpost-body .xmention{color:#1d9bf0;}
+.xpost-img{width:100%;max-height:400px;object-fit:cover;border-radius:14px;border:1px solid #2a2a2a;margin-bottom:10px;display:block;}
+.xpost-actions{display:flex;gap:0;margin:0 -8px;}
+.xpost-action{display:flex;align-items:center;gap:6px;font-size:13px;color:#555;padding:6px 14px;border-radius:20px;cursor:default;transition:all .15s;flex:1;justify-content:center;}
+.xpost-action:hover{color:#1d9bf0;background:rgba(29,155,240,.1);}
+.xpost-action.heart:hover{color:#f91880;background:rgba(249,24,128,.1);}
+.xpost-action.repost:hover{color:#00ba7c;background:rgba(0,186,124,.1);}
+.xpost-pinned-banner{display:flex;align-items:center;gap:6px;font-size:12px;color:#555;margin-bottom:6px;padding-left:56px;}
+.xpost-del-btn{margin-left:auto;background:none;border:none;color:#333;cursor:pointer;font-size:13px;padding:2px 8px;border-radius:4px;transition:all .15s;}
+.xpost-del-btn:hover{background:#1f0505;color:var(--red);}
+/* Community note */
+.xpost-note{background:#0a1628;border:1px solid #1d3a5f;border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:13px;color:#8bb8e8;line-height:1.5;}
+.xpost-note-hd{font-weight:700;color:#1d9bf0;margin-bottom:3px;font-size:12px;}
+/* Sidebar */
+.xitter-sidebar-box{background:#0d0d0d;border:1px solid #1e1e1e;border-radius:16px;padding:16px;margin-bottom:16px;}
+.xitter-sidebar-hd{font-size:19px;font-weight:800;color:#fff;margin-bottom:12px;}
+.xitter-trend-item{padding:10px 0;border-bottom:1px solid #1a1a1a;cursor:default;transition:background .1s;}
+.xitter-trend-item:hover{background:#111;margin:0 -16px;padding:10px 16px;}
+.xitter-trend-item:last-child{border-bottom:none;}
+.xitter-trend-cat{font-size:12px;color:#555;}
+.xitter-trend-tag{font-size:15px;font-weight:700;color:#fff;margin:1px 0;}
+.xitter-trend-posts{font-size:12px;color:#555;}
+.xitter-wtf-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #1a1a1a;}
+.xitter-wtf-item:last-child{border-bottom:none;}
+.xitter-wtf-av{width:40px;height:40px;border-radius:50%;background:#111;border:1px solid #222;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.xitter-wtf-name{font-size:15px;font-weight:700;color:#fff;display:flex;align-items:center;gap:4px;}
+.xitter-wtf-handle{font-size:13px;color:#555;}
+.xitter-wtf-btn{margin-left:auto;background:#fff;color:#000;border:none;border-radius:20px;padding:6px 16px;font-size:13px;font-weight:700;cursor:default;flex-shrink:0;}
+/* Empty state */
+.xpost-empty{text-align:center;padding:60px 20px;color:#555;font-size:15px;}
+.xpost-empty-icon{font-size:48px;margin-bottom:12px;}
+.xpost-empty-hd{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px;}
+@media(max-width:768px){.xitter-page{grid-template-columns:1fr;}.xitter-sidebar{display:none;}.xitter-feed-col{border-right:none;padding-right:0;}}
+
 .lt-entry{position:relative;display:flex;flex-direction:column;gap:3px;padding:8px 0;border-bottom:1px solid var(--border);animation:slideInTop .35s cubic-bezier(.16,1,.3,1) forwards;}
 .lt-entry:last-child{border-bottom:none;}
 .lt-dot{position:absolute;left:-17px;top:12px;width:8px;height:8px;border-radius:50%;flex-shrink:0;border:2px solid var(--bg);}
@@ -459,6 +520,7 @@ header{box-shadow:0 0 18px 2px rgba(192,57,43,.35),0 0 40px 4px rgba(192,57,43,.
     <button class="tab-btn" onclick="showTab('agenda',this)">Agenda</button>
     <button class="tab-btn" onclick="showTab('crisis',this)"><span class="dot dot-red"></span>Crisis Updates</button>
     <button class="tab-btn" onclick="showTab('press',this)"><span class="dot dot-amber"></span>Press Releases</button>
+    <button class="tab-btn" onclick="showTab('xitter',this)" style="color:#1d9bf0;">✕itter</button>
     <button class="tab-btn" onclick="showTab('clock',this)">Doomsday Clock</button>
     <button class="tab-btn" onclick="showTab('speakers',this)">Speakers</button>
     <button class="tab-btn" onclick="showTab('intel',this)" style="color:#a78bfa;border-color:var(--border);">🔐 Intel</button>
@@ -971,9 +1033,154 @@ All delegations are expected to engage in good faith. Time is not a luxury we po
       </div>
     </div>
 
+    <div class="admin-wrap" style="border-color:#1d9bf0;background:#030d18;">
+      <h2 style="color:#1d9bf0;">✕itter — Post as World Leader</h2>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:#555;margin-bottom:14px;">SYNCS TO ALL DEVICES IN REAL TIME</div>
+      <div class="form-row">
+        <div>
+          <label>Leader / Account</label>
+          <select id="xpost-leader">
+            <option value="trump">🇺🇸 Donald J. Trump · @realDonaldTrump · 🔵</option>
+            <option value="netanyahu">🇮🇱 Benjamin Netanyahu · @IsraeliPM · 🔵</option>
+            <option value="khamenei">🇮🇷 Khamenei · @khamenei_ir · 🔵</option>
+            <option value="vance">🇺🇸 JD Vance · @JDVance · 🔵</option>
+            <option value="erdogan">🇹🇷 Recep Tayyip Erdoğan · @RTErdogan · 🔵</option>
+            <option value="putin">🇷🇺 Vladimir Putin · @KremlinRussia · 🔵</option>
+            <option value="xi">🇨🇳 Xi Jinping · @XiJinping_MFA · 🔵</option>
+            <option value="mashal">🇵🇸 Khaled Mashal · @KhaledMashal · ⬛</option>
+            <option value="nasrallah">🇱🇧 Hassan Nasrallah · @NasrallahSG · ⬛</option>
+            <option value="mbs">🇸🇦 MBS · @MohammedBinSalman · 🔵</option>
+            <option value="modi">🇮🇳 Narendra Modi · @narendramodi · 🔵</option>
+            <option value="custom">✏️ Custom Account...</option>
+          </select>
+        </div>
+        <div id="xpost-custom-wrap" style="display:none;">
+          <label>Custom Name · @handle · emoji avatar</label>
+          <input type="text" id="xpost-custom-name" placeholder="e.g. 🇩🇪 Olaf Scholz · @OlafScholz · 🔵">
+        </div>
+      </div>
+      <div class="form-row single"><div><label>Post Text</label><textarea id="xpost-text" style="min-height:90px;" placeholder="What's happening?"></textarea></div></div>
+      <div class="form-row">
+        <div><label>Image URL (optional)</label><input type="text" id="xpost-img-url" placeholder="https://..."></div>
+        <div><label>Likes · Reposts · Views</label><input type="text" id="xpost-stats" placeholder="e.g. 48.2K · 12.1K · 2.4M"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <label style="display:flex;align-items:center;gap:6px;color:var(--muted);font-size:11px;letter-spacing:0;text-transform:none;cursor:pointer;"><input type="checkbox" id="xpost-pin"> 📌 Pin to top</label>
+        <button class="btn" onclick="postXitter()" style="border-color:#1d9bf0;color:#1d9bf0;margin-left:auto;">Post to ✕itter →</button>
+      </div>
+      <div class="flash" id="xpost-flash">✓ Posted.</div>
+    </div>
+
+  </div><!-- end admin-content -->
+</div><!-- end tab-admin -->
+
+<!-- XITTER TAB -->
+<div id="tab-xitter" class="section">
+  <div class="xitter-page">
+    <!-- FEED COLUMN -->
+    <div class="xitter-feed-col">
+      <div class="xitter-masthead">
+        <div>
+          <div class="xitter-logo-big">✕itter</div>
+          <div class="xitter-brand-tag">"where world leaders go to start wars" · not affiliated with any platform, probably</div>
+        </div>
+      </div>
+      <div class="xitter-tabs">
+        <div class="xitter-tab active">For You</div>
+        <div class="xitter-tab">Following</div>
+        <div class="xitter-tab">Breaking 🔴</div>
+      </div>
+      <div id="xpost-feed">
+        <div class="xpost-empty">
+          <div class="xpost-empty-icon">🌐</div>
+          <div class="xpost-empty-hd">Nothing yet.</div>
+          <div>World leaders are probably in a bunker. Check back soon.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="xitter-sidebar">
+      <div style="background:#111;border:1px solid #2a2a2a;border-radius:20px;padding:10px 16px;display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+        <span style="color:#555;font-size:16px;">🔍</span>
+        <span style="color:#555;font-size:15px;">Search ✕itter</span>
+      </div>
+      <div class="xitter-sidebar-box">
+        <div class="xitter-sidebar-hd">What's happening</div>
+        <div class="xitter-trend-item">
+          <div class="xitter-trend-cat">🔴 LIVE · Breaking News</div>
+          <div class="xitter-trend-tag">#DEFCON2</div>
+          <div class="xitter-trend-posts">847K posts · Nuclear weapons trending for the first time since 1983</div>
+        </div>
+        <div class="xitter-trend-item">
+          <div class="xitter-trend-cat">Politics · Trending</div>
+          <div class="xitter-trend-tag">#OperationSamsonShield</div>
+          <div class="xitter-trend-posts">2.1M posts</div>
+        </div>
+        <div class="xitter-trend-item">
+          <div class="xitter-trend-cat">World · Trending</div>
+          <div class="xitter-trend-tag">#MECrisis</div>
+          <div class="xitter-trend-posts">5.8M posts · Elon has thoughts</div>
+        </div>
+        <div class="xitter-trend-item">
+          <div class="xitter-trend-cat">Science · Trending</div>
+          <div class="xitter-trend-tag">#DoomsdayClock</div>
+          <div class="xitter-trend-posts">431K posts · 2 minutes to midnight</div>
+        </div>
+        <div class="xitter-trend-item">
+          <div class="xitter-trend-cat">Entertainment · Trending</div>
+          <div class="xitter-trend-tag">#VanceIsPresident</div>
+          <div class="xitter-trend-posts">12.4M posts · people are not okay</div>
+        </div>
+        <div class="xitter-trend-item">
+          <div class="xitter-trend-cat">Finance · Trending</div>
+          <div class="xitter-trend-tag">$OIL</div>
+          <div class="xitter-trend-posts">+340% · Strait of Hormuz closed</div>
+        </div>
+      </div>
+      <div class="xitter-sidebar-box">
+        <div class="xitter-sidebar-hd">Who to follow</div>
+        <div class="xitter-wtf-item">
+          <div class="xitter-wtf-av">🇺🇸</div>
+          <div>
+            <div class="xitter-wtf-name">Donald J. Trump <span style="color:#1d9bf0;font-size:13px;">✓</span></div>
+            <div class="xitter-wtf-handle">@realDonaldTrump · 94M followers</div>
+          </div>
+          <div class="xitter-wtf-btn">Follow</div>
+        </div>
+        <div class="xitter-wtf-item">
+          <div class="xitter-wtf-av">🇮🇷</div>
+          <div>
+            <div class="xitter-wtf-name">Khamenei <span style="color:#1d9bf0;font-size:13px;">✓</span></div>
+            <div class="xitter-wtf-handle">@khamenei_ir · 7.2M followers</div>
+          </div>
+          <div class="xitter-wtf-btn">Follow</div>
+        </div>
+        <div class="xitter-wtf-item">
+          <div class="xitter-wtf-av">🇷🇺</div>
+          <div>
+            <div class="xitter-wtf-name">Vladimir Putin <span style="color:#1d9bf0;font-size:13px;">✓</span></div>
+            <div class="xitter-wtf-handle">@KremlinRussia · 3.1M followers</div>
+          </div>
+          <div class="xitter-wtf-btn">Follow</div>
+        </div>
+        <div class="xitter-wtf-item">
+          <div class="xitter-wtf-av">💀</div>
+          <div>
+            <div class="xitter-wtf-name">Nuclear Warhead <span style="color:#ffd700;font-size:13px;">✓</span></div>
+            <div class="xitter-wtf-handle">@W88_Warhead · Satire account probably</div>
+          </div>
+          <div class="xitter-wtf-btn">Follow</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#333;line-height:2;padding:0 4px;">
+        Terms of Service · Privacy Policy · Cookie Policy<br>
+        © 2025 ✕itter Corp. (formerly Twotter Inc.)<br>
+        <span style="color:#222;">Posts may cause nuclear war. ✕itter is not liable.</span>
+      </div>
+    </div>
   </div>
 </div>
-<!-- ENDGAME OVERLAY -->
 <div id="endgame-overlay" onclick="dismissEndgame()">
   <div class="endgame-bg"></div>
   <div class="endgame-content">
@@ -1004,20 +1211,6 @@ All delegations are expected to engage in good faith. Time is not a luxury we po
   </div>
 </div>
 
-</main>
-
-<script>
-// Inject new tab sections from template into main
-document.addEventListener('DOMContentLoaded', () => {
-  const t = document.getElementById('new-sections');
-  if (t) {
-    const divs = t.content.querySelectorAll('.section, div[id^="tab-"]');
-    const main = document.querySelector('main');
-    divs.forEach(d => main.appendChild(d.cloneNode(true)));
-  }
-});
-</script>
-
 <!-- ASSET STATUS BOARD TAB -->
 <div id="tab-assets" class="section">
   <div class="sec-label">Asset Status Board — Live Operational Status</div>
@@ -1026,10 +1219,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <!-- DOOMSDAY CLOCK TAB -->
 <div id="tab-clock" class="section">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1000px;">
-    <div>
-      <div class="sec-label">Doomsday Clock</div>
-      <div class="doom-clock-wrap">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1000px;margin:0 auto;">
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <div class="sec-label" style="align-self:flex-start;">Doomsday Clock</div>
+      <div class="doom-clock-wrap" style="width:100%;align-items:center;">
         <svg id="doom-svg" class="doom-clock-svg" viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <radialGradient id="clockbg" cx="50%" cy="50%" r="50%">
@@ -1548,25 +1741,26 @@ let casualties=[
 ];
 let nextCasualtyId=7;
 
-function renderCasualtyGrid(){
+function renderCasualtyGrid(animate){
   const grid=document.getElementById('casualty-grid');
   if(!grid)return;
   grid.innerHTML='';
+  const shouldAnimate = animate && document.getElementById('tab-clock') && document.getElementById('tab-clock').classList.contains('active');
   casualties.forEach(c=>{
     const card=document.createElement('div');card.className='casualty-card';
-    card.innerHTML=`<div class="casualty-label">${c.icon} ${c.label}</div><div class="casualty-num ${c.color}" id="cnum-${c.id}">0</div><div class="casualty-sub">${c.label}</div>`;
+    card.innerHTML='<div class="casualty-label">'+c.icon+' '+c.label+'</div><div class="casualty-num '+c.color+'" id="cnum-'+c.id+'">'+c.value.toLocaleString()+'<span style="font-size:0.6em;opacity:0.7;">+</span></div>';
     grid.appendChild(card);
-    // Slot machine roll up to value
+    if(!shouldAnimate||c.value===0)return;
+    // Slot machine roll — only when tab is visible
     const el=card.querySelector('#cnum-'+c.id);
-    if(c.value===0){el.textContent='0';return;}
+    el.innerHTML='0<span style="font-size:0.6em;opacity:0.7;">+</span>';
     const duration=1200;const steps=40;
     const increment=c.value/steps;
     let current=0;let step=0;
     const iv=setInterval(()=>{
       step++;
       current=step===steps?c.value:Math.floor(increment*step);
-      el.textContent=current.toLocaleString();
-      // Briefly flash each digit change
+      el.innerHTML=current.toLocaleString()+'<span style="font-size:0.6em;opacity:0.7;">+</span>';
       el.style.opacity=0.6+Math.random()*0.4+'';
       if(step>=steps){clearInterval(iv);el.style.opacity='1';}
     },duration/steps);
@@ -1935,7 +2129,6 @@ window.addEventListener('load',()=>{
 
 function showTab(id,btn){
   if(id==='admin' && !adminUnlocked){
-    // Just show the lock screen, don't wipe anything
     document.getElementById('admin-lock').style.display='block';
     document.getElementById('admin-content').style.display='none';
   }
@@ -1943,6 +2136,8 @@ function showTab(id,btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
+  // Animate casualty numbers when clock tab opened
+  if(id==='clock') renderCasualtyGrid(true);
 }
 
 function checkAdminPw(){
@@ -1950,6 +2145,25 @@ function checkAdminPw(){
     unlockAdmin();
   } else {document.getElementById('pw-error').style.display='block';document.getElementById('admin-pw').value='';}
 }
+
+// ── XITTER ── (rendering handled in Firebase module to avoid HTML parser issues)
+let xPosts = [];
+let nextXId = 1;
+function fmtXTime(ts){ const d=new Date(ts); return d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})+' · '+d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}); }
+function fmtStats(stats){ if(!stats)return{likes:'0',reposts:'0',views:'0'}; const p=stats.split('·').map(s=>s.trim()); return{likes:p[0]||'0',reposts:p[1]||'0',views:p[2]||'0'}; }
+function renderXitter(){ /* overridden by Firebase module */ }
+function deleteXpost(id){ if(window._fbDeleteXpost)window._fbDeleteXpost(id); }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const leaderSelect = document.getElementById('xpost-leader');
+  if (leaderSelect) {
+    leaderSelect.addEventListener('change', function(){
+      const wrap = document.getElementById('xpost-custom-wrap');
+      if (wrap) wrap.style.display = this.value === 'custom' ? 'block' : 'none';
+    });
+  }
+});
+
 
 function unlockAdmin(){
   adminUnlocked=true;
@@ -2143,11 +2357,21 @@ function postCrisisUpdate(doFlash){
 }
 
 function showPRAdminBtns(){
+  // Hardcoded PRs (ids 1, 2)
   prIds.forEach(id=>{
     const w=document.getElementById('pr-admin-btns-'+id);if(!w)return;
     w.style.display='flex';if(w.children.length>0)return;
     const eb=document.createElement('button');eb.className='btn-edit btn-sm';eb.textContent='✎ edit';eb.onclick=()=>togglePREdit(id);
     const db=document.createElement('button');db.className='del-btn';db.textContent='✕';db.onclick=()=>deletePR(id);
+    w.appendChild(eb);w.appendChild(db);
+  });
+  // Firebase PRs — find all [data-fb] cards and inject if not already done
+  document.querySelectorAll('.pr-card[data-fb]').forEach(card=>{
+    const key=card.getAttribute('data-fb');
+    const w=card.querySelector('[id^="pr-admin-btns-"]');if(!w)return;
+    w.style.display='flex';if(w.children.length>0)return;
+    const eb=document.createElement('button');eb.className='btn-edit btn-sm';eb.textContent='✎ edit';eb.onclick=()=>togglePREdit(key);
+    const db=document.createElement('button');db.className='del-btn';db.textContent='✕';db.onclick=()=>{ if(window.deletePRfb) window.deletePRfb(key); };
     w.appendChild(eb);w.appendChild(db);
   });
 }
@@ -2301,10 +2525,10 @@ function addDirective(){
   const from=document.getElementById('bc-from').value.trim();
   const msg=document.getElementById('bc-msg').value.trim();if(!msg)return;
   const feed=document.getElementById('bc-feed');
-  if(feed.querySelector('div[style*="text-align"]'))feed.innerHTML='';
+  if(feed.firstChild && feed.firstChild.style && feed.firstChild.style.textAlign)feed.innerHTML='';
   const now=new Date();const t=now.getHours()+':'+String(now.getMinutes()).padStart(2,'0')+' UTC';
   const item=document.createElement('div');item.className='bc-item';
-  item.innerHTML=`<div class="bc-meta">${from||'UNKNOWN'} · ${t}</div><div class="bc-body">${msg}</div>`;
+  item.innerHTML='<div class="bc-meta">'+(from||'UNKNOWN')+' · '+t+'<\/div><div class="bc-body">'+msg+'<\/div>';
   feed.insertBefore(item,feed.firstChild);
   document.getElementById('bc-from').value='';document.getElementById('bc-msg').value='';
 }
@@ -2602,7 +2826,6 @@ window.postPressRelease = function() {
 };
 
 window.deletePRfb = function(key) {
-  if (!confirm('Delete this press release?')) return;
   remove(ref(db, 'pressReleases/' + key));
 };
 
@@ -2611,8 +2834,10 @@ window.savePRfb = function(key) {
   const title = document.getElementById('pr-et-' + key).value;
   const time  = document.getElementById('pr-etime-' + key).value;
   const body  = document.getElementById('pr-eb-' + key).value;
+  // Close form first so re-render doesn't get blocked
+  const form = document.getElementById('pr-edit-' + key);
+  if (form) form.classList.remove('open');
   update(ref(db, 'pressReleases/' + key), { from, title, time, body });
-  document.getElementById('pr-edit-' + key).classList.remove('open');
 };
 
 onValue(ref(db, 'pressReleases'), snap => {
@@ -2650,11 +2875,13 @@ onValue(ref(db, 'pressReleases'), snap => {
     // Insert before hardcoded PRs so newest Firebase PRs appear at the top
     feed.insertBefore(card, hardcoded || null);
     if (adminUnlocked) {
-      const w = card.querySelector('#pr-admin-btns-' + key);
-      w.style.display = 'flex';
-      const eb = document.createElement('button'); eb.className = 'btn-edit btn-sm'; eb.textContent = '✎ edit'; eb.onclick = () => togglePREdit(key);
-      const db2 = document.createElement('button'); db2.className = 'del-btn'; db2.textContent = '✕'; db2.onclick = () => deletePRfb(key);
-      w.appendChild(eb); w.appendChild(db2);
+      const w = card.querySelector('[id^="pr-admin-btns-"]');
+      if (w) {
+        w.style.display = 'flex';
+        const eb = document.createElement('button'); eb.className = 'btn-edit btn-sm'; eb.textContent = '✎ edit'; eb.onclick = () => togglePREdit(key);
+        const db2 = document.createElement('button'); db2.className = 'del-btn'; db2.textContent = '✕'; db2.onclick = () => deletePRfb(key);
+        w.appendChild(eb); w.appendChild(db2);
+      }
     }
   });
   if (adminUnlocked) showPRAdminBtns();
@@ -3078,6 +3305,167 @@ onValue(ref(db, 'directives'), snap => {
   if (!snap.val()) return;
   directives = snap.val();
   if (adminUnlocked) renderDirectiveAdmin();
+});
+
+
+// ── XITTER SYNC ──
+const xLeaders = {
+  trump:     { name:'Donald J. Trump',    handle:'@realDonaldTrump', avatar:'🇺🇸', verified:'🔵' },
+  netanyahu: { name:'Benjamin Netanyahu', handle:'@IsraeliPM',       avatar:'🇮🇱', verified:'🔵' },
+  khamenei:  { name:'Khamenei',           handle:'@khamenei_ir',     avatar:'🇮🇷', verified:'🔵' },
+  vance:     { name:'JD Vance',           handle:'@JDVance',         avatar:'🇺🇸', verified:'🔵' },
+  erdogan:   { name:'Recep Tayyip Erdoğan', handle:'@RTErdogan',     avatar:'🇹🇷', verified:'🔵' },
+  putin:     { name:'Vladimir Putin',     handle:'@KremlinRussia',   avatar:'🇷🇺', verified:'🔵' },
+  xi:        { name:'Xi Jinping',         handle:'@XiJinping_MFA',   avatar:'🇨🇳', verified:'🔵' },
+  mashal:    { name:'Khaled Mashal',      handle:'@KhaledMashal',    avatar:'🇵🇸', verified:'⬛' },
+  nasrallah: { name:'Hassan Nasrallah',   handle:'@NasrallahSG',     avatar:'🇱🇧', verified:'⬛' },
+  mbs:       { name:'MBS',               handle:'@MohammedBinSalman',avatar:'🇸🇦', verified:'🔵' },
+  modi:      { name:'Narendra Modi',      handle:'@narendramodi',    avatar:'🇮🇳', verified:'🔵' },
+};
+
+const communityNotes = {
+  '@realDonaldTrump': 'Readers added context: The United States is officially at DEFCON 2. Experts note this is not a TV show.',
+  '@khamenei_ir': 'Readers added context: This account has been suspended 7 times and is currently under UN review.',
+  '@KremlinRussia': "Readers added context: Russia has denied involvement in all events mentioned in this post, as well as several events that have not yet occurred.",
+  '@JDVance': 'Readers added context: JD Vance became Acting President approximately 4 hours ago.',
+  '@KhaledMashal': "Readers added context: ✕itter's Community Notes team has been evacuated.",
+  '@IsraeliPM': 'Readers added context: The Knesset is currently on fire. Literally.',
+};
+
+function fmtXTimeModule(ts){
+  const d = new Date(ts);
+  return d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}) + ' · ' + d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
+function fmtStatsModule(stats){
+  if(!stats)return{likes:'0',reposts:'0',views:'0'};
+  const p=stats.split('·').map(s=>s.trim());
+  return{likes:p[0]||'0',reposts:p[1]||'0',views:p[2]||'0'};
+}
+
+window.renderXitter = function() {
+  const feed = document.getElementById('xpost-feed');
+  if (!feed) return;
+  if (!xPosts.length) {
+    feed.innerHTML = '';
+    const empty = document.createElement('div');
+    empty.className = 'xpost-empty';
+    empty.innerHTML = '<div class="xpost-empty-icon">🌐</div><div class="xpost-empty-hd">Nothing yet.</div><div>World leaders are probably in a bunker. Check back soon.</div>';
+    feed.appendChild(empty);
+    return;
+  }
+  const sorted = [...xPosts].sort((a,b)=>{
+    if(a.pinned&&!b.pinned)return -1;
+    if(!a.pinned&&b.pinned)return 1;
+    return(b.ts||0)-(a.ts||0);
+  });
+  feed.innerHTML='';
+  sorted.forEach(p=>{
+    const st=fmtStatsModule(p.stats);
+    const card=document.createElement('div');
+    card.className='xpost';
+    card.dataset.id=p.id;
+    const verifiedClass=p.verified==='🔵'?'blue':p.verified==='🟡'?'gold':'grey';
+
+    if(p.pinned){
+      const banner=document.createElement('div');
+      banner.className='xpost-pinned-banner';
+      banner.innerHTML='📌 <span style="color:#555">Pinned post</span>';
+      card.appendChild(banner);
+      card.style.borderLeft='3px solid #1d4a6b';
+    }
+
+    const avatar=document.createElement('div');
+    avatar.className='xpost-avatar';
+    avatar.textContent=p.avatar;
+    card.appendChild(avatar);
+
+    const right=document.createElement('div');
+    right.className='xpost-right';
+
+    const header=document.createElement('div');
+    header.className='xpost-header';
+    const name=document.createElement('span');name.className='xpost-name';name.textContent=p.name;
+    const verif=document.createElement('span');verif.className='xpost-verified '+verifiedClass;verif.textContent=p.verified||'';
+    const handle=document.createElement('span');handle.className='xpost-handle';handle.textContent=p.handle;
+    const dot=document.createElement('span');dot.className='xpost-dot';dot.textContent='·';
+    const time=document.createElement('span');time.className='xpost-time';time.textContent=fmtXTimeModule(p.ts);
+    header.append(name,verif,handle,dot,time);
+    if(adminUnlocked){
+      const delBtn=document.createElement('button');
+      delBtn.className='xpost-del-btn';delBtn.textContent='✕';
+      delBtn.onclick=()=>window._fbDeleteXpost&&window._fbDeleteXpost(p.id);
+      header.appendChild(delBtn);
+    }
+    right.appendChild(header);
+
+    const body=document.createElement('div');
+    body.className='xpost-body';
+    body.innerHTML=(p.text||'')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/(#\w+)/g,'<span class="xhash">$1</span>')
+      .replace(/(@\w+)/g,'<span class="xmention">$1</span>')
+      .replace(/\n/g,'<br>');
+    right.appendChild(body);
+
+    if(p.imgUrl){
+      const img=document.createElement('img');
+      img.className='xpost-img';img.src=p.imgUrl;img.alt='';
+      img.onerror=()=>img.style.display='none';
+      right.appendChild(img);
+    }
+
+    const note=communityNotes[p.handle];
+    if(note){
+      const noteEl=document.createElement('div');
+      noteEl.className='xpost-note';
+      noteEl.innerHTML='<div class="xpost-note-hd">🔵 Community Note</div>'+note;
+      right.appendChild(noteEl);
+    }
+
+    const actions=document.createElement('div');
+    actions.className='xpost-actions';
+    const comments=Math.floor(Math.random()*9000+500).toLocaleString();
+    const repostEl=document.createElement('span');repostEl.className='xpost-action repost';repostEl.textContent='🔁 '+st.reposts;
+    const heartEl=document.createElement('span');heartEl.className='xpost-action heart';heartEl.textContent='❤️ '+st.likes;
+    const viewEl=document.createElement('span');viewEl.className='xpost-action';viewEl.textContent='📊 '+st.views;
+    const cmtEl=document.createElement('span');cmtEl.className='xpost-action';cmtEl.textContent='💬 '+comments;
+    const shareEl=document.createElement('span');shareEl.className='xpost-action';shareEl.textContent='↑';
+    actions.append(cmtEl,repostEl,heartEl,viewEl,shareEl);
+    right.appendChild(actions);
+    card.appendChild(right);
+    feed.appendChild(card);
+  });
+};
+
+window.postXitter = function() {
+  const leaderKey=document.getElementById('xpost-leader').value;
+  const text=document.getElementById('xpost-text').value.trim();
+  const imgUrl=document.getElementById('xpost-img-url').value.trim();
+  const stats=document.getElementById('xpost-stats').value.trim();
+  const pinned=document.getElementById('xpost-pin').checked;
+  if(!text){alert('Write something first.');return;}
+  let name,handle,avatar,verified;
+  if(leaderKey==='custom'){
+    const raw=document.getElementById('xpost-custom-name').value.trim();
+    const parts=raw.split('·').map(s=>s.trim());
+    avatar=parts[0]||'👤';name=parts[0]||'Unknown';handle=parts[1]||'@unknown';verified=parts[2]||'';
+  } else {
+    const l=xLeaders[leaderKey]||xLeaders.trump;
+    name=l.name;handle=l.handle;avatar=l.avatar;verified=l.verified;
+  }
+  const newRef=push(ref(db,'xPosts'));
+  set(newRef,{name,handle,avatar,verified,text,imgUrl,stats,pinned,ts:Date.now()});
+  ['xpost-text','xpost-img-url','xpost-stats'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('xpost-pin').checked=false;
+  flash('xpost-flash');
+};
+
+window._fbDeleteXpost=function(fbKey){remove(ref(db,'xPosts/'+fbKey));};
+
+onValue(ref(db,'xPosts'),snap=>{
+  const data=snap.val()||{};
+  xPosts=Object.entries(data).map(([id,v])=>({...v,id}));
+  renderXitter();
 });
 
 console.log('Firebase sync active');
