@@ -119,7 +119,7 @@ main{max-width:1300px;margin:0 auto;padding:28px;}
 .update-card.resolved{border-left-color:var(--green-bright);}
 .update-card.eyes-only{border-left-color:var(--purple);background:#0e0b14;}
 .update-meta{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;}
-.update-time{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
+.update-time{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#aaa;background:#1a1a1a;border:1px solid #2a2a2a;padding:2px 8px;letter-spacing:2px;}
 .update-severity{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;padding:2px 6px;}
 .sev-critical{background:#1f0505;color:var(--red);}
 .sev-warning{background:#1a1000;color:var(--amber);}
@@ -132,15 +132,17 @@ main{max-width:1300px;margin:0 auto;padding:28px;}
 .eyes-blur{filter:blur(5px);transition:filter .3s;cursor:pointer;user-select:none;}
 .eyes-blur:hover{filter:blur(0);}
 .eyes-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:#a78bfa;}
-.pr-feed{display:flex;flex-direction:column;gap:14px;margin-bottom:24px;}
+.pr-feed{display:flex;flex-direction:column;gap:16px;margin-bottom:24px;}
 .pr-card{background:var(--surface);border:1px solid var(--border);}
-.pr-header{padding:13px 17px 9px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
-.pr-from{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--amber);}
-.pr-title-text{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:2px;margin-top:3px;}
-.pr-time-txt{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap;}
-.pr-body-txt{padding:13px 17px;font-size:13px;line-height:1.75;color:#aaa;white-space:pre-wrap;}
+.pr-header{padding:16px 22px 12px;border-bottom:2px solid var(--border2);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;background:var(--surface2);}
+.pr-from{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--amber);text-transform:uppercase;margin-bottom:4px;}
+.pr-title-text{font-family:Georgia,serif;font-size:18px;color:#e8e8e8;font-weight:bold;line-height:1.3;}
+.pr-time-txt{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap;background:#1a1a1a;padding:3px 8px;border:1px solid var(--border2);}
+.pr-body-txt{padding:18px 22px;font-size:14px;line-height:1.85;color:#bbb;white-space:pre-wrap;font-family:Georgia,serif;}
 .pr-edit-form{background:#0d0d0d;border-top:1px solid var(--border2);padding:13px 17px;display:none;flex-direction:column;gap:9px;}
 .pr-edit-form.open{display:flex;}
+.pr-edit-form input,.pr-edit-form textarea,.pr-edit-form select{background:#0e0e0e;border-color:var(--border2);color:var(--text);}
+.pr-edit-form label{color:var(--muted);}
 .vote-board{display:flex;flex-direction:column;gap:13px;}
 .vote-item{background:var(--surface);border:1px solid var(--border);}
 .vote-header{padding:11px 15px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
@@ -324,6 +326,64 @@ header{box-shadow:0 0 18px 2px rgba(192,57,43,.35),0 0 40px 4px rgba(192,57,43,.
 
 /* crisis update line breaks */
 .update-body{white-space:pre-wrap;}
+
+/* ── DOOMSDAY CLOCK ── */
+.doom-clock-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0;}
+.doom-clock-svg{filter:drop-shadow(0 0 12px rgba(192,57,43,.5));}
+.doom-mins-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);margin-top:10px;text-align:center;}
+.doom-mins-val{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;color:var(--red);text-align:center;line-height:1;}
+
+/* ── CASUALTY COUNTER ── */
+.casualty-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:20px;}
+.casualty-card{background:var(--surface);border:1px solid var(--border);padding:14px;text-align:center;}
+.casualty-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:6px;}
+.casualty-num{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:2px;line-height:1;transition:color .3s,transform .1s,opacity .1s;display:block;}
+.casualty-num.red{color:var(--red);}
+.casualty-num.amber{color:var(--amber);}
+.casualty-num.green{color:var(--green-bright);}
+.casualty-num.white{color:#fff;}
+.casualty-sub{display:none;}
+
+/* ── ASSET STATUS BOARD ── */
+.asset-grid{display:flex;flex-direction:column;gap:8px;}
+.asset-row{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-left:3px solid #333;}
+.asset-row.operational{border-left-color:var(--green-bright);}
+.asset-row.damaged{border-left-color:var(--amber);}
+.asset-row.destroyed{border-left-color:var(--red);opacity:.6;}
+.asset-icon{font-size:18px;flex-shrink:0;}
+.asset-name{flex:1;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#ddd;letter-spacing:1px;}
+.asset-status-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;padding:3px 8px;}
+.status-operational{background:#071a0e;color:var(--green-bright);border:1px solid var(--green-bright);}
+.status-damaged{background:#1a1000;color:var(--amber);border:1px solid var(--amber);}
+.status-destroyed{background:#1f0505;color:var(--red);border:1px solid var(--red);}
+
+/* ── SECRET DIRECTIVES ── */
+#secret-overlay{position:fixed;inset:0;z-index:10001;background:#000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:32px;}
+#secret-overlay.active{display:flex;}
+.secret-lock{text-align:center;max-width:480px;width:100%;}
+.secret-lock-title{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:4px;color:var(--amber);margin-bottom:4px;}
+.secret-lock-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);margin-bottom:28px;}
+.secret-brief{display:none;max-width:700px;width:100%;animation:fadeIn .4s ease;}
+.secret-brief.active{display:block;}
+.secret-brief-header{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:4px;color:#fff;margin-bottom:4px;}
+.secret-brief-country{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--amber);margin-bottom:24px;}
+.secret-section{margin-bottom:20px;}
+.secret-section-title{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--red);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.secret-section-body{font-size:13px;line-height:1.8;color:#bbb;white-space:pre-wrap;}
+
+/* ── ENDGAME SCREEN ── */
+#endgame-overlay{position:fixed;inset:0;z-index:10002;display:none;flex-direction:column;align-items:center;justify-content:center;background:#000;cursor:pointer;}
+#endgame-overlay.active{display:flex;}
+.endgame-bg{position:absolute;inset:0;animation:endgameBg 4s ease-in-out infinite alternate;}
+@keyframes endgameBg{from{background:radial-gradient(ellipse at center,#0a0a0a 0%,#000 100%)}to{background:radial-gradient(ellipse at center,#111 0%,#000 100%)}}
+.endgame-content{position:relative;text-align:center;padding:40px;max-width:800px;}
+.endgame-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:6px;color:var(--muted);margin-bottom:16px;}
+.endgame-outcome{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,9vw,110px);letter-spacing:6px;line-height:1;margin-bottom:20px;animation:escFlicker 4s ease-in-out infinite;}
+.endgame-outcome.ceasefire{color:var(--green-bright);text-shadow:0 0 40px rgba(39,174,96,.5);}
+.endgame-outcome.escalated{color:var(--amber);text-shadow:0 0 40px rgba(212,134,10,.5);}
+.endgame-outcome.nuclear{color:var(--red);text-shadow:0 0 60px rgba(192,57,43,.8),0 0 120px rgba(192,57,43,.3);}
+.endgame-summary{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:1.5px;color:#888;line-height:1.9;white-space:pre-wrap;margin-bottom:28px;}
+.endgame-dismiss{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:#333;animation:blink 1.4s step-end infinite;}
 @keyframes blink-caret{from,to{border-color:transparent}50%{border-color:var(--red)}}
 
 @media(max-width:768px){
@@ -387,7 +447,9 @@ header{box-shadow:0 0 18px 2px rgba(192,57,43,.35),0 0 40px 4px rgba(192,57,43,.
     <button class="tab-btn" onclick="showTab('agenda',this)">Agenda</button>
     <button class="tab-btn" onclick="showTab('crisis',this)"><span class="dot dot-red"></span>Crisis Updates</button>
     <button class="tab-btn" onclick="showTab('press',this)"><span class="dot dot-amber"></span>Press Releases</button>
+    <button class="tab-btn" onclick="showTab('clock',this)">Doomsday Clock</button>
     <button class="tab-btn" onclick="showTab('speakers',this)">Speakers</button>
+    <button class="tab-btn" onclick="showTab('intel',this)" style="color:#a78bfa;border-color:var(--border);">🔐 Intel</button>
     <button class="tab-btn" onclick="showTab('admin',this)" style="margin-left:auto;color:var(--amber);border-left:1px solid var(--border);">⚙ Admin</button>
   </nav>
 </header>
@@ -745,6 +807,74 @@ All delegations are expected to engage in good faith. Time is not a luxury we po
       </div>
     </div>
 
+    <!-- ENDGAME -->
+    <div class="admin-wrap" style="border-color:#27ae60;background:#020a04;">
+      <h2 style="color:var(--green-bright);">🏁 Endgame Screen</h2>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:#555;margin-bottom:14px;">SESSION CONCLUSION — SYNCS TO ALL DEVICES</div>
+      <div class="form-row">
+        <div>
+          <label>Outcome</label>
+          <select id="endgame-outcome-select">
+            <option value="ceasefire">✅ Ceasefire Achieved</option>
+            <option value="escalated">⚠ Conflict Escalated</option>
+            <option value="nuclear">☢ Nuclear Exchange</option>
+          </select>
+        </div>
+        <div>
+          <label>Outcome Title (large text)</label>
+          <input type="text" id="endgame-title-input" placeholder="e.g. CEASEFIRE ACHIEVED" value="CEASEFIRE ACHIEVED">
+        </div>
+      </div>
+      <div class="form-row single"><div><label>Summary / Outcome Details</label><textarea id="endgame-summary-input" style="min-height:100px;" placeholder="Describe what happened, key decisions, final state..."></textarea></div></div>
+      <div style="display:flex;gap:8px;margin-top:4px;">
+        <button class="btn btn-success" onclick="triggerEndgame()" style="flex:1;font-size:12px;padding:12px;">🏁 CONCLUDE SESSION</button>
+        <button class="btn btn-sm" onclick="dismissEndgame()">Dismiss</button>
+      </div>
+    </div>
+
+    <!-- DOOMSDAY CLOCK -->
+    <div class="admin-wrap">
+      <h2>Doomsday Clock</h2>
+      <div class="form-row">
+        <div>
+          <label>Minutes to Midnight (0.5–11.5)</label>
+          <input type="number" id="doom-mins-input" value="2" min="0.5" max="11.5" step="0.5">
+        </div>
+        <div style="display:flex;align-items:flex-end;">
+          <button class="btn btn-primary" onclick="setDoomClock()" style="width:100%;">Set Clock →</button>
+        </div>
+      </div>
+      <div class="flash" id="doom-flash">✓ Clock updated.</div>
+    </div>
+
+    <!-- CASUALTY COUNTER -->
+    <div class="admin-wrap">
+      <h2>Casualty &amp; Strike Counter</h2>
+      <div id="admin-casualty-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;"></div>
+      <button class="btn btn-sm" onclick="addCasualtyCounter()">+ Add Counter</button>
+      <button class="btn btn-primary btn-sm" onclick="saveCasualtyCounters()" style="margin-left:8px;">Apply →</button>
+      <div class="flash" id="casualty-flash">✓ Counters updated.</div>
+    </div>
+
+    <!-- ASSET BOARD -->
+    <div class="admin-wrap">
+      <h2>Asset Status Board</h2>
+      <div id="admin-asset-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;"></div>
+      <button class="btn btn-sm" onclick="addAsset()">+ Add Asset</button>
+      <button class="btn btn-primary btn-sm" onclick="saveAssets()" style="margin-left:8px;">Apply →</button>
+      <div class="flash" id="asset-flash">✓ Assets updated.</div>
+    </div>
+
+    <!-- SECRET DIRECTIVES -->
+    <div class="admin-wrap" style="border-color:#4c1d95;background:#0a0514;">
+      <h2 style="color:#a78bfa;">🔐 Secret Directives</h2>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:#555;margin-bottom:14px;">DELEGATES ENTER THEIR CODE ON THE INTEL TAB TO ACCESS THEIR BRIEF</div>
+      <div id="admin-directives-list" style="display:flex;flex-direction:column;gap:12px;margin-bottom:12px;"></div>
+      <button class="btn btn-sm" onclick="addDirectiveEntry()" style="border-color:#a78bfa;color:#a78bfa;">+ Add Country Brief</button>
+      <button class="btn btn-primary btn-sm" onclick="saveDirectives()" style="margin-left:8px;">Save All →</button>
+      <div class="flash" id="directives-flash">✓ Directives saved.</div>
+    </div>
+
     <div class="admin-wrap">
       <h2>Post Crisis Update</h2>
       <div class="form-row">
@@ -822,6 +952,210 @@ All delegations are expected to engage in good faith. Time is not a luxury we po
 
   </div>
 </div>
+<!-- ENDGAME OVERLAY -->
+<div id="endgame-overlay" onclick="dismissEndgame()">
+  <div class="endgame-bg"></div>
+  <div class="endgame-content">
+    <div class="endgame-tag">MENA EMERGENCY CRISIS COMMITTEE — SESSION CONCLUDED</div>
+    <div class="endgame-outcome" id="endgame-outcome">CEASEFIRE</div>
+    <div class="endgame-summary" id="endgame-summary"></div>
+    <div class="endgame-dismiss">— CLICK ANYWHERE TO DISMISS —</div>
+  </div>
+</div>
+
+<!-- SECRET DIRECTIVE OVERLAY -->
+<div id="secret-overlay">
+  <div class="secret-lock" id="secret-lock-panel">
+    <div class="secret-lock-title">🔐 CLASSIFIED INTEL</div>
+    <div class="secret-lock-sub">ENTER YOUR DELEGATION CODE</div>
+    <input type="text" id="secret-code-input" placeholder="e.g. 🇺🇸I" style="text-align:center;font-size:18px;letter-spacing:4px;margin-bottom:14px;background:#0a0a0a;border-color:#333;" onkeydown="if(event.key==='Enter')unlockSecret()">
+    <button class="btn btn-primary" onclick="unlockSecret()" style="width:100%;margin-bottom:12px;">Access Briefing →</button>
+    <div id="secret-error" style="display:none;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--red);margin-top:8px;">✕ Invalid code.</div>
+    <button class="btn btn-sm" onclick="closeSecret()" style="margin-top:16px;width:100%;">← Back to Committee</button>
+  </div>
+  <div class="secret-brief" id="secret-brief-panel">
+    <div class="secret-brief-header" id="sb-flag-name"></div>
+    <div class="secret-brief-country" id="sb-country"></div>
+    <div class="secret-section"><div class="secret-section-title">OBJECTIVES</div><div class="secret-section-body" id="sb-objectives"></div></div>
+    <div class="secret-section"><div class="secret-section-title">RED LINES</div><div class="secret-section-body" id="sb-redlines"></div></div>
+    <div class="secret-section"><div class="secret-section-title">CLASSIFIED INTEL</div><div class="secret-section-body" id="sb-intel"></div></div>
+    <button class="btn btn-sm" onclick="closeSecret()" style="margin-top:8px;">← Back to Committee</button>
+  </div>
+</div>
+
+</main>
+
+<script>
+// Inject new tab sections from template into main
+document.addEventListener('DOMContentLoaded', () => {
+  const t = document.getElementById('new-sections');
+  if (t) {
+    const divs = t.content.querySelectorAll('.section, div[id^="tab-"]');
+    const main = document.querySelector('main');
+    divs.forEach(d => main.appendChild(d.cloneNode(true)));
+  }
+});
+</script>
+
+<!-- ASSET STATUS BOARD TAB -->
+<div id="tab-assets" class="section">
+  <div class="sec-label">Asset Status Board — Live Operational Status</div>
+  <div class="asset-grid" id="asset-grid"></div>
+</div>
+
+<!-- DOOMSDAY CLOCK TAB -->
+<div id="tab-clock" class="section">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1000px;">
+    <div>
+      <div class="sec-label">Doomsday Clock</div>
+      <div class="doom-clock-wrap">
+        <svg id="doom-svg" class="doom-clock-svg" viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="clockbg" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#111"/>
+              <stop offset="100%" stop-color="#050505"/>
+            </radialGradient>
+            <filter id="hand-glow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="midnight-glow">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- Clock face -->
+          <circle cx="150" cy="150" r="142" fill="#050505" stroke="#1a1a1a" stroke-width="1"/>
+          <circle cx="150" cy="150" r="138" fill="url(#clockbg)" stroke="#2a2a2a" stroke-width="1"/>
+          <circle cx="150" cy="150" r="132" fill="none" stroke="#1a1a1a" stroke-width="0.5"/>
+          <!-- Hour tick marks -->
+          <g id="clock-hour-ticks" stroke="#333" stroke-width="2" stroke-linecap="round">
+            <line x1="150" y1="18" x2="150" y2="32"/>
+            <line x1="220" y1="34" x2="213" y2="46" transform="rotate(30,150,150)"/>
+            <line x1="220" y1="34" x2="213" y2="46" transform="rotate(60,150,150)"/>
+            <line x1="220" y1="34" x2="213" y2="46" transform="rotate(90,150,150)"/>
+            <line x1="220" y1="34" x2="213" y2="46" transform="rotate(120,150,150)"/>
+            <line x1="220" y1="34" x2="213" y2="46" transform="rotate(150,150,150)"/>
+            <line x1="220" y1="34" x2="213" y2="46" transform="rotate(180,150,150)"/>
+            <line x1="220" y1="34" x2="213" y2="46" transform="rotate(210,150,150)"/>
+            <line x1="220" y1="34" x2="213" y2="46" transform="rotate(240,150,150)"/>
+            <line x1="220" y1="34" x2="213" y2="46" transform="rotate(270,150,150)"/>
+            <line x1="220" y1="34" x2="213" y2="46" transform="rotate(300,150,150)"/>
+            <line x1="220" y1="34" x2="213" y2="46" transform="rotate(330,150,150)"/>
+          </g>
+          <!-- Minute tick marks -->
+          <g stroke="#1e1e1e" stroke-width="1" stroke-linecap="round">
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(6,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(12,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(18,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(24,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(36,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(42,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(48,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(54,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(66,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(72,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(78,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(84,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(96,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(102,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(108,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(114,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(126,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(132,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(138,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(144,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(156,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(162,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(168,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(174,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(186,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(192,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(198,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(204,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(216,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(222,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(228,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(234,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(246,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(252,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(258,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(264,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(276,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(282,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(288,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(294,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(306,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(312,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(318,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(324,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(336,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(342,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(348,150,150)"/>
+            <line x1="150" y1="18" x2="150" y2="24" transform="rotate(354,150,150)"/>
+          </g>
+          <!-- Midnight marker — red -->
+          <line x1="150" y1="18" x2="150" y2="36" stroke="#c0392b" stroke-width="3" filter="url(#midnight-glow)"/>
+          <text x="150" y="54" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="#c0392b" letter-spacing="2" filter="url(#midnight-glow)">MIDNIGHT</text>
+          <!-- Hour numbers -->
+          <text x="150" y="82" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#333">12</text>
+          <text x="218" y="154" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#333">3</text>
+          <text x="150" y="226" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#333">6</text>
+          <text x="82" y="154" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#333">9</text>
+          <!-- Clock hand with glow -->
+          <line id="doom-hand-glow" x1="150" y1="150" x2="150" y2="36" stroke="#c0392b" stroke-width="6" stroke-linecap="round" opacity="0.25" style="transform-origin:150px 150px;transition:transform 1.2s cubic-bezier(.16,1,.3,1);"/>
+          <line id="doom-hand" x1="150" y1="150" x2="150" y2="36" stroke="#e8e8e8" stroke-width="2.5" stroke-linecap="round" style="transform-origin:150px 150px;transition:transform 1.2s cubic-bezier(.16,1,.3,1);" filter="url(#hand-glow)"/>
+          <!-- Short hand (decorative) -->
+          <line x1="150" y1="150" x2="150" y2="90" stroke="#555" stroke-width="4" stroke-linecap="round" style="transform-origin:150px 150px;" transform="rotate(180)"/>
+          <!-- Center -->
+          <circle cx="150" cy="150" r="7" fill="#c0392b"/>
+          <circle cx="150" cy="150" r="3.5" fill="#111"/>
+          <!-- Committee text around face -->
+          <text x="150" y="272" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="#222" letter-spacing="3">BULLETIN OF THE ATOMIC SCIENTISTS</text>
+        </svg>
+        <div class="doom-mins-val" id="doom-mins-display">2</div>
+        <div class="doom-mins-label" style="margin-top:4px;">MINUTES TO MIDNIGHT</div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-label">Casualty &amp; Strike Counter</div>
+      <div class="casualty-grid" id="casualty-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECRET INTEL TAB -->
+<div id="tab-intel" class="section">
+  <div id="intel-lock-panel" style="max-width:460px;margin:60px auto;text-align:center;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:4px;color:var(--amber);margin-bottom:8px;">🔐 Classified Intel</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:28px;">ENTER YOUR DELEGATION CODE TO ACCESS YOUR COUNTRY BRIEF</div>
+    <input type="text" id="intel-code-input" placeholder="Enter delegation code" style="text-align:center;font-size:16px;letter-spacing:4px;margin-bottom:14px;background:#0a0a0a;border-color:#333;" onkeydown="if(event.key==='Enter')unlockIntelTab()">
+    <button class="btn btn-primary" onclick="unlockIntelTab()" style="width:100%;margin-bottom:12px;">Access Briefing →</button>
+    <div id="intel-error" style="display:none;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--red);margin-top:8px;">✕ Invalid code. Check with your chair.</div>
+  </div>
+  <div id="intel-brief-content" style="display:none;max-width:720px;animation:fadeIn .4s ease;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:4px;color:#fff;line-height:1;" id="ib-flag-name"></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--amber);margin-top:4px;" id="ib-country"></div>
+      </div>
+      <button class="btn btn-sm" onclick="lockIntelTab()">🔐 Lock</button>
+    </div>
+    <div style="margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--red);padding:16px 18px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--red);margin-bottom:10px;">OBJECTIVES</div>
+      <div style="font-size:13px;line-height:1.85;color:#bbb;white-space:pre-wrap;" id="ib-objectives"></div>
+    </div>
+    <div style="margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--amber);padding:16px 18px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--amber);margin-bottom:10px;">RED LINES</div>
+      <div style="font-size:13px;line-height:1.85;color:#bbb;white-space:pre-wrap;" id="ib-redlines"></div>
+    </div>
+    <div style="margin-bottom:20px;background:var(--surface);border:1px solid #2a1a2e;border-left:3px solid var(--purple);padding:16px 18px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:#a78bfa;margin-bottom:10px;">CLASSIFIED INTEL</div>
+      <div style="font-size:13px;line-height:1.85;color:#bbb;white-space:pre-wrap;" id="ib-intel"></div>
+    </div>
+  </div>
+</div>
+
 </main>
 
 <script>
@@ -1120,7 +1454,301 @@ function animateBars(){
   });
 }
 
-/* ── ESCALATION EVENT ── */
+/* ── ENDGAME SCREEN ── */
+function triggerEndgame(){
+  const outcome=document.getElementById('endgame-outcome-select').value;
+  const title=document.getElementById('endgame-title-input').value.trim()||'SESSION CONCLUDED';
+  const summary=document.getElementById('endgame-summary-input').value.trim();
+  showEndgame(outcome,title,summary);
+}
+function showEndgame(outcome,title,summary){
+  const el=document.getElementById('endgame-overlay');
+  const ot=document.getElementById('endgame-outcome');
+  const os=document.getElementById('endgame-summary');
+  ot.textContent=title;
+  ot.className='endgame-outcome '+outcome;
+  os.textContent=summary;
+  el.classList.add('active');
+}
+function dismissEndgame(){
+  document.getElementById('endgame-overlay').classList.remove('active');
+}
+
+/* ── DOOMSDAY CLOCK ── */
+let doomMins=2;
+function setDoomClock(mins){
+  if(mins===undefined)mins=parseFloat(document.getElementById('doom-mins-input').value)||2;
+  doomMins=Math.max(0.5,Math.min(11.5,mins));
+  updateDoomClockDisplay();
+  flash('doom-flash');
+}
+function updateDoomClockDisplay(){
+  const hand=document.getElementById('doom-hand');
+  const handGlow=document.getElementById('doom-hand-glow');
+  const display=document.getElementById('doom-mins-display');
+  if(!hand)return;
+  const deg=(doomMins/60)*360;
+  const transform=`rotate(${-deg}deg)`;
+  hand.style.transform=transform;
+  if(handGlow){
+    handGlow.style.transform=transform;
+    // More glow and red tint when close to midnight (under 3 mins)
+    if(doomMins<=3){
+      hand.style.stroke='#e84545';
+      handGlow.style.opacity='0.6';
+      handGlow.style.stroke='#c0392b';
+      handGlow.style.strokeWidth='10';
+      if(display)display.style.color='var(--red)';
+    } else if(doomMins<=5){
+      hand.style.stroke='#e0c0a0';
+      handGlow.style.opacity='0.35';
+      handGlow.style.stroke='#c0392b';
+      handGlow.style.strokeWidth='7';
+      if(display)display.style.color='var(--amber)';
+    } else {
+      hand.style.stroke='#e8e8e8';
+      handGlow.style.opacity='0.2';
+      handGlow.style.stroke='#c0392b';
+      handGlow.style.strokeWidth='6';
+      if(display)display.style.color='var(--red)';
+    }
+  }
+  if(display)display.textContent=doomMins%1===0?doomMins:doomMins.toFixed(1);
+}
+
+/* ── CASUALTY COUNTERS ── */
+let casualties=[
+  {id:1,label:'Missiles Intercepted',value:0,color:'green',icon:'🛡'},
+  {id:2,label:'Missiles Impacted',value:0,color:'red',icon:'💥'},
+  {id:3,label:'Confirmed Casualties',value:0,color:'red',icon:'☠'},
+  {id:4,label:'Cities Struck',value:0,color:'amber',icon:'🏙'},
+  {id:5,label:'Aircraft Downed',value:0,color:'amber',icon:'✈'},
+  {id:6,label:'Naval Assets Lost',value:0,color:'white',icon:'⚓'},
+];
+let nextCasualtyId=7;
+
+function renderCasualtyGrid(){
+  const grid=document.getElementById('casualty-grid');
+  if(!grid)return;
+  grid.innerHTML='';
+  casualties.forEach(c=>{
+    const card=document.createElement('div');card.className='casualty-card';
+    card.innerHTML=`<div class="casualty-label">${c.icon} ${c.label}</div><div class="casualty-num ${c.color}" id="cnum-${c.id}">0</div><div class="casualty-sub">${c.label}</div>`;
+    grid.appendChild(card);
+    // Slot machine roll up to value
+    const el=card.querySelector('#cnum-'+c.id);
+    if(c.value===0){el.textContent='0';return;}
+    const duration=1200;const steps=40;
+    const increment=c.value/steps;
+    let current=0;let step=0;
+    const iv=setInterval(()=>{
+      step++;
+      current=step===steps?c.value:Math.floor(increment*step);
+      el.textContent=current.toLocaleString();
+      // Briefly flash each digit change
+      el.style.opacity=0.6+Math.random()*0.4+'';
+      if(step>=steps){clearInterval(iv);el.style.opacity='1';}
+    },duration/steps);
+  });
+}
+
+function animateCasualtyNum(id, oldVal, newVal){
+  const el=document.getElementById('cnum-'+id);
+  if(!el)return;
+  const diff=newVal-oldVal;
+  if(diff===0)return;
+  const steps=30;const duration=800;
+  let step=0;
+  const iv=setInterval(()=>{
+    step++;
+    const val=Math.round(oldVal+(diff/steps)*step);
+    el.textContent=val.toLocaleString();
+    el.style.transform=`translateY(${(1-step/steps)*-8}px)`;
+    el.style.opacity=0.5+0.5*(step/steps)+'';
+    if(step>=steps){
+      clearInterval(iv);
+      el.textContent=newVal.toLocaleString();
+      el.style.transform='translateY(0)';
+      el.style.opacity='1';
+    }
+  },duration/steps);
+}
+
+function renderCasualtyAdmin(){
+  const el=document.getElementById('admin-casualty-list');if(!el)return;
+  el.innerHTML='';
+  casualties.forEach((c,i)=>{
+    const row=document.createElement('div');
+    row.style.cssText='display:grid;grid-template-columns:28px 1fr 90px 90px 28px;gap:7px;align-items:center;';
+    row.innerHTML=`
+      <input type="text" id="ci-icon-${c.id}" value="${c.icon}" style="text-align:center;font-size:16px;padding:5px;">
+      <input type="text" id="ci-lbl-${c.id}" value="${c.label}" placeholder="Label">
+      <input type="number" id="ci-val-${c.id}" value="${c.value}" min="0" placeholder="Value">
+      <select id="ci-col-${c.id}">
+        <option value="red" ${c.color==='red'?'selected':''}>Red</option>
+        <option value="amber" ${c.color==='amber'?'selected':''}>Amber</option>
+        <option value="green" ${c.color==='green'?'selected':''}>Green</option>
+        <option value="white" ${c.color==='white'?'selected':''}>White</option>
+      </select>
+      <button class="del-btn" onclick="removeCasualty(${c.id})">✕</button>`;
+    el.appendChild(row);
+  });
+}
+
+function addCasualtyCounter(){
+  casualties.push({id:nextCasualtyId++,label:'New Counter',value:0,color:'white',icon:'📊'});
+  renderCasualtyAdmin();
+}
+function removeCasualty(id){
+  casualties=casualties.filter(c=>c.id!==id);
+  renderCasualtyAdmin();
+}
+function saveCasualtyCounters(){
+  casualties.forEach(c=>{
+    const icon=document.getElementById('ci-icon-'+c.id);
+    const lbl=document.getElementById('ci-lbl-'+c.id);
+    const val=document.getElementById('ci-val-'+c.id);
+    const col=document.getElementById('ci-col-'+c.id);
+    if(icon)c.icon=icon.value;
+    if(lbl)c.label=lbl.value;
+    if(val)c.value=parseInt(val.value)||0;
+    if(col)c.color=col.value;
+  });
+  renderCasualtyGrid();
+  flash('casualty-flash');
+}
+
+/* ── ASSET BOARD ── */
+let assets=[
+  {id:1,icon:'🚢',name:'USS Gerald R. Ford',status:'damaged'},
+  {id:2,icon:'🏛',name:'Knesset Complex',status:'damaged'},
+  {id:3,icon:'⚡',name:'Tehran Power Grid',status:'damaged'},
+  {id:4,icon:'🏥',name:'Khan Younis Field Hospital',status:'destroyed'},
+  {id:5,icon:'🛡',name:'Israeli Iron Dome',status:'operational'},
+  {id:6,icon:'🚀',name:'IRGC Missile Installations',status:'operational'},
+  {id:7,icon:'🛩',name:'US Air Assets — Gulf',status:'operational'},
+  {id:8,icon:'📡',name:'Iranian Comms Network',status:'damaged'},
+];
+let nextAssetId=9;
+
+function renderAssetGrid(){
+  const grid=document.getElementById('asset-grid');if(!grid)return;
+  grid.innerHTML='';
+  assets.forEach(a=>{
+    const row=document.createElement('div');
+    row.className='asset-row '+a.status;
+    const badgeCls=a.status==='operational'?'status-operational':a.status==='damaged'?'status-damaged':'status-destroyed';
+    const badgeTxt=a.status==='operational'?'● OPERATIONAL':a.status==='damaged'?'◐ DAMAGED':'✕ DESTROYED';
+    row.innerHTML=`<span class="asset-icon">${a.icon}</span><span class="asset-name">${a.name}</span><span class="asset-status-badge ${badgeCls}">${badgeTxt}</span>`;
+    grid.appendChild(row);
+  });
+}
+
+function renderAssetAdmin(){
+  const el=document.getElementById('admin-asset-list');if(!el)return;
+  el.innerHTML='';
+  assets.forEach(a=>{
+    const row=document.createElement('div');
+    row.style.cssText='display:grid;grid-template-columns:36px 1fr 130px 28px;gap:7px;align-items:center;';
+    row.innerHTML=`
+      <input type="text" id="ai-icon-${a.id}" value="${a.icon}" style="text-align:center;font-size:16px;padding:5px;">
+      <input type="text" id="ai-name-${a.id}" value="${a.name}" placeholder="Asset name">
+      <select id="ai-st-${a.id}">
+        <option value="operational" ${a.status==='operational'?'selected':''}>Operational</option>
+        <option value="damaged"     ${a.status==='damaged'?'selected':''}>Damaged</option>
+        <option value="destroyed"   ${a.status==='destroyed'?'selected':''}>Destroyed</option>
+      </select>
+      <button class="del-btn" onclick="removeAsset(${a.id})">✕</button>`;
+    el.appendChild(row);
+  });
+}
+
+function addAsset(){
+  assets.push({id:nextAssetId++,icon:'🎯',name:'New Asset',status:'operational'});
+  renderAssetAdmin();
+}
+function removeAsset(id){assets=assets.filter(a=>a.id!==id);renderAssetAdmin();}
+function saveAssets(){
+  assets.forEach(a=>{
+    const icon=document.getElementById('ai-icon-'+a.id);
+    const name=document.getElementById('ai-name-'+a.id);
+    const st=document.getElementById('ai-st-'+a.id);
+    if(icon)a.icon=icon.value;
+    if(name)a.name=name.value;
+    if(st)a.status=st.value;
+  });
+  renderAssetGrid();
+  flash('asset-flash');
+}
+
+/* ── SECRET DIRECTIVES ── */
+let directives=[];
+
+function renderDirectiveAdmin(){
+  const el=document.getElementById('admin-directives-list');if(!el)return;
+  el.innerHTML='';
+  directives.forEach((d,i)=>{
+    const block=document.createElement('div');
+    block.style.cssText='border:1px solid #2a1a2e;padding:12px;background:#08030f;';
+    block.innerHTML=`
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+        <div><label>Country &amp; Flag (display name)</label><input type="text" id="dir-name-${i}" value="${d.name||''}" placeholder="e.g. 🇺🇸 USA"></div>
+        <div><label>Secret Code</label><input type="text" id="dir-code-${i}" value="${d.code||''}" placeholder="e.g. USA-ALPHA" style="letter-spacing:2px;"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+        <div><label>Objectives</label><textarea id="dir-obj-${i}" style="min-height:70px;">${d.objectives||''}</textarea></div>
+        <div><label>Red Lines</label><textarea id="dir-red-${i}" style="min-height:70px;">${d.redlines||''}</textarea></div>
+        <div><label>Classified Intel</label><textarea id="dir-intel-${i}" style="min-height:70px;">${d.intel||''}</textarea></div>
+      </div>
+      <button class="del-btn" onclick="removeDirectiveEntry(${i})" style="margin-top:8px;">✕ Remove</button>`;
+    el.appendChild(block);
+  });
+}
+
+function addDirectiveEntry(){
+  directives.push({name:'',code:'',objectives:'',redlines:'',intel:''});
+  renderDirectiveAdmin();
+}
+function removeDirectiveEntry(i){directives.splice(i,1);renderDirectiveAdmin();}
+function saveDirectives(){
+  directives.forEach((d,i)=>{
+    const name=document.getElementById('dir-name-'+i);
+    const code=document.getElementById('dir-code-'+i);
+    const obj=document.getElementById('dir-obj-'+i);
+    const red=document.getElementById('dir-red-'+i);
+    const intel=document.getElementById('dir-intel-'+i);
+    if(name)d.name=name.value;
+    if(code)d.code=code.value.trim().toLowerCase();
+    if(obj)d.objectives=obj.value;
+    if(red)d.redlines=red.value;
+    if(intel)d.intel=intel.value;
+  });
+  flash('directives-flash');
+}
+
+function unlockIntelTab(){
+  const code=document.getElementById('intel-code-input').value.trim().toLowerCase();
+  const dir=directives.find(d=>d.code===code);
+  if(!dir){
+    document.getElementById('intel-error').style.display='block';
+    setTimeout(()=>document.getElementById('intel-error').style.display='none',3000);
+    return;
+  }
+  document.getElementById('intel-lock-panel').style.display='none';
+  document.getElementById('intel-brief-content').style.display='block';
+  document.getElementById('ib-flag-name').textContent=dir.name;
+  document.getElementById('ib-country').textContent='CLASSIFIED COUNTRY BRIEF';
+  document.getElementById('ib-objectives').textContent=dir.objectives;
+  document.getElementById('ib-redlines').textContent=dir.redlines;
+  document.getElementById('ib-intel').textContent=dir.intel;
+}
+function lockIntelTab(){
+  document.getElementById('intel-lock-panel').style.display='block';
+  document.getElementById('intel-brief-content').style.display='none';
+  document.getElementById('intel-code-input').value='';
+}
+
+
 function triggerEscalation(){
   const title=document.getElementById('esc-title-input').value.trim()||'ESCALATION DETECTED';
   const msg=document.getElementById('esc-msg-input').value.trim();
@@ -1208,23 +1836,50 @@ function runStatic(duration){
 
 /* ── TYPEWRITER ALERT ── */
 window.showAlert=function(tag,title,body){
+  if(!pageLoaded)return;
   document.getElementById('alert-tag').textContent=tag;
   document.getElementById('alert-body').textContent=body;
   const titleEl=document.getElementById('alert-title');
-  titleEl.textContent='';titleEl.className='alert-title';
+  titleEl.textContent='';
+  titleEl.style.cssText='border-right:3px solid var(--red);display:inline-block;min-height:1em;';
   document.getElementById('alert-overlay').style.display='flex';
-  // static first, then type
-  runStatic(600);
+  runStatic(800);
   setTimeout(()=>{
     let i=0;
-    titleEl.className='alert-title typewriter';
-    function type(){
-      if(i<title.length){titleEl.textContent+=title[i++];setTimeout(type,28);}
-      else{setTimeout(()=>titleEl.classList.remove('typewriter'),800);}
-    }
-    type();
-  },400);
+    const blinkIv=setInterval(()=>{
+      titleEl.style.borderColor=titleEl.style.borderColor==='transparent'?'var(--red)':'transparent';
+    },400);
+    setTimeout(()=>{
+      clearInterval(blinkIv);
+      titleEl.style.borderColor='var(--red)';
+      function type(){
+        if(i<title.length){
+          titleEl.textContent+=title[i++];
+          setTimeout(type,60+Math.random()*40);
+        } else {
+          let blinks=0;
+          const doneIv=setInterval(()=>{
+            titleEl.style.borderColor=titleEl.style.borderColor==='transparent'?'var(--red)':'transparent';
+            if(++blinks>8){clearInterval(doneIv);titleEl.style.borderRight='none';}
+          },350);
+        }
+      }
+      type();
+    },600);
+  },700);
 };
+
+/* ── TRANSMISSION FLASH ── */
+function showTransmissionFlash(){
+  if(!pageLoaded)return;
+  const el=document.getElementById('transmission-flash');
+  el.style.display='block';
+  el.style.animation='none';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    el.style.animation='transmissionIn 2.5s ease forwards';
+  }));
+  setTimeout(()=>{el.style.display='none';el.style.animation='';},2600);
+}
 
 /* ── TICKER SPEED UP ON NEW UPDATE ── */
 function tickerBurst(){
@@ -1238,6 +1893,7 @@ function tickerBurst(){
 // patch applied inside renderCrisisFeed via new-card class and new-badge span
 
 /* ── INIT ── */
+let pageLoaded = false;
 window.addEventListener('load',()=>{
   applySitState();
   applyDefconColor(sitState.defcon);
@@ -1245,6 +1901,12 @@ window.addEventListener('load',()=>{
   setTimeout(animateBars,900);
   setTimeout(animateTimeline,400);
   setTimeout(triggerGlitch,2200);
+  renderCasualtyGrid();
+  renderAssetGrid();
+  updateDoomClockDisplay();
+  // Mark page as fully loaded after a short delay so Firebase listeners
+  // don't fire overlays/banners on initial data hydration
+  setTimeout(()=>{ pageLoaded = true; }, 2500);
 });
 
 function showTab(id,btn){
@@ -1275,14 +1937,14 @@ function checkAdminPw(){
     document.getElementById('admin-content').style.display='block';
     document.getElementById('pw-error').style.display='none';
     renderCrisisFeed();showPRAdminBtns();renderVoteAdminList();renderSpeakerQueue();
-    // Show speech controls
     document.getElementById('speech-controls-locked').style.display='none';
     document.getElementById('speech-controls-unlocked').style.display='flex';
-    // Show roll call
     document.getElementById('rollcall-section').style.display='block';
     initRollCallCards();
-    // Render sit admin
     renderSitAdmin();
+    renderCasualtyAdmin();
+    renderAssetAdmin();
+    renderDirectiveAdmin();
   } else {document.getElementById('pw-error').style.display='block';document.getElementById('admin-pw').value='';}
 }
 
@@ -1717,9 +2379,8 @@ window.showAlert = function(tag, title, body) {
   set(ref(db, 'session/alert'), { tag, title, body, ts: Date.now() });
 };
 onValue(ref(db, 'session/alert'), snap => {
-  if (!snap.val()) return;
+  if (!snap.val() || !pageLoaded) return;
   const { tag, title, body, ts } = snap.val();
-  // Only show if recent (within 30s) and not the admin who sent it
   if (Date.now() - ts < 30000 && !adminUnlocked) {
     document.getElementById('alert-tag').textContent = tag;
     document.getElementById('alert-title').textContent = title;
@@ -1796,7 +2457,7 @@ window.renderCrisisFeed = function() {
         <div style="display:flex;gap:5px;" id="cu-btns-${key}"></div>
       </div>
       <div class="update-title">${u.title}${isRecent?'<span class="new-badge">NEW</span>':''}</div>
-      <div class="update-body ${isEyes && !adminUnlocked ? 'eyes-blur' : ''}">${u.body}</div>
+      <div class="update-body ${isEyes && !adminUnlocked ? 'eyes-blur' : ''}" style="white-space:normal;">${parseMd(u.body||'')}</div>
       ${u.source ? `<div class="update-source">Source: ${u.source}</div>` : ''}
       <div class="edit-form" id="cu-edit-${key}">
         <div class="edit-form-row">
@@ -1856,10 +2517,12 @@ window.savePRfb = function(key) {
 onValue(ref(db, 'pressReleases'), snap => {
   const data = snap.val() || {};
   const feed = document.getElementById('press-feed');
-  // Keep the two hardcoded starter PRs (ids 1 & 2), clear the rest
   const existing = feed.querySelectorAll('.pr-card[data-fb]');
   existing.forEach(el => el.remove());
+  // Sort by ts descending (newest upload first) — NOT by the time field the user types
   const items = Object.entries(data).map(([k,v]) => ({...v, key: k})).sort((a,b) => (b.ts||0)-(a.ts||0));
+  // Insert after the two hardcoded PRs (which are at the bottom as oldest)
+  const hardcoded = feed.querySelector('.pr-card:not([data-fb])');
   items.forEach(pr => {
     const key = pr.key;
     const card = document.createElement('div');
@@ -1883,7 +2546,8 @@ onValue(ref(db, 'pressReleases'), snap => {
           <button class="btn btn-sm" onclick="togglePREdit('${key}')">Cancel</button>
         </div>
       </div>`;
-    feed.insertBefore(card, feed.firstChild);
+    // Insert before hardcoded PRs so newest Firebase PRs appear at the top
+    feed.insertBefore(card, hardcoded || null);
     if (adminUnlocked) {
       const w = card.querySelector('#pr-admin-btns-' + key);
       w.style.display = 'flex';
@@ -2172,6 +2836,147 @@ onValue(ref(db, 'speakers'), snap => {
     const timerEl = document.getElementById('speech-timer');
     if (timerEl) { timerEl.textContent = '—'; timerEl.className = 'speech-timer ok'; }
   }
+});
+
+// ── MARKDOWN PARSER ──
+function parseMd(text) {
+  if (!text) return '';
+  let html = text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g,'<strong style="color:#e8e8e8;font-weight:500;">$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em>$1</em>');
+  // Bullet points — convert lines starting with - or * into list items
+  const lines = html.split('\n');
+  let result = [];
+  let inList = false;
+  for (const line of lines) {
+    const bullet = line.match(/^[\-\*\•] (.+)/);
+    if (bullet) {
+      if (!inList) { result.push('<ul style="margin:4px 0 4px 18px;list-style:disc;">'); inList = true; }
+      result.push(`<li style="margin:2px 0;color:#999;">${bullet[1]}</li>`);
+    } else {
+      if (inList) { result.push('</ul>'); inList = false; }
+      result.push(line + (line ? '<br>' : '<br>'));
+    }
+  }
+  if (inList) result.push('</ul>');
+  return result.join('');
+}
+
+// ── ENDGAME SYNC ──
+window.triggerEndgame = function() {
+  const outcome = document.getElementById('endgame-outcome-select').value;
+  const title   = document.getElementById('endgame-title-input').value.trim() || 'SESSION CONCLUDED';
+  const summary = document.getElementById('endgame-summary-input').value.trim();
+  showEndgame(outcome, title, summary);
+  set(ref(db, 'endgame'), { outcome, title, summary, active: true, ts: Date.now() });
+};
+window.dismissEndgame = function() {
+  document.getElementById('endgame-overlay').classList.remove('active');
+  if (adminUnlocked) set(ref(db, 'endgame'), { active: false, ts: Date.now() });
+};
+onValue(ref(db, 'endgame'), snap => {
+  if (!snap.val() || !pageLoaded) return;
+  const e = snap.val();
+  if (e.active && !adminUnlocked) showEndgame(e.outcome, e.title, e.summary);
+  else if (!e.active) document.getElementById('endgame-overlay').classList.remove('active');
+});
+
+// ── ESCALATION EVENT SYNC ──
+window.triggerEscalation = function() {
+  const title = document.getElementById('esc-title-input').value.trim() || 'ESCALATION DETECTED';
+  const msg   = document.getElementById('esc-msg-input').value.trim();
+  showEscalation(title, msg);
+  set(ref(db, 'escalation'), { title, msg, active: true, ts: Date.now() });
+};
+window.dismissEscalation = function() {
+  document.getElementById('escalation-overlay').classList.remove('active');
+  if (adminUnlocked) set(ref(db, 'escalation'), { active: false, ts: Date.now() });
+};
+onValue(ref(db, 'escalation'), snap => {
+  if (!snap.val() || !pageLoaded) return;
+  const e = snap.val();
+  if (e.active && !adminUnlocked) showEscalation(e.title || 'ESCALATION DETECTED', e.msg || '');
+  else if (!e.active) document.getElementById('escalation-overlay').classList.remove('active');
+});
+
+// ── DOOMSDAY CLOCK SYNC ──
+window.setDoomClock = function() {
+  const mins = parseFloat(document.getElementById('doom-mins-input').value) || 2;
+  doomMins = Math.max(0.5, Math.min(11.5, mins));
+  updateDoomClockDisplay();
+  set(ref(db, 'doomClock'), { mins: doomMins });
+  flash('doom-flash');
+};
+onValue(ref(db, 'doomClock'), snap => {
+  if (!snap.val()) return;
+  doomMins = snap.val().mins || 2;
+  updateDoomClockDisplay();
+});
+
+// ── CASUALTY COUNTER SYNC ──
+window.saveCasualtyCounters = function() {
+  casualties.forEach(c => {
+    const icon = document.getElementById('ci-icon-' + c.id);
+    const lbl  = document.getElementById('ci-lbl-'  + c.id);
+    const val  = document.getElementById('ci-val-'  + c.id);
+    const col  = document.getElementById('ci-col-'  + c.id);
+    if (icon) c.icon  = icon.value;
+    if (lbl)  c.label = lbl.value;
+    if (val)  c.value = parseInt(val.value) || 0;
+    if (col)  c.color = col.value;
+  });
+  set(ref(db, 'casualties'), casualties);
+  flash('casualty-flash');
+};
+onValue(ref(db, 'casualties'), snap => {
+  if (!snap.val()) return;
+  casualties = snap.val();
+  renderCasualtyGrid();
+  if (adminUnlocked) renderCasualtyAdmin();
+});
+
+// ── ASSET BOARD SYNC ──
+window.saveAssets = function() {
+  assets.forEach(a => {
+    const icon = document.getElementById('ai-icon-' + a.id);
+    const name = document.getElementById('ai-name-' + a.id);
+    const st   = document.getElementById('ai-st-'   + a.id);
+    if (icon) a.icon   = icon.value;
+    if (name) a.name   = name.value;
+    if (st)   a.status = st.value;
+  });
+  set(ref(db, 'assets'), assets);
+  flash('asset-flash');
+};
+onValue(ref(db, 'assets'), snap => {
+  if (!snap.val()) return;
+  assets = snap.val();
+  renderAssetGrid();
+  if (adminUnlocked) renderAssetAdmin();
+});
+
+// ── SECRET DIRECTIVES SYNC ──
+window.saveDirectives = function() {
+  directives.forEach((d, i) => {
+    const name  = document.getElementById('dir-name-'  + i);
+    const code  = document.getElementById('dir-code-'  + i);
+    const obj   = document.getElementById('dir-obj-'   + i);
+    const red   = document.getElementById('dir-red-'   + i);
+    const intel = document.getElementById('dir-intel-' + i);
+    if (name)  d.name       = name.value;
+    if (code)  d.code       = code.value.trim().toLowerCase();
+    if (obj)   d.objectives = obj.value;
+    if (red)   d.redlines   = red.value;
+    if (intel) d.intel      = intel.value;
+  });
+  set(ref(db, 'directives'), directives);
+  flash('directives-flash');
+};
+onValue(ref(db, 'directives'), snap => {
+  if (!snap.val()) return;
+  directives = snap.val();
+  if (adminUnlocked) renderDirectiveAdmin();
 });
 
 console.log('Firebase sync active');
